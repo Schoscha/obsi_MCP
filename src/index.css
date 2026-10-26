@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* Neurath X Mono (René Bieder) — Self-Hosted / Local @font-face */
+@font-face {
+  font-family: 'Neurath X Mono';
+  src:
+    local('Neurath X Mono'),
+    local('NeurathXMono-Regular'),
+    local('Neurath X Mono Regular'),
+    url('/fonts/NeurathXMono-Regular.woff2') format('woff2'),
+    url('/fonts/NeurathXMono-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neurath X Mono';
+  src:
+    local('Neurath X Mono Medium'),
+    local('NeurathXMono-Medium'),
+    url('/fonts/NeurathXMono-Medium.woff2') format('woff2'),
+    url('/fonts/NeurathXMono-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neurath X Mono';
+  src:
+    local('Neurath X Mono Bold'),
+    local('NeurathXMono-Bold'),
+    url('/fonts/NeurathXMono-Bold.woff2') format('woff2'),
+    url('/fonts/NeurathXMono-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+  --font-mono: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+  --font-display: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  :root {
+    --font-neurath: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+    --bg-base: #15130c;
+    --bg-lowest: #100e08;
+    --bg-low: #1e1b14;
+    --bg-container: #221f18;
+    --bg-high: #2c2a22;
+    --bg-highest: #37352c;
+    --bg-bright: #3c3931;
+    --text-primary: #e8e2d6;
+    --text-secondary: #cac6ba;
+    --text-muted: #8c877a;
+    --border-structural: #2E2A20;
+    --border-active: #3D382C;
+    --signal-vermillion: #E54D2E;
+    --signal-vermillion-hover: #F05C3E;
+    --signal-cyan: #7bd0ff;
+    --signal-cyan-dim: #2a9bcb;
+    --canvas-paper: #F5F3EC;
+    --grid-dot: rgba(202, 198, 186, 0.16);
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "zero" 1, "ss01" 1;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    caret-color: #E54D2E;
+  }
+
+  ::selection {
+    background-color: #E54D2E;
+    color: #F5F3EC;
+  }
+}
+
+/* Custom Tectonic Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #100e08;
+  border-left: 1px solid #2E2A20;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #37352c;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E54D2E;
+}
+
+/* Typography Utilities — Neurath X Mono (Radical Geometry, Fixed Width) */
+.font-display {
+  font-family: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-mono,
+.font-mono-code {
+  font-family: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tectonic Precision Surface Stratification — Dark (Obsidian) */
+.tectonic-z0 {
+  background-color: #15130c;
+  color: #e8e2d6;
+}
+
+.tectonic-z0-lowest {
+  background-color: #100e08;
+  color: #e8e2d6;
+}
+
+.tectonic-z1 {
+  background-color: #1e1b14;
+  border: 1px solid #2E2A20;
+  color: #e8e2d6;
+}
+
+.tectonic-z2 {
+  background-color: #221f18;
+  border: 1px solid #3D382C;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  color: #e8e2d6;
+}
+
+/* Tectonic Precision Surface Stratification — Paper (Canvas Paper Inverted) */
+.paper-z0 {
+  background-color: #F5F3EC;
+  color: #18160F;
+}
+
+.paper-z1 {
+  background-color: #ECE8DC;
+  border: 1px solid #C8C2B0;
+  color: #18160F;
+}
+
+.paper-z2 {
+  background-color: #E2DDD0;
+  border: 1px solid #ACA592;
+  box-shadow: 0 4px 16px rgba(24, 22, 15, 0.12);
+  color: #18160F;
+}
+
+/* Architectural Drafting Grid Overlays */
+.tectonic-grid-dark {
+  background-image: radial-gradient(rgba(202, 198, 186, 0.18) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.tectonic-grid-paper {
+  background-image: radial-gradient(rgba(46, 42, 32, 0.18) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Crisp Focus Ring */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 1px solid #E54D2E;
+  outline-offset: 2px;
+}
+
+/* Compatibility classes for existing sub-modals upgraded to Tectonic Precision */
+.glass-white {
+  background-color: #ECE8DC;
+  border: 1px solid #C8C2B0;
+  box-shadow: 0 4px 16px rgba(24, 22, 15, 0.12);
+  color: #18160F;
+}
+
+.glass-bunt {
+  background-color: #1e1b14;
+  border: 1px solid #2E2A20;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  color: #e8e2d6;
+}
+
+.glass-rainbow-edge {
+  position: relative;
+}
+
+.glass-pill-white {
+  background-color: #E2DDD0;
+  border: 1px solid #ACA592;
+  color: #18160F;
+}
+
+.glass-pill-bunt {
+  background-color: #221f18;
+  border: 1px solid #2E2A20;
+  color: #e8e2d6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

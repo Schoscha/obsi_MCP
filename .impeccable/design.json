@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T06:32:00Z",
+  "title": "Design System: Tectonic Precision",
+  "extensions": {
+    "colorMeta": {
+      "blueprint-amber": {
+        "role": "primary",
+        "displayName": "Industrial Vermillion",
+        "canonical": "#E54D2E",
+        "tonalRamp": ["#3e0500", "#580a00", "#8d1700", "#b32a0d", "#E54D2E", "#fa5c3b", "#ffb4a4", "#ffdad3"]
+      },
+      "on-surface": {
+        "role": "secondary",
+        "displayName": "Architectural Bone",
+        "canonical": "#e8e2d6",
+        "tonalRamp": ["#1d1c14", "#323128", "#49473d", "#8c877a", "#b9b5a9", "#cac6ba", "#e8e2d6", "#F5F3EC"]
+      },
+      "tertiary": {
+        "role": "tertiary",
+        "displayName": "Blueprint Cyan",
+        "canonical": "#7bd0ff",
+        "tonalRamp": ["#001e2c", "#002d40", "#003549", "#004c69", "#2a9bcb", "#7bd0ff", "#a5dfff", "#c3e7ff"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Deep Obsidian",
+        "canonical": "#15130c",
+        "tonalRamp": ["#100e08", "#15130c", "#1e1b14", "#221f18", "#2c2a22", "#37352c", "#3c3931", "#49473d"]
+      },
+      "structural-border": {
+        "role": "neutral",
+        "displayName": "Structural Border",
+        "canonical": "#2E2A20",
+        "tonalRamp": ["#15130c", "#1e1b14", "#232017", "#2E2A20", "#37352c", "#3D382C", "#49473d", "#5a413b"]
+      }
+    },
+    "typographyMeta": {
+      "headline-xl": { "displayName": "Headline XL", "purpose": "Primary architectural hero headers." },
+      "headline-md": { "displayName": "Headline MD", "purpose": "Pane and modal section headers." },
+      "title-sm": { "displayName": "Title SM", "purpose": "Module titles, active tabs, and node labels." },
+      "body-md": { "displayName": "Body MD", "purpose": "Operational copy, markdown notes, and descriptions." },
+      "label-sm": { "displayName": "Label SM", "purpose": "Uppercase schematic tags, ranks, and telemetry badges." }
+    },
+    "shadows": [
+      {
+        "name": "contact-elevation",
+        "value": "0 4px 16px rgba(0, 0, 0, 0.45)",
+        "purpose": "Directional contact shadow for Z2 floating panels and modals."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-tectonic",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Crisp mechanical transition for pane docking and node selection."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Vermillion Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Industrial Vermillion command trigger with 4px corner radius.",
+      "html": "<button class=\"ds-btn-primary\">DEPLOY PIPELINE</button>",
+      "css": ".ds-btn-primary { background: #E54D2E; color: #F5F3EC; padding: 8px 14px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; border: 1px solid #fa5c3b; cursor: pointer; transition: background 0.15s ease, transform 0.1s ease; } .ds-btn-primary:hover { background: #F05C3E; } .ds-btn-primary:active { transform: scale(0.98); } .ds-btn-primary:focus-visible { outline: 1px solid #E54D2E; outline-offset: 2px; }"
+    },
+    {
+      "name": "Tectonic Docked Pane",
+      "kind": "card",
+      "refersTo": "pane-z1",
+      "description": "Stratified Z1 module container with 1px structural border.",
+      "html": "<div class=\"ds-pane\"><div class=\"ds-pane-header\"><span>RRF ENGINE</span><span class=\"ds-badge\">READY</span></div><div class=\"ds-pane-body\">p50 Latency: 23ms</div></div>",
+      "css": ".ds-pane { background: #1e1b14; border: 1px solid #2E2A20; border-radius: 4px; color: #e8e2d6; font-family: 'JetBrains Mono', monospace; } .ds-pane-header { padding: 8px 12px; border-bottom: 1px solid #2E2A20; background: #221f18; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; } .ds-badge { background: #E54D2E; color: #F5F3EC; padding: 2px 6px; border-radius: 2px; font-size: 10px; } .ds-pane-body { padding: 12px; font-size: 12px; color: #cac6ba; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Tectonic Precision — Architectural Drafting & Technical Minimalism",
+    "overview": "The design system merges architectural drafting discipline with modern technical minimalism, favoring structural clarity, high-density utility, and purposeful layout engineering.",
+    "keyCharacteristics": [
+      "Architectural stratification (#15130c Z0, #1e1b14 Z1, #221f18 Z2) with 1px #2E2A20 structural borders",
+      "Industrial Vermillion (#E54D2E) signal accent against Architectural Bone (#e8e2d6)",
+      "Neurath X Mono (René Bieder — Radical Geometry, Fixed Width) across all display headers and operational typography",
+      "Calibrated 2px-4px corner geometry; zero pill shapes or decorative blur"
+    ],
+    "rules": [
+      {
+        "name": "The Planar Stratification Rule",
+        "body": "Depth is established through Z0/Z1/Z2 surface tones and 1px #2E2A20 borders, never heavy glass blur or rainbow borders.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No-Pill Rule",
+        "body": "All controls, badges, and panes use 2px-4px corners; rounded-full pill shapes are prohibited.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do use Space Grotesk for structural headers and JetBrains Mono for all operational copy, controls, metrics, and code.",
+      "Do enforce 0px-4px corners across all panes, buttons, badges, and inputs.",
+      "Do establish depth via planar surface stratification (#15130c -> #1e1b14 -> #221f18) and 1px #2E2A20 structural borders."
+    ],
+    "donts": [
+      "Don't use pill shapes (rounded-full), heavy glassmorphism blur, rainbow borders, or spinning decorative sparkles.",
+      "Don't use decorative consumer widgets (weather forecasts, stock avatars, mountain wallpapers).",
+      "Don't use soft ambient neon glows; use crisp 1px #E54D2E active borders and 6px square status indicators."
+    ]
+  }
+}
