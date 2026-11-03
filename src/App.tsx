@@ -5,6 +5,9 @@ import { GlassChecklistModal } from './components/GlassChecklistModal';
 import { GlassSimulatorModal } from './components/GlassSimulatorModal';
 import { GlassNoteModal } from './components/GlassNoteModal';
 import { GlassGraphModal } from './components/GlassGraphModal';
+import { FuselabGraphCanvas } from './components/FuselabGraphCanvas';
+import { CentralStationSidebarTree } from './components/CentralStationSidebarTree';
+import { CentralStationSubpageRenderer } from './components/CentralStationSubpageRenderer';
 import { GlassAnalysisModal } from './components/GlassAnalysisModal';
 import { GlassNewsModal } from './components/GlassNewsModal';
 import { GlassAudioPlayerModal } from './components/GlassAudioPlayerModal';
@@ -34,6 +37,8 @@ import {
   Database,
   ShieldCheck,
   Sparkles,
+  Menu,
+  X,
 } from 'lucide-react';
 
 interface CanvasNode {
@@ -143,15 +148,17 @@ const VAULT_FOLDERS = [
 ];
 
 export function App() {
-  // Default to 'bunt' which maps to Tectonic Precision Dark Obsidian (#15130c)
-  // 'weiss' maps to Canvas Paper (#F5F3EC) high-contrast light mode
+  // Default to 'bunt' which maps to Tectonic Precision Dark Obsidian (#07100e)
+  // 'weiss' maps to Canvas Paper (#f0f7f5) high-contrast light mode
   const [themeMode, setThemeMode] = useState<'weiss' | 'bunt'>('bunt');
   const isWeiss = themeMode === 'weiss';
 
-  // Workspace View Mode
+  // Workspace View Mode (Default to 'station' -> Central.station 6 Areas / 45 Subpages!)
   const [workspaceMode, setWorkspaceMode] = useState<
-    'split' | 'canvas' | 'rrf' | 'chapters'
-  >('split');
+    'station' | 'canvas' | 'split' | 'rrf' | 'chapters'
+  >('station');
+  const [activeStationSubpageId, setActiveStationSubpageId] = useState<string>('cockpit');
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   // Left Panel Tab ('rrf' | 'code')
   const [leftConsoleTab, setLeftConsoleTab] = useState<'rrf' | 'code'>('rrf');
@@ -168,6 +175,7 @@ export function App() {
   const [canvasLayerFilter, setCanvasLayerFilter] = useState<
     'all' | 'retrieval' | 'vault' | 'mcp'
   >('all');
+  const [canvasEngine, setCanvasEngine] = useState<'fuselab' | 'cards'>('fuselab');
 
   // Interactive RRF Engine State
   const [rrfQuery, setRrfQuery] = useState('OAuth Token Rotation');
@@ -454,59 +462,69 @@ export function App() {
     <div
       className={`min-h-screen flex flex-col select-none transition-colors duration-150 ${
         isWeiss
-          ? 'bg-[#F5F3EC] text-[#15130C]'
-          : 'bg-[#15130c] text-[#e8e2d6]'
+          ? 'bg-[#f0f7f5] text-[#06201b]'
+          : 'bg-[#07100e] text-[#ecfdf5]'
       }`}
     >
       {/* TOP GLOBAL HEADER BAR (h-14) */}
       <header
-        className={`h-14 border-b px-4 flex items-center justify-between gap-3 shrink-0 z-30 ${
+        className={`h-14 border-b px-2 sm:px-4 flex items-center justify-between gap-1.5 sm:gap-3 shrink-0 z-30 ${
           isWeiss
-            ? 'bg-[#EBE8DF] border-[#D6D2C4]'
-            : 'bg-[#15130c] border-[#2E2A20]'
+            ? 'bg-[#e4f0ec] border-[#bdd6cf]'
+            : 'bg-[#07100e] border-[#16302b]'
         }`}
       >
-        {/* Brand & Breadcrumb */}
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="flex items-center gap-2.5 pr-3 border-r border-[#2E2A20]/60">
-            <div className="w-7 h-7 rounded bg-[#E54D2E] text-[#F5F3EC] flex items-center justify-center font-mono font-bold text-xs shrink-0">
-              //
-            </div>
+        {/* Brand & Breadcrumb (Second.brain / Central.station Style) */}
+        <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
+          {/* Mobile Hamburger Drawer Toggle (Mobile only) */}
+          <button
+            onClick={() => setIsMobileNavOpen((open) => !open)}
+            aria-label={isMobileNavOpen ? 'Menü schließen' : 'Menü öffnen'}
+            className="p-2 rounded-lg border border-[#16302b] bg-[#0b1715] text-[#34d399] lg:hidden hover:bg-[#112a24] active:scale-95 transition-all cursor-pointer shrink-0"
+            title="45-Seiten Ordnerbaum öffnen"
+          >
+            {isMobileNavOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          </button>
+
+          <div className="flex items-center gap-2 pr-1.5 sm:pr-3 border-r border-[#16302b]/60">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#6ee7b7] via-[#34d399] to-[#22d3ee] shadow-[0_0_14px_rgba(52,211,153,0.55)] shrink-0" />
             <div className="leading-none">
-              <div className="font-display font-bold text-sm tracking-[0.08em] uppercase">
-                OBSIDIAN // MCP
+              <div className="font-display font-bold text-sm tracking-tight">
+                <span className={isWeiss ? 'text-[#06201b]' : 'text-[#ecfdf5]'}>Second.</span>
+                <span className="text-[#22d3ee]">brain</span>
               </div>
-              <div className="text-[10px] font-mono text-[#9b968a] tracking-[0.14em] uppercase">
-                NEURATH X MONO // STUDIO
+              <div className="text-[9px] font-mono text-[#689187] tracking-[0.12em] uppercase mt-0.5">
+                CENTRAL.STATION
               </div>
             </div>
           </div>
 
-          <div className="hidden xl:flex items-center gap-2 text-xs font-mono text-[#9b968a] truncate">
-            <span>vault</span>
+          <div className="hidden xl:flex items-center gap-2 text-xs font-mono text-[#689187] truncate">
+            <span>Second Brain</span>
             <span>/</span>
-            <span>obsidian-mcp</span>
+            <span>Hybrid Retrieval</span>
             <span>/</span>
-            <span className={isWeiss ? 'text-[#15130C] font-semibold' : 'text-[#e8e2d6] font-semibold'}>
-              hybrid-retrieval.arch.ts
+            <span className={isWeiss ? 'text-[#06201b] font-semibold' : 'text-[#ecfdf5] font-semibold'}>
+              Leitstand
             </span>
-            <span className="ml-2 px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              SYNCED [0 ERR]
+            <span className="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/10 text-[#34d399] border border-emerald-400/30 flex items-center gap-1.5 shadow-[0_0_10px_rgba(52,211,153,0.15)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#34d399] animate-pulse" />
+              synchron · 23ms
             </span>
           </div>
         </div>
 
-        {/* Center Mode Switcher Tabs */}
+        {/* Center Mode Switcher Tabs (Desktop horizontal tabs) */}
         <nav
           aria-label="Workspace Modi"
-          className={`flex items-center p-0.5 rounded border ${
+          className={`hidden md:flex items-center p-0.5 rounded border overflow-x-auto max-w-[50vw] lg:max-w-none shrink-0 ${
             isWeiss
-              ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-              : 'bg-[#1e1b14] border-[#2E2A20]'
+              ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+              : 'bg-[#0b1715] border-[#16302b]'
           }`}
         >
           {[
+            { id: 'station', label: 'Central.station (45 Seiten)' },
             { id: 'split', label: 'Split Studio' },
             { id: 'canvas', label: 'Topology Canvas' },
             { id: 'rrf', label: 'RRF & Code Lab' },
@@ -514,13 +532,16 @@ export function App() {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setWorkspaceMode(tab.id as any)}
-              className={`px-3 py-1 rounded text-xs font-mono transition-colors cursor-pointer ${
+              onClick={() => {
+                setWorkspaceMode(tab.id as any);
+                setIsMobileNavOpen(false);
+              }}
+              className={`px-3 py-1 rounded text-xs font-mono transition-colors whitespace-nowrap cursor-pointer ${
                 workspaceMode === tab.id
-                  ? 'bg-[#E54D2E] text-[#F5F3EC] font-semibold'
+                  ? 'bg-[#34d399] text-[#041311] font-semibold'
                   : isWeiss
-                  ? 'text-[#5C584D] hover:text-[#15130C]'
-                  : 'text-[#9b968a] hover:text-[#e8e2d6]'
+                  ? 'text-[#3b6e63] hover:text-[#06201b]'
+                  : 'text-[#689187] hover:text-[#ecfdf5]'
               }`}
             >
               {tab.label}
@@ -529,197 +550,387 @@ export function App() {
         </nav>
 
         {/* Right Action Controls & Theme Switch */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <button
             onClick={() => setIsAudioOpen(true)}
-            className="px-2.5 py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 bg-[#E54D2E] hover:bg-[#ff5c3d] text-[#F5F3EC] transition-colors cursor-pointer"
-            title="Deutsche Audio-Erklärung abspielen"
+            className="p-2 sm:px-2.5 sm:py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 bg-[#34d399] hover:bg-[#10b981] text-[#041310] transition-colors cursor-pointer"
+            title="Audio Briefing abspielen"
+            aria-label="Audio Briefing"
           >
             <Headphones className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">AUDIO BRIEFING</span>
+            <span className="hidden sm:inline">AUDIO</span>
           </button>
 
           <button
             onClick={handleCreateNewNote}
-            className={`px-2.5 py-1.5 rounded text-xs font-mono flex items-center gap-1.5 border transition-colors cursor-pointer ${
+            className={`hidden sm:flex px-2.5 py-1.5 rounded text-xs font-mono items-center gap-1.5 border transition-colors cursor-pointer ${
               isWeiss
-                ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] hover:border-[#15130C]'
-                : 'bg-[#1e1b14] border-[#2E2A20] text-[#cac6ba] hover:border-[#e8e2d6] hover:text-[#e8e2d6]'
+                ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] hover:border-[#06201b]'
+                : 'bg-[#0b1715] border-[#16302b] text-[#b2d8ce] hover:border-[#ecfdf5] hover:text-[#ecfdf5]'
             }`}
             title="Neue Markdown-Notiz im aktiven Ordner anlegen"
           >
-            <FilePlus className="w-3.5 h-3.5 text-[#E54D2E]" />
+            <FilePlus className="w-3.5 h-3.5 text-[#34d399]" />
             <span className="hidden md:inline">+ NOTIZ</span>
           </button>
 
           <button
             onClick={handleOpenDailyNote}
-            className={`px-2.5 py-1.5 rounded text-xs font-mono flex items-center gap-1.5 border transition-colors cursor-pointer ${
+            className={`hidden md:flex px-2.5 py-1.5 rounded text-xs font-mono items-center gap-1.5 border transition-colors cursor-pointer ${
               isWeiss
-                ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] hover:border-[#15130C]'
-                : 'bg-[#1e1b14] border-[#2E2A20] text-[#cac6ba] hover:border-[#e8e2d6] hover:text-[#e8e2d6]'
+                ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] hover:border-[#06201b]'
+                : 'bg-[#0b1715] border-[#16302b] text-[#b2d8ce] hover:border-[#ecfdf5] hover:text-[#ecfdf5]'
             }`}
             title="Heutige Tagesnotiz (06-daily) öffnen"
           >
-            <CalendarDays className="w-3.5 h-3.5 text-[#7bd0ff]" />
+            <CalendarDays className="w-3.5 h-3.5 text-[#22d3ee]" />
             <span className="hidden lg:inline">DAILY</span>
           </button>
 
           <button
             onClick={() => setIsAnalysisOpen(true)}
-            className={`px-2.5 py-1.5 rounded text-xs font-mono flex items-center gap-1.5 border transition-colors cursor-pointer ${
+            className={`hidden sm:flex px-2.5 py-1.5 rounded text-xs font-mono items-center gap-1.5 border transition-colors cursor-pointer ${
               isWeiss
-                ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] hover:border-[#15130C]'
-                : 'bg-[#1e1b14] border-[#2E2A20] text-[#cac6ba] hover:border-[#e8e2d6] hover:text-[#e8e2d6]'
+                ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] hover:border-[#06201b]'
+                : 'bg-[#0b1715] border-[#16302b] text-[#b2d8ce] hover:border-[#ecfdf5] hover:text-[#ecfdf5]'
             }`}
             title="Architektur-Audit & Sinnhaftigkeit"
           >
-            <BookOpen className="w-3.5 h-3.5 text-[#E54D2E]" />
+            <BookOpen className="w-3.5 h-3.5 text-[#34d399]" />
             <span className="hidden lg:inline">AUDIT</span>
           </button>
 
           <button
             onClick={() => setThemeMode(isWeiss ? 'bunt' : 'weiss')}
             aria-label={isWeiss ? 'Zu Dark Obsidian Modus wechseln' : 'Zu Canvas Paper Modus wechseln'}
-            className={`px-2.5 py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 border transition-colors cursor-pointer ${
+            className={`p-2 sm:px-2.5 sm:py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 border transition-colors cursor-pointer ${
               isWeiss
-                ? 'bg-[#15130C] text-[#F5F3EC] border-[#15130C]'
-                : 'bg-[#F5F3EC] text-[#15130C] border-[#D6D2C4]'
+                ? 'bg-[#06201b] text-[#f0f7f5] border-[#06201b]'
+                : 'bg-[#f0f7f5] text-[#06201b] border-[#bdd6cf]'
             }`}
-            title={isWeiss ? 'Zu OBSIDIAN (#15130c) wechseln' : 'Zu PAPER (#F5F3EC) wechseln'}
+            title={isWeiss ? 'Zu OBSIDIAN (#07100e) wechseln' : 'Zu PAPER (#f0f7f5) wechseln'}
           >
             {isWeiss ? (
               <>
-                <Moon className="w-3.5 h-3.5 text-[#E54D2E]" />
-                <span>OBSIDIAN</span>
+                <Moon className="w-3.5 h-3.5 text-[#34d399]" />
+                <span className="hidden sm:inline">DARK</span>
               </>
             ) : (
               <>
-                <Sun className="w-3.5 h-3.5 text-[#E54D2E]" />
-                <span>PAPER</span>
+                <Sun className="w-3.5 h-3.5 text-[#34d399]" />
+                <span className="hidden sm:inline">PAPER</span>
               </>
             )}
           </button>
         </div>
       </header>
 
-      {/* SUB-HEADER TELEMETRY & QUICK-ACTION STRIP */}
+      {/* SUB-HEADER MARQUEE TELEMETRY & QUICK-ACTION STRIP */}
       <div
-        className={`h-9 border-b px-4 flex items-center justify-between text-[11px] font-mono shrink-0 overflow-x-auto ${
+        className={`h-9 border-b px-3 flex items-center justify-between text-[11px] font-mono shrink-0 overflow-hidden ${
           isWeiss
-            ? 'bg-[#EBE8DF]/60 border-[#D6D2C4] text-[#5C584D]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#9b968a]'
+            ? 'bg-[#e4f0ec]/60 border-[#bdd6cf] text-[#3b6e63]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#689187]'
         }`}
       >
-        <div className="flex items-center gap-4 whitespace-nowrap">
-          <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <strong className={isWeiss ? 'text-[#15130C]' : 'text-[#e8e2d6]'}>
-              Bi-directional Sync Active (23ms p50)
-            </strong>
-          </span>
-          <span>|</span>
-          <span>
-            ENGINE: <strong className="text-[#7bd0ff]">SQLite FTS5 + sqlite-vec v0.1.9</strong>
-          </span>
-          <span>|</span>
-          <span>
-            EMBEDDING: <strong className="text-[#E54D2E]">Model2Vec 256d (30 MB RAM)</strong>
-          </span>
-          <span>|</span>
-          <span>
-            TOKEN CAP: <strong className="text-emerald-500">1.840 / 4.000 TOKENS</strong>
-          </span>
+        <div className="flex-1 marquee-container py-1 overflow-hidden">
+          <div className="marquee-track">
+            {/* 1st copy of ticker items */}
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <strong className={isWeiss ? 'text-[#06201b]' : 'text-[#ecfdf5]'}>
+                Bi-directional Sync Active (23ms p50)
+              </strong>
+              <span className="text-[9.5px] text-[#22d3ee] bg-cyan-950/40 px-1 py-0.2 rounded border border-cyan-800/40">
+                Quelle: WebSocket Daemon /ws/telemetry :8765
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>TOKEN-KONTINGENT:</span>
+              <strong className="text-emerald-400">71% verbraucht (355k / 500k)</strong>
+              <span className="text-[9.5px] text-[#34d399] bg-emerald-950/40 px-1 py-0.2 rounded border border-emerald-800/40">
+                Quelle: Central API /ablaeufe/nutzung & secrets.env (Gemini 2.5: 210k | Claude Opus: 145k · 145k frei)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>HYBRID RETRIEVAL:</span>
+              <strong className="text-[#22d3ee]">SQLite FTS5 Porter + sqlite-vec v0.1.9</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: Vault Indexer DB :8765 (49.746 Chunks)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>EMBEDDING:</span>
+              <strong className="text-[#34d399]">Model2Vec potion-base-8M 256d</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: CPU-Inference (8ms · 30 MB RAM)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>MCP PROTOCOL:</span>
+              <strong className="text-emerald-400">1.840 / 4.000 Tokens STDIO Cap</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: ~/.claude.json & Obsidian MCP
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>HOST:</span>
+              <strong className="text-[#22d3ee]">sascha-kruss-1 (100.89.43.82)</strong>
+              <span className="text-[9.5px] text-emerald-400 bg-emerald-950/40 px-1 py-0.2 rounded border border-emerald-800/40">
+                Quelle: htop Telemetrie (62% RAM · 24.8 GB frei)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>AGENTEN:</span>
+              <strong className="text-[#34d399]">5 aktiv (@hermes, @vera, @opencode, @atlas, @claude)</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: Central Process Supervisor systemd
+              </span>
+            </span>
+
+            {/* 2nd identical copy of ticker items for seamless infinite loop */}
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <strong className={isWeiss ? 'text-[#06201b]' : 'text-[#ecfdf5]'}>
+                Bi-directional Sync Active (23ms p50)
+              </strong>
+              <span className="text-[9.5px] text-[#22d3ee] bg-cyan-950/40 px-1 py-0.2 rounded border border-cyan-800/40">
+                Quelle: WebSocket Daemon /ws/telemetry :8765
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>TOKEN-KONTINGENT:</span>
+              <strong className="text-emerald-400">71% verbraucht (355k / 500k)</strong>
+              <span className="text-[9.5px] text-[#34d399] bg-emerald-950/40 px-1 py-0.2 rounded border border-emerald-800/40">
+                Quelle: Central API /ablaeufe/nutzung & secrets.env (Gemini 2.5: 210k | Claude Opus: 145k · 145k frei)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>HYBRID RETRIEVAL:</span>
+              <strong className="text-[#22d3ee]">SQLite FTS5 Porter + sqlite-vec v0.1.9</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: Vault Indexer DB :8765 (49.746 Chunks)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>EMBEDDING:</span>
+              <strong className="text-[#34d399]">Model2Vec potion-base-8M 256d</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: CPU-Inference (8ms · 30 MB RAM)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>MCP PROTOCOL:</span>
+              <strong className="text-emerald-400">1.840 / 4.000 Tokens STDIO Cap</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: ~/.claude.json & Obsidian MCP
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>HOST:</span>
+              <strong className="text-[#22d3ee]">sascha-kruss-1 (100.89.43.82)</strong>
+              <span className="text-[9.5px] text-emerald-400 bg-emerald-950/40 px-1 py-0.2 rounded border border-emerald-800/40">
+                Quelle: htop Telemetrie (62% RAM · 24.8 GB frei)
+              </span>
+            </span>
+            <span className="text-[#16302b]">✦</span>
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span>AGENTEN:</span>
+              <strong className="text-[#34d399]">5 aktiv (@hermes, @vera, @opencode, @atlas, @claude)</strong>
+              <span className="text-[9.5px] text-[#689187] bg-[#07100e] px-1 py-0.2 rounded border border-[#16302b]">
+                Quelle: Central Process Supervisor systemd
+              </span>
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-3 whitespace-nowrap">
+        {/* Quick Modal Actions on Desktop */}
+        <div className="hidden lg:flex items-center gap-3 pl-3 border-l border-[#16302b] whitespace-nowrap shrink-0">
           <button
             onClick={() => setIsGraphOpen(true)}
-            className="hover:text-[#E54D2E] flex items-center gap-1 cursor-pointer transition-colors"
+            className="hover:text-[#34d399] flex items-center gap-1 cursor-pointer transition-colors"
           >
-            <Share2 className="w-3 h-3 text-[#7bd0ff]" />
-            <span>[Full Graph Modal]</span>
+            <Share2 className="w-3 h-3 text-[#22d3ee]" />
+            <span>[Graph]</span>
           </button>
           <button
             onClick={() => setIsSimulatorOpen(true)}
-            className="hover:text-[#E54D2E] flex items-center gap-1 cursor-pointer transition-colors"
+            className="hover:text-[#34d399] flex items-center gap-1 cursor-pointer transition-colors"
           >
-            <Sliders className="w-3 h-3 text-[#E54D2E]" />
-            <span>[RRF Lab Modal]</span>
+            <Sliders className="w-3 h-3 text-[#34d399]" />
+            <span>[RRF Lab]</span>
           </button>
           <button
             onClick={() => setIsChecklistOpen(true)}
-            className="hover:text-[#E54D2E] flex items-center gap-1 cursor-pointer transition-colors"
+            className="hover:text-[#34d399] flex items-center gap-1 cursor-pointer transition-colors"
           >
             <CheckSquare className="w-3 h-3 text-emerald-500" />
-            <span>[32-Kapitel Export]</span>
+            <span>[32-Kapitel]</span>
           </button>
           <button
             onClick={() => setIsNewsOpen(true)}
-            className="hover:text-[#E54D2E] flex items-center gap-1 cursor-pointer transition-colors"
+            className="hover:text-[#34d399] flex items-center gap-1 cursor-pointer transition-colors"
           >
             <Newspaper className="w-3 h-3 text-amber-500" />
-            <span>[Releases 2026]</span>
+            <span>[Releases]</span>
           </button>
         </div>
       </div>
 
-      {/* MAIN STUDIO WORKBENCH (SIDEBAR + 3-PANEL GRID) */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* LEFT DOCKED SIDEBAR (w-64) */}
-        <aside
-          className={`w-64 border-r flex flex-col justify-between shrink-0 overflow-y-auto ${
+      {/* MAIN STUDIO WORKBENCH (OBSIDIAN RIBBON + SIDEBAR + WORKSPACE) */}
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Mobile Backdrop when Off-Canvas Drawer is open */}
+        {isMobileNavOpen && (
+          <div
+            onClick={() => setIsMobileNavOpen(false)}
+            className="fixed inset-0 top-14 bg-black/60 backdrop-blur-sm z-30 lg:hidden cursor-pointer"
+            aria-hidden="true"
+          />
+        )}
+
+        {/* FAR-LEFT NARROW OBSIDIAN ICON RIBBON (Hidden on phone to save 44px) */}
+        <div
+          className={`hidden md:flex w-11 border-r flex-col items-center justify-between py-3 shrink-0 z-20 ${
             isWeiss
-              ? 'bg-[#EBE8DF] border-[#D6D2C4]'
-              : 'bg-[#1e1b14] border-[#2E2A20]'
+              ? 'bg-[#d7e8e2] border-[#bdd6cf]'
+              : 'bg-[#050c0a] border-[#16302b]'
           }`}
         >
-          <div className="p-3 space-y-5">
-            {/* Section 1: Studio Views */}
-            <div>
-              <div className="px-2 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#9b968a] flex items-center justify-between">
-                <span>WORKSPACE VIEWS</span>
-                <span>[04]</span>
+          <div className="flex flex-col items-center gap-2.5">
+            {[
+              { id: 'station', title: 'Central.station (45 Seiten)', icon: Cpu },
+              { id: 'canvas', title: '2.5D Topology Graph', icon: Share2 },
+              { id: 'split', title: '3-Pane Split Studio', icon: Layers },
+              { id: 'rrf', title: 'RRF & Code Console', icon: Terminal },
+              { id: 'chapters', title: '32-Kapitel Rollout', icon: CheckSquare },
+            ].map((btn) => {
+              const Icon = btn.icon;
+              const active = workspaceMode === btn.id;
+              return (
+                <button
+                  key={btn.id}
+                  onClick={() => setWorkspaceMode(btn.id as any)}
+                  title={btn.title}
+                  className={`p-2 rounded transition-all cursor-pointer ${
+                    active
+                      ? 'bg-[#34d399]/20 text-[#34d399] border border-[#34d399]/50 shadow-[0_0_10px_rgba(52,211,153,0.25)]'
+                      : 'text-[#689187] hover:text-[#ecfdf5] hover:bg-white/5'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col items-center gap-2.5">
+            <button
+              onClick={() => setIsGraphOpen(true)}
+              title="Vollbild 2.5D Graph Modal"
+              className="p-2 rounded text-[#22d3ee] hover:bg-cyan-500/15 transition-colors cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setIsSimulatorOpen(true)}
+              title="RRF Simulator"
+              className="p-2 rounded text-[#689187] hover:text-[#34d399] transition-colors cursor-pointer"
+            >
+              <Sliders className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setIsAnalysisOpen(true)}
+              title="Architektur Audit"
+              className="p-2 rounded text-[#689187] hover:text-[#34d399] transition-colors cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* LEFT DOCKED OBSIDIAN TREE SIDEBAR (Responsive: Off-Canvas Drawer on mobile, Static on lg+) */}
+        <aside
+          className={`fixed inset-y-14 left-0 z-40 w-80 max-w-[85vw] border-r flex flex-col justify-between overflow-y-auto transform transition-transform duration-200 lg:static lg:translate-x-0 ${
+            isMobileNavOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'
+          } ${
+            isWeiss
+              ? 'bg-[#e4f0ec] border-[#bdd6cf]'
+              : 'bg-[#081311] border-[#16302b]'
+          }`}
+        >
+          <div className="p-3 space-y-4">
+            {/* Mobile Workspace Selector (Only visible on mobile screens < md) */}
+            <div className="md:hidden pb-3 border-b border-[#16302b]/70">
+              <div className="px-1 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#22d3ee]">
+                HAUPTANSICHT WÄHLEN
               </div>
-              <div className="space-y-0.5 font-mono text-xs">
+              <div className="grid grid-cols-2 gap-1.5 font-mono text-[11px]">
                 {[
-                  { id: 'split', label: '01 // Split Studio (3-Pane)', icon: Layers },
-                  { id: 'canvas', label: '02 // Topology Canvas', icon: Share2 },
-                  { id: 'rrf', label: '03 // RRF & Code Console', icon: Terminal },
-                  { id: 'chapters', label: '04 // 32-Kapitel Rollout', icon: CheckSquare },
-                ].map((item) => {
-                  const Icon = item.icon;
-                  const active = workspaceMode === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => setWorkspaceMode(item.id as any)}
-                      className={`w-full px-2.5 py-2 rounded-r text-left flex items-center gap-2.5 transition-colors cursor-pointer ${
-                        active
-                          ? isWeiss
-                            ? 'bg-[#E2DFD5] text-[#E54D2E] border-l-2 border-[#E54D2E] font-semibold'
-                            : 'bg-[#2c2a22] text-[#E54D2E] border-l-2 border-[#E54D2E] font-semibold'
-                          : isWeiss
-                          ? 'text-[#5C584D] hover:bg-[#F5F3EC] hover:text-[#15130C]'
-                          : 'text-[#9b968a] hover:bg-[#221f18] hover:text-[#e8e2d6]'
-                      }`}
-                    >
-                      <Icon className="w-3.5 h-3.5 shrink-0" />
-                      <span className="truncate">{item.label}</span>
-                    </button>
-                  );
-                })}
+                  { id: 'station', label: 'Central (45)' },
+                  { id: 'split', label: 'Split Studio' },
+                  { id: 'canvas', label: 'Topology' },
+                  { id: 'rrf', label: 'RRF Lab' },
+                  { id: 'chapters', label: '32-Kapitel' },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setWorkspaceMode(tab.id as any);
+                      setIsMobileNavOpen(false);
+                    }}
+                    className={`px-2.5 py-1.5 rounded text-left transition-colors cursor-pointer border ${
+                      workspaceMode === tab.id
+                        ? 'bg-[#34d399] text-[#041311] font-bold border-[#34d399]'
+                        : 'bg-[#0b1715] text-[#7e9ea5] border-[#173037] hover:text-[#ecfdf5]'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Section 2: Working Vault Folder Filter */}
+            {/* Section 0: CENTRAL.STATION 6 BEREICHE / 45 UNTERSEITEN ORDNERBAUM */}
             <div>
-              <div className="px-2 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#9b968a] flex items-center justify-between">
-                <span>VAULT ORDNER FILTER</span>
+              <div className="px-1 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#34d399] flex items-center justify-between">
+                <span>CENTRAL.STATION // BAUM</span>
+                <button
+                  onClick={() => setIsMobileNavOpen(false)}
+                  className="lg:hidden text-[#34d399] hover:text-white font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#112a24] border border-[#34d399]/40 cursor-pointer"
+                >
+                  ✕ Schließen
+                </button>
+              </div>
+              <CentralStationSidebarTree
+                activeSubpageId={workspaceMode === 'station' ? activeStationSubpageId : ''}
+                onSelectSubpage={(id) => {
+                  setActiveStationSubpageId(id);
+                  setWorkspaceMode('station');
+                  setIsMobileNavOpen(false);
+                }}
+              />
+            </div>
+
+            {/* Section 2: Working Vault Folder Tree (Obsidian Style with > chevrons & CANVAS badges) */}
+            <div>
+              <div className="px-2 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#689187] flex items-center justify-between">
+                <span>SECOND.BRAIN // TREE</span>
                 {activeFolderFilter !== 'ALL' && (
                   <button
                     onClick={() => setActiveFolderFilter('ALL')}
-                    className="text-[#E54D2E] hover:underline cursor-pointer"
+                    className="text-[#34d399] hover:underline cursor-pointer"
                   >
                     [RESET]
                   </button>
@@ -732,30 +943,56 @@ export function App() {
                     <button
                       key={folder.id}
                       onClick={() => setActiveFolderFilter(folder.id)}
-                      className={`w-full px-2.5 py-1.5 rounded-r flex items-center justify-between transition-colors cursor-pointer ${
+                      className={`w-full px-2 py-1 rounded-r flex items-center justify-between transition-colors cursor-pointer ${
                         isSelected
                           ? isWeiss
-                            ? 'bg-[#E2DFD5] text-[#E54D2E] border-l-2 border-[#E54D2E] font-semibold'
-                            : 'bg-[#2c2a22] text-[#E54D2E] border-l-2 border-[#E54D2E] font-semibold'
+                            ? 'bg-[#d7e8e2] text-[#06201b] border-l-2 border-[#34d399] font-semibold'
+                            : 'bg-[#112a24] text-[#34d399] border-l-2 border-[#34d399] font-semibold'
                           : isWeiss
-                          ? 'text-[#5C584D] hover:bg-[#F5F3EC] hover:text-[#15130C]'
-                          : 'text-[#9b968a] hover:bg-[#221f18] hover:text-[#e8e2d6]'
+                          ? 'text-[#3b6e63] hover:bg-[#f0f7f5] hover:text-[#06201b]'
+                          : 'text-[#99bab2] hover:bg-[#0e1d1a] hover:text-[#ecfdf5]'
                       }`}
                     >
-                      <span className="flex items-center gap-2 truncate">
-                        <Folder className="w-3.5 h-3.5 shrink-0" />
+                      <span className="flex items-center gap-1.5 truncate">
+                        <span className="text-[#689187] text-[10px]">›</span>
                         <span className="truncate">{folder.label}</span>
                       </span>
-                      <span className="text-[10px] opacity-75">{folder.count}</span>
+                      <span className="text-[10px] text-[#689187]">{folder.count}</span>
                     </button>
                   );
                 })}
+
+                {/* Obsidian CANVAS shortcuts like in AIOS Command Center V3 */}
+                <button
+                  onClick={() => setWorkspaceMode('canvas')}
+                  className="w-full px-2 py-1 rounded-r flex items-center justify-between text-[#99bab2] hover:bg-[#0e1d1a] hover:text-[#ecfdf5] transition-colors cursor-pointer"
+                >
+                  <span className="flex items-center gap-1.5 truncate">
+                    <span className="text-[#689187] text-[10px]">›</span>
+                    <span className="truncate">Second.brain</span>
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#112a24] text-[#34d399] border border-[#1f4a42] font-bold">
+                    CANVAS
+                  </span>
+                </button>
+                <button
+                  onClick={() => setIsGraphOpen(true)}
+                  className="w-full px-2 py-1 rounded-r flex items-center justify-between text-[#99bab2] hover:bg-[#0e1d1a] hover:text-[#ecfdf5] transition-colors cursor-pointer"
+                >
+                  <span className="flex items-center gap-1.5 truncate">
+                    <span className="text-[#689187] text-[10px]">›</span>
+                    <span className="truncate">Agenten-Netz</span>
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/15 text-[#22d3ee] border border-cyan-500/30 font-bold">
+                    CANVAS
+                  </span>
+                </button>
               </div>
             </div>
 
             {/* Section 3: Quick Vault Markdown Files */}
             <div>
-              <div className="px-2 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#9b968a] flex items-center justify-between">
+              <div className="px-2 mb-1.5 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#689187] flex items-center justify-between">
                 <span>INDEXED NOTES ({filteredVaultNotes.length})</span>
                 <span>[.MD]</span>
               </div>
@@ -769,15 +1006,15 @@ export function App() {
                     }}
                     className={`w-full px-2.5 py-1.5 rounded border text-left transition-colors cursor-pointer flex items-center justify-between gap-2 ${
                       isWeiss
-                        ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#E54D2E] text-[#15130C]'
-                        : 'bg-[#15130c] border-[#2E2A20] hover:border-[#E54D2E] text-[#cac6ba]'
+                        ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#34d399] text-[#06201b]'
+                        : 'bg-[#060f0d] border-[#16302b] hover:border-[#34d399] text-[#b2d8ce]'
                     }`}
                   >
                     <span className="flex items-center gap-1.5 truncate">
-                      <FileText className="w-3 h-3 text-[#7bd0ff] shrink-0" />
+                      <FileText className="w-3 h-3 text-[#22d3ee] shrink-0" />
                       <span className="truncate">{note.filename}</span>
                     </span>
-                    <ArrowUpRight className="w-3 h-3 text-[#9b968a] shrink-0" />
+                    <ArrowUpRight className="w-3 h-3 text-[#689187] shrink-0" />
                   </button>
                 ))}
               </div>
@@ -788,38 +1025,49 @@ export function App() {
           <div
             className={`p-3 border-t font-mono text-[11px] space-y-2 ${
               isWeiss
-                ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-                : 'bg-[#15130c] border-[#2E2A20]'
+                ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+                : 'bg-[#060f0d] border-[#16302b]'
             }`}
           >
             <div className="flex items-center justify-between">
-              <span className="text-[#9b968a] uppercase text-[10px]">ROLLOUT FORTSCHRITT</span>
-              <span className="text-[#E54D2E] font-bold">{progressPercent}%</span>
+              <span className="text-[#689187] uppercase text-[10px]">ROLLOUT FORTSCHRITT</span>
+              <span className="text-[#34d399] font-bold">{progressPercent}%</span>
             </div>
             <div
               className={`w-full h-1.5 rounded overflow-hidden ${
-                isWeiss ? 'bg-[#D6D2C4]' : 'bg-[#221f18]'
+                isWeiss ? 'bg-[#bdd6cf]' : 'bg-[#0e1d1a]'
               }`}
             >
               <div
-                className="h-full bg-[#E54D2E] transition-all duration-300"
+                className="h-full bg-[#34d399] transition-all duration-300"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-[10px] text-[#9b968a]">
-              <span>sqlite-vec v0.1.9</span>
-              <span className="text-emerald-500">● READY</span>
+            <div className="flex items-center justify-between text-[10px] text-[#689187]">
+              <span>VPS · SASCHA-KRUSS-1</span>
+              <span className="text-[#34d399]">● 62% RAM</span>
             </div>
           </div>
         </aside>
 
         {/* CENTER 12-COLUMN WORKSPACE */}
-        {workspaceMode === 'chapters' ? (
+        {workspaceMode === 'station' ? (
+          <main className="flex-1 overflow-y-auto p-2.5 sm:p-4 md:p-5 bg-[#080d0f] w-full max-w-full">
+            <CentralStationSubpageRenderer
+              activeSubpageId={activeStationSubpageId}
+              onSelectSubpage={(id) => {
+                setActiveStationSubpageId(id);
+                setWorkspaceMode('station');
+              }}
+              onOpenHybridSearch={() => setIsSimulatorOpen(true)}
+            />
+          </main>
+        ) : workspaceMode === 'chapters' ? (
           /* FULL 32-CHAPTER MATRIX VIEW */
-          <main className="flex-1 overflow-y-auto p-5 space-y-5">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4 border-[#2E2A20]">
+          <main className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4 sm:space-y-5 w-full">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4 border-[#16302b]">
               <div>
-                <div className="text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#E54D2E]">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#34d399]">
                   [ROLLOUT MATRIX // BLAKE CROSLEY 2026 LEITFADEN]
                 </div>
                 <h1 className="text-xl font-display font-bold uppercase tracking-tight mt-0.5">
@@ -829,7 +1077,7 @@ export function App() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsChecklistOpen(true)}
-                  className="px-3 py-1.5 rounded text-xs font-mono font-semibold bg-[#E54D2E] text-[#F5F3EC] hover:bg-[#ff5c3d] cursor-pointer"
+                  className="px-3 py-1.5 rounded text-xs font-mono font-semibold bg-[#34d399] text-[#041311] hover:bg-[#10b981] cursor-pointer"
                 >
                   ALS .MD EXPORTIEREN / VOLLBILD
                 </button>
@@ -847,15 +1095,15 @@ export function App() {
                     key={phase}
                     className={`rounded border p-4 flex flex-col justify-between ${
                       isWeiss
-                        ? 'bg-[#EBE8DF]/70 border-[#D6D2C4]'
-                        : 'bg-[#1e1b14] border-[#2E2A20]'
+                        ? 'bg-[#e4f0ec]/70 border-[#bdd6cf]'
+                        : 'bg-[#0b1715] border-[#16302b]'
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between gap-2 pb-2.5 mb-3 border-b border-[#2E2A20]">
+                      <div className="flex items-center justify-between gap-2 pb-2.5 mb-3 border-b border-[#16302b]">
                         <div>
                           <h2 className="font-display font-bold text-sm uppercase">{phase}</h2>
-                          <span className="text-[11px] font-mono text-[#9b968a]">
+                          <span className="text-[11px] font-mono text-[#689187]">
                             {phaseDone} von {phaseTasks.length} Kapiteln abgeschlossen
                           </span>
                         </div>
@@ -863,8 +1111,8 @@ export function App() {
                           onClick={() => handleBatchTogglePhase(phase, !allDone)}
                           className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold border flex items-center gap-1.5 cursor-pointer ${
                             allDone
-                              ? 'bg-[#221f18] text-[#9b968a] border-[#2E2A20]'
-                              : 'bg-[#E54D2E] text-[#F5F3EC] border-[#E54D2E]'
+                              ? 'bg-[#0e1d1a] text-[#689187] border-[#16302b]'
+                              : 'bg-[#34d399] text-[#041311] border-[#34d399]'
                           }`}
                         >
                           {allDone ? (
@@ -892,21 +1140,21 @@ export function App() {
                                   ? 'bg-emerald-950/5 border-emerald-600/30'
                                   : 'bg-emerald-950/15 border-emerald-500/30'
                                 : isWeiss
-                                ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#E54D2E]'
-                                : 'bg-[#15130c] border-[#2E2A20] hover:border-[#E54D2E]'
+                                ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#34d399]'
+                                : 'bg-[#07100e] border-[#16302b] hover:border-[#34d399]'
                             }`}
                           >
                             {task.completed ? (
-                              <CheckSquare className="w-4 h-4 text-[#E54D2E] shrink-0 mt-0.5" />
+                              <CheckSquare className="w-4 h-4 text-[#34d399] shrink-0 mt-0.5" />
                             ) : (
-                              <Square className="w-4 h-4 text-[#9b968a] shrink-0 mt-0.5" />
+                              <Square className="w-4 h-4 text-[#689187] shrink-0 mt-0.5" />
                             )}
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center justify-between gap-2 font-mono text-[11px]">
-                                <span className="font-bold text-[#E54D2E]">
+                                <span className="font-bold text-[#34d399]">
                                   KAP. {String(task.chapterNumber).padStart(2, '0')}
                                 </span>
-                                <span className="text-[#7bd0ff] truncate">{task.filename}</span>
+                                <span className="text-[#22d3ee] truncate">{task.filename}</span>
                               </div>
                               <div
                                 className={`text-xs font-display font-bold mt-0.5 ${
@@ -935,16 +1183,16 @@ export function App() {
                   workspaceMode === 'rrf' ? 'col-span-12 lg:col-span-8' : 'col-span-12 lg:col-span-4'
                 } border-r flex flex-col overflow-hidden ${
                   isWeiss
-                    ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-                    : 'bg-[#15130c] border-[#2E2A20]'
+                    ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+                    : 'bg-[#07100e] border-[#16302b]'
                 }`}
               >
                 {/* Console Header Tabs */}
                 <div
                   className={`h-10 px-3 border-b flex items-center justify-between shrink-0 ${
                     isWeiss
-                      ? 'bg-[#EBE8DF] border-[#D6D2C4]'
-                      : 'bg-[#221f18] border-[#2E2A20]'
+                      ? 'bg-[#e4f0ec] border-[#bdd6cf]'
+                      : 'bg-[#0e1d1a] border-[#16302b]'
                   }`}
                 >
                   <div className="flex items-center gap-1">
@@ -952,8 +1200,8 @@ export function App() {
                       onClick={() => setLeftConsoleTab('rrf')}
                       className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold flex items-center gap-1.5 cursor-pointer ${
                         leftConsoleTab === 'rrf'
-                          ? 'bg-[#E54D2E] text-[#F5F3EC]'
-                          : 'text-[#9b968a] hover:text-[#e8e2d6]'
+                          ? 'bg-[#34d399] text-[#041311]'
+                          : 'text-[#689187] hover:text-[#ecfdf5]'
                       }`}
                     >
                       <Cpu className="w-3 h-3" />
@@ -963,8 +1211,8 @@ export function App() {
                       onClick={() => setLeftConsoleTab('code')}
                       className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold flex items-center gap-1.5 cursor-pointer ${
                         leftConsoleTab === 'code'
-                          ? 'bg-[#E54D2E] text-[#F5F3EC]'
-                          : 'text-[#9b968a] hover:text-[#e8e2d6]'
+                          ? 'bg-[#34d399] text-[#041311]'
+                          : 'text-[#689187] hover:text-[#ecfdf5]'
                       }`}
                     >
                       <Code className="w-3 h-3" />
@@ -972,7 +1220,7 @@ export function App() {
                     </button>
                   </div>
 
-                  <span className="text-[10px] font-mono text-[#7bd0ff]">
+                  <span className="text-[10px] font-mono text-[#22d3ee]">
                     k = {kParam}
                   </span>
                 </div>
@@ -982,12 +1230,12 @@ export function App() {
                   <div className="flex-1 overflow-y-auto p-3.5 space-y-3.5">
                     {/* Search Input */}
                     <div>
-                      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.12em] text-[#9b968a] mb-1">
+                      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.12em] text-[#689187] mb-1">
                         <span>HYBRID QUERY (FTS5 BM25 + VEC0 KNN)</span>
                         <span>[CTRL+K]</span>
                       </div>
                       <div className="relative">
-                        <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#9b968a]" />
+                        <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#689187]" />
                         <input
                           ref={searchInputRef}
                           type="text"
@@ -1005,8 +1253,8 @@ export function App() {
                           aria-label="Hybrid Retrieval Suchanfrage"
                           className={`w-full pl-8 pr-3 py-1.5 rounded text-xs font-mono outline-none border transition-colors ${
                             isWeiss
-                              ? 'bg-[#EBE8DF] border-[#D6D2C4] text-[#15130C] focus:border-[#E54D2E]'
-                              : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6] focus:border-[#E54D2E]'
+                              ? 'bg-[#e4f0ec] border-[#bdd6cf] text-[#06201b] focus:border-[#34d399]'
+                              : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5] focus:border-[#34d399]'
                           }`}
                         />
                       </div>
@@ -1020,10 +1268,10 @@ export function App() {
                               onClick={() => setRrfQuery(preset)}
                               className={`px-2 py-0.5 rounded text-[10px] font-mono border cursor-pointer transition-colors ${
                                 rrfQuery === preset
-                                  ? 'bg-[#E54D2E]/20 text-[#E54D2E] border-[#E54D2E]'
+                                  ? 'bg-[#34d399]/20 text-[#34d399] border-[#34d399]'
                                   : isWeiss
-                                  ? 'bg-[#EBE8DF] border-[#D6D2C4] text-[#5C584D]'
-                                  : 'bg-[#1e1b14] border-[#2E2A20] text-[#9b968a] hover:text-[#e8e2d6]'
+                                  ? 'bg-[#e4f0ec] border-[#bdd6cf] text-[#3b6e63]'
+                                  : 'bg-[#0b1715] border-[#16302b] text-[#689187] hover:text-[#ecfdf5]'
                               }`}
                             >
                               {preset}
@@ -1037,14 +1285,14 @@ export function App() {
                     <div
                       className={`p-3 rounded border grid grid-cols-3 gap-2.5 font-mono text-[11px] ${
                         isWeiss
-                          ? 'bg-[#EBE8DF]/70 border-[#D6D2C4]'
-                          : 'bg-[#1e1b14] border-[#2E2A20]'
+                          ? 'bg-[#e4f0ec]/70 border-[#bdd6cf]'
+                          : 'bg-[#0b1715] border-[#16302b]'
                       }`}
                     >
                       <div>
                         <div className="flex justify-between text-[10px]">
-                          <span className="text-[#9b968a]">RRF k:</span>
-                          <span className="text-[#E54D2E] font-bold">{kParam}</span>
+                          <span className="text-[#689187]">RRF k:</span>
+                          <span className="text-[#34d399] font-bold">{kParam}</span>
                         </div>
                         <input
                           type="range"
@@ -1053,13 +1301,13 @@ export function App() {
                           value={kParam}
                           onChange={(e) => setKParam(Number(e.target.value))}
                           aria-label="RRF Konstante k"
-                          className="w-full accent-[#E54D2E] cursor-pointer mt-1"
+                          className="w-full accent-[#34d399] cursor-pointer mt-1"
                         />
                       </div>
 
                       <div>
                         <div className="flex justify-between text-[10px]">
-                          <span className="text-[#9b968a]">BM25:</span>
+                          <span className="text-[#689187]">BM25:</span>
                           <span className="text-amber-500 font-bold">{bm25Weight.toFixed(1)}x</span>
                         </div>
                         <input
@@ -1076,8 +1324,8 @@ export function App() {
 
                       <div>
                         <div className="flex justify-between text-[10px]">
-                          <span className="text-[#9b968a]">VEC0:</span>
-                          <span className="text-[#7bd0ff] font-bold">{vecWeight.toFixed(1)}x</span>
+                          <span className="text-[#689187]">VEC0:</span>
+                          <span className="text-[#22d3ee] font-bold">{vecWeight.toFixed(1)}x</span>
                         </div>
                         <input
                           type="range"
@@ -1087,14 +1335,14 @@ export function App() {
                           value={vecWeight}
                           onChange={(e) => setVecWeight(Number(e.target.value))}
                           aria-label="Vektor Gewichtung"
-                          className="w-full accent-[#7bd0ff] cursor-pointer mt-1"
+                          className="w-full accent-[#22d3ee] cursor-pointer mt-1"
                         />
                       </div>
                     </div>
 
                     {/* Ranked Results Stream */}
                     <div className="space-y-2">
-                      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.12em] text-[#9b968a]">
+                      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.12em] text-[#689187]">
                         <span>FUSED CHUNKS ({rankedRrfChunks.length})</span>
                         <span className="text-emerald-500">CAP: 1.840 / 4.000 TOK</span>
                       </div>
@@ -1106,11 +1354,11 @@ export function App() {
                           className={`p-3 rounded border transition-colors cursor-pointer ${
                             index === 0
                               ? isWeiss
-                                ? 'bg-[#EBE8DF] border-[#E54D2E]'
-                                : 'bg-[#1e1b14] border-[#E54D2E]'
+                                ? 'bg-[#e4f0ec] border-[#34d399]'
+                                : 'bg-[#0b1715] border-[#34d399]'
                               : isWeiss
-                              ? 'bg-[#EBE8DF]/50 border-[#D6D2C4] hover:border-[#15130C]'
-                              : 'bg-[#1e1b14] border-[#2E2A20] hover:border-[#4c453a]'
+                              ? 'bg-[#e4f0ec]/50 border-[#bdd6cf] hover:border-[#06201b]'
+                              : 'bg-[#0b1715] border-[#16302b] hover:border-[#1f423b]'
                           }`}
                         >
                           <div className="flex items-center justify-between gap-2">
@@ -1118,8 +1366,8 @@ export function App() {
                               <span
                                 className={`px-1.5 py-0.5 rounded font-mono font-bold text-[10px] ${
                                   index === 0
-                                    ? 'bg-[#E54D2E] text-[#F5F3EC]'
-                                    : 'bg-[#221f18] text-[#cac6ba] border border-[#2E2A20]'
+                                    ? 'bg-[#34d399] text-[#041311]'
+                                    : 'bg-[#0e1d1a] text-[#b2d8ce] border border-[#16302b]'
                                 }`}
                               >
                                 #{index + 1}
@@ -1133,30 +1381,30 @@ export function App() {
                             </span>
                           </div>
 
-                          <div className="text-[11px] font-mono text-[#7bd0ff] mt-1">
+                          <div className="text-[11px] font-mono text-[#22d3ee] mt-1">
                             {chunk.section}
                           </div>
 
                           <p
                             className={`text-[11px] font-mono mt-1.5 line-clamp-2 ${
-                              isWeiss ? 'text-[#5C584D]' : 'text-[#cac6ba]'
+                              isWeiss ? 'text-[#3b6e63]' : 'text-[#b2d8ce]'
                             }`}
                           >
                             {chunk.snippet}
                           </p>
 
-                          <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-[#2E2A20]/60 text-[10px] font-mono text-[#9b968a]">
+                          <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-[#16302b]/60 text-[10px] font-mono text-[#689187]">
                             <div className="flex items-center gap-3">
                               <span>
                                 BM25: <strong className="text-amber-500">#{chunk.bm25Rank}</strong>
                               </span>
                               <span>
-                                VEC0: <strong className="text-[#7bd0ff]">#{chunk.vecRank}</strong>
+                                VEC0: <strong className="text-[#22d3ee]">#{chunk.vecRank}</strong>
                               </span>
                               <span>{chunk.tokens} Tok</span>
                             </div>
                             {chunk.isDualHit && (
-                              <span className="text-[#E54D2E] font-bold">★ DUAL HIT</span>
+                              <span className="text-[#34d399] font-bold">★ DUAL HIT</span>
                             )}
                           </div>
                         </div>
@@ -1166,11 +1414,11 @@ export function App() {
                 ) : (
                   /* CODE / .INDEXIGNORE DSL VIEW WITH LINE NUMBERS */
                   <div className="flex-1 overflow-y-auto p-3.5 font-mono text-xs space-y-3">
-                    <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.12em] text-[#9b968a]">
+                    <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.12em] text-[#689187]">
                       <span>hybrid_retriever.py // RRF FUSION & .INDEXIGNORE</span>
                       <button
                         onClick={() => handleOpenNoteByName('.indexignore')}
-                        className="text-[#E54D2E] hover:underline cursor-pointer"
+                        className="text-[#34d399] hover:underline cursor-pointer"
                       >
                         [.indexignore bearbeiten]
                       </button>
@@ -1178,8 +1426,8 @@ export function App() {
                     <pre
                       className={`p-3 rounded border overflow-x-auto leading-relaxed text-[11px] ${
                         isWeiss
-                          ? 'bg-[#15130C] text-[#e8e2d6] border-[#15130C]'
-                          : 'bg-[#100e07] text-[#e8e2d6] border-[#2E2A20]'
+                          ? 'bg-[#06201b] text-[#ecfdf5] border-[#06201b]'
+                          : 'bg-[#050a09] text-[#ecfdf5] border-[#16302b]'
                       }`}
                     >
                       <code>{`01  from model2vec import StaticModel
@@ -1209,19 +1457,19 @@ export function App() {
                 <div
                   className={`h-36 border-t flex flex-col shrink-0 ${
                     isWeiss
-                      ? 'bg-[#EBE8DF] border-[#D6D2C4]'
-                      : 'bg-[#100e07] border-[#2E2A20]'
+                      ? 'bg-[#e4f0ec] border-[#bdd6cf]'
+                      : 'bg-[#050a09] border-[#16302b]'
                   }`}
                 >
                   <div
                     className={`px-3 py-1.5 border-b flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.12em] ${
                       isWeiss
-                        ? 'bg-[#E2DFD5] border-[#D6D2C4] text-[#15130C]'
-                        : 'bg-[#1e1b14] border-[#2E2A20] text-[#9b968a]'
+                        ? 'bg-[#d7e8e2] border-[#bdd6cf] text-[#06201b]'
+                        : 'bg-[#0b1715] border-[#16302b] text-[#689187]'
                     }`}
                   >
                     <span className="flex items-center gap-1.5 font-bold">
-                      <Terminal className="w-3 h-3 text-[#E54D2E]" />
+                      <Terminal className="w-3 h-3 text-[#34d399]" />
                       <span>STDIO // HOOK EXECUTION LOG</span>
                     </span>
                     <span className="text-emerald-500">● STREAMING</span>
@@ -1233,9 +1481,9 @@ export function App() {
                         className={
                           i === 0
                             ? isWeiss
-                              ? 'text-[#15130C] font-semibold'
-                              : 'text-[#e8e2d6]'
-                            : 'text-[#9b968a]'
+                              ? 'text-[#06201b] font-semibold'
+                              : 'text-[#ecfdf5]'
+                            : 'text-[#689187]'
                         }
                       >
                         {log}
@@ -1246,27 +1494,84 @@ export function App() {
               </section>
             )}
 
-            {/* PANEL 2: CENTER 2D INTERACTIVE NODE TOPOLOGY CANVAS */}
+            {/* PANEL 2: CENTER 2.5D FUSELAB SPHERE GRAPH / 2D TOPOLOGY CANVAS */}
             {workspaceMode !== 'rrf' && (
               <section
                 ref={canvasRef}
-                onPointerMove={handleCanvasPointerMove}
-                onPointerUp={handleCanvasPointerUp}
+                onPointerMove={canvasEngine === 'cards' ? handleCanvasPointerMove : undefined}
+                onPointerUp={canvasEngine === 'cards' ? handleCanvasPointerUp : undefined}
                 className={`${
                   workspaceMode === 'canvas' ? 'col-span-12 lg:col-span-9' : 'col-span-12 lg:col-span-5'
                 } relative overflow-hidden flex flex-col border-r ${
                   isWeiss
-                    ? 'bg-[#F5F3EC] tectonic-grid-paper border-[#D6D2C4]'
-                    : 'bg-[#15130c] tectonic-grid-dark border-[#2E2A20]'
+                    ? 'bg-[#f0f7f5] tectonic-grid-paper border-[#bdd6cf]'
+                    : 'bg-[#07100e] tectonic-grid-dark border-[#16302b]'
                 }`}
               >
-                {/* Top Floating Canvas HUD Toolbar */}
-                <div className="p-3 flex flex-wrap items-center justify-between gap-2 z-10 pointer-events-none">
+                {/* Engine Mode Sub-Header (2.5D Sphere HUD vs 2D Blueprint Cards) */}
+                <div
+                  className={`h-10 px-3 border-b flex items-center justify-between gap-2 shrink-0 z-30 ${
+                    isWeiss
+                      ? 'bg-[#e4f0ec] border-[#bdd6cf]'
+                      : 'bg-[#071519] border-sky-500/25'
+                  }`}
+                >
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setCanvasEngine('fuselab')}
+                      className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold flex items-center gap-1.5 cursor-pointer transition-all ${
+                        canvasEngine === 'fuselab'
+                          ? 'bg-gradient-to-r from-sky-500 to-emerald-500 text-slate-950 shadow-[0_0_12px_rgba(16,185,129,0.35)]'
+                          : 'text-[#689187] hover:text-[#ecfdf5]'
+                      }`}
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>2.5D SPHERE HUD (FUSELAB)</span>
+                    </button>
+                    <button
+                      onClick={() => setCanvasEngine('cards')}
+                      className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold flex items-center gap-1.5 cursor-pointer transition-all ${
+                        canvasEngine === 'cards'
+                          ? 'bg-[#34d399] text-[#041311]'
+                          : 'text-[#689187] hover:text-[#ecfdf5]'
+                      }`}
+                    >
+                      <Layers className="w-3 h-3" />
+                      <span>2D BLUEPRINT CARDS</span>
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => setIsGraphOpen(true)}
+                    className="px-2.5 py-1 rounded text-[10px] font-mono font-bold bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border border-sky-400/30 flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    <Share2 className="w-3 h-3" />
+                    <span>[VOLLBILD GRAPH]</span>
+                  </button>
+                </div>
+
+                {canvasEngine === 'fuselab' ? (
+                  <div className="flex-1 relative overflow-hidden">
+                    <FuselabGraphCanvas
+                      themeMode={themeMode}
+                      compact={workspaceMode === 'split'}
+                      onSelectNode={(nodeName, linkedNote) => {
+                        setRrfQuery(nodeName);
+                        if (linkedNote) {
+                          handleOpenNoteByName(linkedNote);
+                        }
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    {/* Top Floating Canvas HUD Toolbar */}
+                    <div className="p-3 flex flex-wrap items-center justify-between gap-2 z-10 pointer-events-none">
                   <div
                     className={`pointer-events-auto flex items-center gap-1 p-1 rounded border font-mono text-[11px] ${
                       isWeiss
-                        ? 'bg-[#EBE8DF] border-[#D6D2C4]'
-                        : 'bg-[#1e1b14] border-[#2E2A20]'
+                        ? 'bg-[#e4f0ec] border-[#bdd6cf]'
+                        : 'bg-[#0b1715] border-[#16302b]'
                     }`}
                   >
                     {[
@@ -1280,10 +1585,10 @@ export function App() {
                         onClick={() => setCanvasLayerFilter(layer.id as any)}
                         className={`px-2 py-1 rounded text-[10px] font-semibold transition-colors cursor-pointer ${
                           canvasLayerFilter === layer.id
-                            ? 'bg-[#E54D2E] text-[#F5F3EC]'
+                            ? 'bg-[#34d399] text-[#041311]'
                             : isWeiss
-                            ? 'text-[#5C584D] hover:text-[#15130C]'
-                            : 'text-[#9b968a] hover:text-[#e8e2d6]'
+                            ? 'text-[#3b6e63] hover:text-[#06201b]'
+                            : 'text-[#689187] hover:text-[#ecfdf5]'
                         }`}
                       >
                         {layer.label}
@@ -1294,8 +1599,8 @@ export function App() {
                   <div
                     className={`pointer-events-auto flex items-center gap-2 px-2.5 py-1 rounded border font-mono text-[10px] ${
                       isWeiss
-                        ? 'bg-[#EBE8DF] border-[#D6D2C4] text-[#15130C]'
-                        : 'bg-[#1e1b14] border-[#2E2A20] text-[#cac6ba]'
+                        ? 'bg-[#e4f0ec] border-[#bdd6cf] text-[#06201b]'
+                        : 'bg-[#0b1715] border-[#16302b] text-[#b2d8ce]'
                     }`}
                   >
                     <span>
@@ -1303,7 +1608,7 @@ export function App() {
                     </span>
                     <button
                       onClick={() => setCanvasNodes(INITIAL_CANVAS_NODES)}
-                      className="text-[#E54D2E] hover:underline cursor-pointer ml-1"
+                      className="text-[#34d399] hover:underline cursor-pointer ml-1"
                       title="Knoten-Positionen zurücksetzen"
                     >
                       [RESET]
@@ -1322,7 +1627,7 @@ export function App() {
                         canvasNodes[1].y + 45
                       }, ${canvasNodes[1].x} ${canvasNodes[1].y + 45}`}
                       fill="none"
-                      stroke="#E54D2E"
+                      stroke="#34d399"
                       strokeWidth="1.75"
                     />
                     {/* Wire 2: Vault -> vec0 */}
@@ -1333,7 +1638,7 @@ export function App() {
                         canvasNodes[2].y + 45
                       }, ${canvasNodes[2].x} ${canvasNodes[2].y + 45}`}
                       fill="none"
-                      stroke="#7bd0ff"
+                      stroke="#22d3ee"
                       strokeWidth="1.75"
                     />
                     {/* Wire 3: FTS5 -> RRF */}
@@ -1344,7 +1649,7 @@ export function App() {
                         canvasNodes[3].y + 35
                       }, ${canvasNodes[3].x} ${canvasNodes[3].y + 35}`}
                       fill="none"
-                      stroke="#E54D2E"
+                      stroke="#34d399"
                       strokeWidth="1.75"
                     />
                     {/* Wire 4: vec0 -> RRF */}
@@ -1355,7 +1660,7 @@ export function App() {
                         canvasNodes[3].y + 60
                       }, ${canvasNodes[3].x} ${canvasNodes[3].y + 60}`}
                       fill="none"
-                      stroke="#7bd0ff"
+                      stroke="#22d3ee"
                       strokeWidth="1.75"
                     />
                     {/* Wire 5: RRF -> MCP Server */}
@@ -1374,7 +1679,7 @@ export function App() {
                         canvasNodes[4].x
                       } ${canvasNodes[4].y + 45}`}
                       fill="none"
-                      stroke="#E54D2E"
+                      stroke="#34d399"
                       strokeWidth="1.75"
                     />
                   </svg>
@@ -1392,15 +1697,15 @@ export function App() {
                         className={`absolute top-0 left-0 w-56 rounded border p-3 cursor-grab active:cursor-grabbing transition-shadow ${
                           isSelected
                             ? isWeiss
-                              ? 'bg-[#EBE8DF] border-[#E54D2E] ring-1 ring-[#E54D2E]'
-                              : 'bg-[#221f18] border-[#E54D2E] ring-1 ring-[#E54D2E]'
+                              ? 'bg-[#e4f0ec] border-[#34d399] ring-1 ring-[#34d399]'
+                              : 'bg-[#0e1d1a] border-[#34d399] ring-1 ring-[#34d399]'
                             : isWeiss
-                            ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#15130C]'
-                            : 'bg-[#1e1b14] border-[#2E2A20] hover:border-[#4c453a]'
+                            ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#06201b]'
+                            : 'bg-[#0b1715] border-[#16302b] hover:border-[#1f423b]'
                         }`}
                       >
                         <div className="flex items-center justify-between gap-1 text-[9px] font-mono uppercase tracking-wider">
-                          <span className="text-[#E54D2E] font-bold">{node.code}</span>
+                          <span className="text-[#34d399] font-bold">{node.code}</span>
                           <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-500 border border-emerald-500/30">
                             {node.status}
                           </span>
@@ -1409,34 +1714,36 @@ export function App() {
                         <div className="font-display font-bold text-xs mt-1 truncate">
                           {node.title}
                         </div>
-                        <div className="text-[10px] font-mono text-[#9b968a] truncate mt-0.5">
+                        <div className="text-[10px] font-mono text-[#689187] truncate mt-0.5">
                           {node.subtitle}
                         </div>
 
                         <div
                           className={`mt-2 pt-1.5 border-t flex items-center justify-between text-[10px] font-mono ${
-                            isWeiss ? 'border-[#D6D2C4]' : 'border-[#2E2A20]'
+                            isWeiss ? 'border-[#bdd6cf]' : 'border-[#16302b]'
                           }`}
                         >
-                          <span className="text-[#9b968a]">{node.metricLabel}:</span>
-                          <span className="text-[#7bd0ff] font-semibold">{node.metricValue}</span>
+                          <span className="text-[#689187]">{node.metricLabel}:</span>
+                          <span className="text-[#22d3ee] font-semibold">{node.metricValue}</span>
                         </div>
                       </div>
                     );
                   })}
                 </div>
 
-                {/* Bottom Canvas Status Bar & Minimap Indicator */}
-                <div
-                  className={`h-9 px-3 border-t flex items-center justify-between text-[10px] font-mono ${
-                    isWeiss
-                      ? 'bg-[#EBE8DF] border-[#D6D2C4] text-[#5C584D]'
-                      : 'bg-[#1e1b14] border-[#2E2A20] text-[#9b968a]'
-                  }`}
-                >
-                  <span>DRAG NODES TO RE-LAYOUT TOPOLOGY · CLICK NODE TO INSPECT</span>
-                  <span className="text-[#7bd0ff]">GRID: 20PX RADIAL DRAFTING</span>
-                </div>
+                    {/* Bottom Canvas Status Bar & Minimap Indicator */}
+                    <div
+                      className={`h-9 px-3 border-t flex items-center justify-between text-[10px] font-mono ${
+                        isWeiss
+                          ? 'bg-[#e4f0ec] border-[#bdd6cf] text-[#3b6e63]'
+                          : 'bg-[#0b1715] border-[#16302b] text-[#689187]'
+                      }`}
+                    >
+                      <span>DRAG NODES TO RE-LAYOUT TOPOLOGY · CLICK NODE TO INSPECT</span>
+                      <span className="text-[#22d3ee]">GRID: 20PX RADIAL DRAFTING</span>
+                    </div>
+                  </>
+                )}
               </section>
             )}
 
@@ -1445,15 +1752,15 @@ export function App() {
               className={`${
                 workspaceMode === 'rrf' ? 'col-span-12 lg:col-span-4' : 'col-span-12 lg:col-span-3'
               } flex flex-col overflow-hidden ${
-                isWeiss ? 'bg-[#EBE8DF]' : 'bg-[#1e1b14]'
+                isWeiss ? 'bg-[#e4f0ec]' : 'bg-[#0b1715]'
               }`}
             >
               {/* Inspector Header & Sub-Tabs */}
               <div
                 className={`h-10 px-3 border-b flex items-center justify-between shrink-0 ${
                   isWeiss
-                    ? 'bg-[#E2DFD5] border-[#D6D2C4]'
-                    : 'bg-[#221f18] border-[#2E2A20]'
+                    ? 'bg-[#d7e8e2] border-[#bdd6cf]'
+                    : 'bg-[#0e1d1a] border-[#16302b]'
                 }`}
               >
                 <div className="flex items-center gap-1">
@@ -1467,10 +1774,10 @@ export function App() {
                       onClick={() => setRightInspectorTab(t.id as any)}
                       className={`px-2 py-1 rounded text-[10px] font-mono font-semibold cursor-pointer transition-colors ${
                         rightInspectorTab === t.id
-                          ? 'bg-[#E54D2E] text-[#F5F3EC]'
+                          ? 'bg-[#34d399] text-[#041311]'
                           : isWeiss
-                          ? 'text-[#5C584D] hover:text-[#15130C]'
-                          : 'text-[#9b968a] hover:text-[#e8e2d6]'
+                          ? 'text-[#3b6e63] hover:text-[#06201b]'
+                          : 'text-[#689187] hover:text-[#ecfdf5]'
                       }`}
                     >
                       {t.label}
@@ -1491,33 +1798,33 @@ export function App() {
                     <div
                       className={`p-3.5 rounded border space-y-2.5 ${
                         isWeiss
-                          ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-                          : 'bg-[#15130c] border-[#2E2A20]'
+                          ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+                          : 'bg-[#07100e] border-[#16302b]'
                       }`}
                     >
                       <div className="flex items-center justify-between text-[10px] font-mono">
-                        <span className="text-[#E54D2E] font-bold">{selectedCanvasNode.code}</span>
+                        <span className="text-[#34d399] font-bold">{selectedCanvasNode.code}</span>
                         <span className="text-emerald-500">● {selectedCanvasNode.status}</span>
                       </div>
                       <h2 className="font-display font-bold text-base">
                         {selectedCanvasNode.title}
                       </h2>
-                      <p className="text-xs font-mono text-[#9b968a]">
+                      <p className="text-xs font-mono text-[#689187]">
                         {selectedCanvasNode.subtitle}
                       </p>
 
-                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#2E2A20]/60 font-mono text-[11px]">
+                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#16302b]/60 font-mono text-[11px]">
                         <div>
-                          <div className="text-[9px] text-[#9b968a]">KOORDINATEN</div>
+                          <div className="text-[9px] text-[#689187]">KOORDINATEN</div>
                           <div>
                             X: {selectedCanvasNode.x} · Y: {selectedCanvasNode.y}
                           </div>
                         </div>
                         <div>
-                          <div className="text-[9px] text-[#9b968a]">
+                          <div className="text-[9px] text-[#689187]">
                             {selectedCanvasNode.metricLabel}
                           </div>
-                          <div className="text-[#7bd0ff] font-bold">
+                          <div className="text-[#22d3ee] font-bold">
                             {selectedCanvasNode.metricValue}
                           </div>
                         </div>
@@ -1528,7 +1835,7 @@ export function App() {
                           onClick={() =>
                             handleOpenNoteByName(selectedCanvasNode.linkedNoteFilename!)
                           }
-                          className="w-full mt-2 py-2 rounded text-xs font-mono font-semibold bg-[#E54D2E] hover:bg-[#ff5c3d] text-[#F5F3EC] flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                          className="w-full mt-2 py-2 rounded text-xs font-mono font-semibold bg-[#34d399] hover:bg-[#10b981] text-[#041311] flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                         >
                           <FileText className="w-3.5 h-3.5" />
                           <span>SPEZIFIKATIONS-NOTIZ ÖFFNEN</span>
@@ -1540,48 +1847,48 @@ export function App() {
                     <div
                       className={`p-3.5 rounded border space-y-2 font-mono text-xs ${
                         isWeiss
-                          ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-                          : 'bg-[#15130c] border-[#2E2A20]'
+                          ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+                          : 'bg-[#07100e] border-[#16302b]'
                       }`}
                     >
-                      <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#9b968a]">
+                      <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#689187]">
                         SYSTEM TELEMETRY // 2026 SPEC
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#2E2A20]/50">
-                        <span className="text-[#9b968a]">MCP Package:</span>
+                      <div className="flex justify-between py-1 border-b border-[#16302b]/50">
+                        <span className="text-[#689187]">MCP Package:</span>
                         <span className="text-emerald-500 font-semibold">
                           obsidian-mcp (STDIO)
                         </span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#2E2A20]/50">
-                        <span className="text-[#9b968a]">Claude Config:</span>
-                        <span className="text-[#7bd0ff]">~/.claude.json</span>
+                      <div className="flex justify-between py-1 border-b border-[#16302b]/50">
+                        <span className="text-[#689187]">Claude Config:</span>
+                        <span className="text-[#22d3ee]">~/.claude.json</span>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#2E2A20]/50">
-                        <span className="text-[#9b968a]">Chunking:</span>
+                      <div className="flex justify-between py-1 border-b border-[#16302b]/50">
+                        <span className="text-[#689187]">Chunking:</span>
                         <span>Heading-First (~400 Tok)</span>
                       </div>
                       <div className="flex justify-between py-1">
-                        <span className="text-[#9b968a]">Aktiver Ordner:</span>
-                        <span className="text-[#E54D2E] font-bold">{activeFolderFilter}</span>
+                        <span className="text-[#689187]">Aktiver Ordner:</span>
+                        <span className="text-[#34d399] font-bold">{activeFolderFilter}</span>
                       </div>
                     </div>
 
                     {/* Quick Action Matrix */}
                     <div className="space-y-1.5 font-mono text-xs">
-                      <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#9b968a]">
+                      <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#689187]">
                         DEEP-DIVE WERKZEUGE
                       </div>
                       <button
                         onClick={() => setIsChecklistOpen(true)}
                         className={`w-full p-2.5 rounded border text-left flex items-center justify-between cursor-pointer transition-colors ${
                           isWeiss
-                            ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#E54D2E]'
-                            : 'bg-[#15130c] border-[#2E2A20] hover:border-[#E54D2E]'
+                            ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#34d399]'
+                            : 'bg-[#07100e] border-[#16302b] hover:border-[#34d399]'
                         }`}
                       >
                         <span>32-Kapitel Master-Taskliste</span>
-                        <span className="text-[#E54D2E] font-bold">
+                        <span className="text-[#34d399] font-bold">
                           {completedCount}/{totalCount} ›
                         </span>
                       </button>
@@ -1589,19 +1896,19 @@ export function App() {
                         onClick={() => setIsSimulatorOpen(true)}
                         className={`w-full p-2.5 rounded border text-left flex items-center justify-between cursor-pointer transition-colors ${
                           isWeiss
-                            ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#E54D2E]'
-                            : 'bg-[#15130c] border-[#2E2A20] hover:border-[#E54D2E]'
+                            ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#34d399]'
+                            : 'bg-[#07100e] border-[#16302b] hover:border-[#34d399]'
                         }`}
                       >
                         <span>RRF Simulator Vollbild</span>
-                        <span className="text-[#7bd0ff]">k = {kParam} ›</span>
+                        <span className="text-[#22d3ee]">k = {kParam} ›</span>
                       </button>
                       <button
                         onClick={() => setIsAudioOpen(true)}
                         className={`w-full p-2.5 rounded border text-left flex items-center justify-between cursor-pointer transition-colors ${
                           isWeiss
-                            ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#E54D2E]'
-                            : 'bg-[#15130c] border-[#2E2A20] hover:border-[#E54D2E]'
+                            ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#34d399]'
+                            : 'bg-[#07100e] border-[#16302b] hover:border-[#34d399]'
                         }`}
                       >
                         <span>Audio-Erklärung (7 Kapitel)</span>
@@ -1614,7 +1921,7 @@ export function App() {
                 {rightInspectorTab === 'notes' && (
                   <div className="space-y-3">
                     <div className="relative">
-                      <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#9b968a]" />
+                      <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#689187]" />
                       <input
                         type="text"
                         value={noteSearchFilter}
@@ -1623,14 +1930,14 @@ export function App() {
                         aria-label="Notizen filtern"
                         className={`w-full pl-8 pr-3 py-1.5 rounded text-xs font-mono outline-none border ${
                           isWeiss
-                            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] focus:border-[#E54D2E]'
-                            : 'bg-[#15130c] border-[#2E2A20] text-[#e8e2d6] focus:border-[#E54D2E]'
+                            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] focus:border-[#34d399]'
+                            : 'bg-[#07100e] border-[#16302b] text-[#ecfdf5] focus:border-[#34d399]'
                         }`}
                       />
                     </div>
 
                     {filteredVaultNotes.length === 0 ? (
-                      <div className="p-4 text-center font-mono text-xs text-[#9b968a]">
+                      <div className="p-4 text-center font-mono text-xs text-[#689187]">
                         Keine Notizen im Ordner "{activeFolderFilter}" gefunden.
                       </div>
                     ) : (
@@ -1644,15 +1951,15 @@ export function App() {
                             }}
                             className={`p-3 rounded border cursor-pointer transition-colors ${
                               isWeiss
-                                ? 'bg-[#F5F3EC] border-[#D6D2C4] hover:border-[#E54D2E]'
-                                : 'bg-[#15130c] border-[#2E2A20] hover:border-[#E54D2E]'
+                                ? 'bg-[#f0f7f5] border-[#bdd6cf] hover:border-[#34d399]'
+                                : 'bg-[#07100e] border-[#16302b] hover:border-[#34d399]'
                             }`}
                           >
                             <div className="flex items-center justify-between text-[10px] font-mono">
-                              <span className="text-[#E54D2E] font-bold truncate">
+                              <span className="text-[#34d399] font-bold truncate">
                                 {note.filename}
                               </span>
-                              <span className="text-[#7bd0ff] shrink-0">{note.folder}</span>
+                              <span className="text-[#22d3ee] shrink-0">{note.folder}</span>
                             </div>
                             <div className="font-display font-bold text-xs mt-1">
                               {note.title}
@@ -1661,7 +1968,7 @@ export function App() {
                               {note.tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#221f18] text-[#9b968a] border border-[#2E2A20]"
+                                  className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#0e1d1a] text-[#689187] border border-[#16302b]"
                                 >
                                   #{tag}
                                 </span>
@@ -1676,7 +1983,7 @@ export function App() {
 
                 {rightInspectorTab === 'phases' && (
                   <div className="space-y-2.5">
-                    <div className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#9b968a]">
+                    <div className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#689187]">
                       7-PHASEN ROLLOUT & BATCH-STEUERUNG
                     </div>
                     {phasesList.map((phase) => {
@@ -1690,34 +1997,34 @@ export function App() {
                           key={phase}
                           className={`p-3 rounded border space-y-2 ${
                             isWeiss
-                              ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-                              : 'bg-[#15130c] border-[#2E2A20]'
+                              ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+                              : 'bg-[#07100e] border-[#16302b]'
                           }`}
                         >
                           <div className="flex items-center justify-between gap-2">
                             <span className="font-display font-bold text-xs truncate">
                               {phase}
                             </span>
-                            <span className="font-mono text-[10px] text-[#E54D2E] font-bold shrink-0">
+                            <span className="font-mono text-[10px] text-[#34d399] font-bold shrink-0">
                               {pDone}/{pTasks.length}
                             </span>
                           </div>
-                          <div className="w-full h-1.5 rounded bg-[#221f18] overflow-hidden">
+                          <div className="w-full h-1.5 rounded bg-[#0e1d1a] overflow-hidden">
                             <div
-                              className="h-full bg-[#E54D2E] transition-all"
+                              className="h-full bg-[#34d399] transition-all"
                               style={{ width: `${pct}%` }}
                             />
                           </div>
                           <div className="flex items-center justify-between pt-1">
                             <button
                               onClick={() => setIsChecklistOpen(true)}
-                              className="text-[10px] font-mono text-[#7bd0ff] hover:underline cursor-pointer"
+                              className="text-[10px] font-mono text-[#22d3ee] hover:underline cursor-pointer"
                             >
                               Details ›
                             </button>
                             <button
                               onClick={() => handleBatchTogglePhase(phase, !isAllDone)}
-                              className="text-[10px] font-mono text-[#E54D2E] hover:underline cursor-pointer"
+                              className="text-[10px] font-mono text-[#34d399] hover:underline cursor-pointer"
                             >
                               {isAllDone ? '[Phase zurücksetzen]' : '[Phase komplett abhaken]'}
                             </button>

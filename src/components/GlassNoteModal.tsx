@@ -83,31 +83,31 @@ export const GlassNoteModal = ({
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-4xl max-h-[92vh] rounded flex flex-col overflow-hidden border shadow-2xl transition-colors duration-150 ${
           isWeiss
-            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6]'
+            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5]'
         }`}
       >
         {/* Top Header */}
         <div
           className={`px-5 py-4 border-b flex items-center justify-between gap-3 ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-8 h-8 rounded flex items-center justify-center shrink-0 bg-[#E54D2E] text-[#F5F3EC]">
+            <div className="w-8 h-8 rounded flex items-center justify-center shrink-0 bg-[#34d399] text-[#041311]">
               <FileText className="w-4 h-4" />
             </div>
 
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold text-[#E54D2E] truncate">
+                <span className="text-xs font-mono font-bold text-[#34d399] truncate">
                   {note.filename}
                 </span>
                 <span
                   className={`text-[10px] px-1.5 py-0.5 rounded font-mono border ${
                     isWeiss
-                      ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#5C584D]'
-                      : 'bg-[#221f18] border-[#2E2A20] text-[#7bd0ff]'
+                      ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#3b6e63]'
+                      : 'bg-[#0e1d1a] border-[#16302b] text-[#22d3ee]'
                   }`}
                 >
                   {note.folder}
@@ -130,8 +130,8 @@ export const GlassNoteModal = ({
                   onClick={handleCancelEdit}
                   className={`px-2.5 py-1.5 rounded text-xs font-mono flex items-center gap-1.5 border transition-colors cursor-pointer ${
                     isWeiss
-                      ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#5C584D] hover:text-[#15130C]'
-                      : 'bg-[#221f18] border-[#2E2A20] text-[#cac6ba] hover:text-[#e8e2d6]'
+                      ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#3b6e63] hover:text-[#06201b]'
+                      : 'bg-[#0e1d1a] border-[#16302b] text-[#b2d8ce] hover:text-[#ecfdf5]'
                   }`}
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
@@ -139,7 +139,7 @@ export const GlassNoteModal = ({
                 </button>
                 <button
                   onClick={handleSave}
-                  className="px-3 py-1.5 rounded text-xs font-mono font-semibold bg-[#E54D2E] hover:bg-[#ff5c3d] text-[#F5F3EC] flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 rounded text-xs font-mono font-semibold bg-[#34d399] hover:bg-[#10b981] text-[#041311] flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Speichern</span>
@@ -150,11 +150,11 @@ export const GlassNoteModal = ({
                 onClick={() => setIsEditing(true)}
                 className={`px-3 py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 border transition-colors cursor-pointer ${
                   isWeiss
-                    ? 'bg-[#F5F3EC] hover:bg-[#E2DFD5] text-[#15130C] border-[#D6D2C4]'
-                    : 'bg-[#221f18] hover:bg-[#2c2a22] text-[#e8e2d6] border-[#2E2A20]'
+                    ? 'bg-[#f0f7f5] hover:bg-[#d7e8e2] text-[#06201b] border-[#bdd6cf]'
+                    : 'bg-[#0e1d1a] hover:bg-[#132824] text-[#ecfdf5] border-[#16302b]'
                 }`}
               >
-                <Edit3 className="w-3.5 h-3.5 text-[#E54D2E]" />
+                <Edit3 className="w-3.5 h-3.5 text-[#34d399]" />
                 <span className="hidden sm:inline">Bearbeiten</span>
               </button>
             )}
@@ -164,8 +164,8 @@ export const GlassNoteModal = ({
               aria-label="Markdown kopieren"
               className={`p-1.5 rounded border transition-colors cursor-pointer ${
                 isWeiss
-                  ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                  : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                  ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                  : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
               }`}
               title="Markdown kopieren"
             >
@@ -177,8 +177,8 @@ export const GlassNoteModal = ({
               aria-label="Notiz schließen"
               className={`p-1.5 rounded border transition-colors cursor-pointer ${
                 isWeiss
-                  ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                  : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                  ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                  : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
               }`}
             >
               <X className="w-4 h-4" />
@@ -189,19 +189,19 @@ export const GlassNoteModal = ({
         {/* Note Metadata Bar */}
         <div
           className={`px-5 py-2.5 border-b flex flex-wrap items-center justify-between gap-3 text-xs ${
-            isWeiss ? 'bg-[#EBE8DF]/60 border-[#D6D2C4]' : 'bg-[#221f18] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec]/60 border-[#bdd6cf]' : 'bg-[#0e1d1a] border-[#16302b]'
           }`}
         >
           <div className="flex items-center gap-2">
-            <Tag className="w-3.5 h-3.5 text-[#9b968a]" />
+            <Tag className="w-3.5 h-3.5 text-[#689187]" />
             <div className="flex flex-wrap items-center gap-1.5">
               {note.tags.map((tag) => (
                 <span
                   key={tag}
                   className={`px-2 py-0.5 rounded text-[11px] font-mono border ${
                     isWeiss
-                      ? 'bg-[#F5F3EC] text-[#15130C] border-[#D6D2C4]'
-                      : 'bg-[#15130c] text-[#7bd0ff] border-[#2E2A20]'
+                      ? 'bg-[#f0f7f5] text-[#06201b] border-[#bdd6cf]'
+                      : 'bg-[#07100e] text-[#22d3ee] border-[#16302b]'
                   }`}
                 >
                   #{tag}
@@ -210,7 +210,7 @@ export const GlassNoteModal = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 text-[#9b968a] text-[11px] font-mono">
+          <div className="flex items-center gap-1.5 text-[#689187] text-[11px] font-mono">
             <Clock className="w-3.5 h-3.5" />
             <span>Zuletzt bearbeitet: {note.updated}</span>
           </div>
@@ -225,16 +225,16 @@ export const GlassNoteModal = ({
               aria-label="Markdown Inhalt bearbeiten"
               className={`w-full h-full min-h-[380px] p-4 rounded font-mono text-xs leading-relaxed outline-none border resize-none ${
                 isWeiss
-                  ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] focus:border-[#E54D2E]'
-                  : 'bg-[#100e07] border-[#2E2A20] text-[#e8e2d6] focus:border-[#E54D2E]'
+                  ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] focus:border-[#34d399]'
+                  : 'bg-[#050a09] border-[#16302b] text-[#ecfdf5] focus:border-[#34d399]'
               }`}
             />
           ) : (
             <pre
               className={`p-4 rounded font-mono text-xs leading-relaxed overflow-x-auto whitespace-pre-wrap border ${
                 isWeiss
-                  ? 'bg-[#EBE8DF]/50 border-[#D6D2C4] text-[#15130C]'
-                  : 'bg-[#100e07] border-[#2E2A20] text-[#e8e2d6]'
+                  ? 'bg-[#e4f0ec]/50 border-[#bdd6cf] text-[#06201b]'
+                  : 'bg-[#050a09] border-[#16302b] text-[#ecfdf5]'
               }`}
             >
               <code>{currentContent}</code>

@@ -72,17 +72,17 @@ export const GlassNewsModal = ({ isOpen, onClose, themeMode }: Props) => {
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-3xl max-h-[90vh] rounded flex flex-col overflow-hidden border shadow-2xl transition-colors duration-150 ${
           isWeiss
-            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6]'
+            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5]'
         }`}
       >
         <div
           className={`px-5 py-4 border-b flex items-center justify-between ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#E54D2E] text-[#F5F3EC]">
+            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#34d399] text-[#041311]">
               <Newspaper className="w-4 h-4" />
             </div>
             <div>
@@ -92,7 +92,7 @@ export const GlassNewsModal = ({ isOpen, onClose, themeMode }: Props) => {
               >
                 Changelog & System-Releases 2026
               </h2>
-              <p className="text-xs font-mono text-[#9b968a]">
+              <p className="text-xs font-mono text-[#689187]">
                 Aktuelle Updates aus dem Obsidian-, SQLite- und MCP-Ökosystem
               </p>
             </div>
@@ -103,8 +103,8 @@ export const GlassNewsModal = ({ isOpen, onClose, themeMode }: Props) => {
             aria-label="Changelog schließen"
             className={`p-1.5 rounded border transition-colors cursor-pointer ${
               isWeiss
-                ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
             }`}
           >
             <X className="w-4 h-4" />
@@ -117,22 +117,22 @@ export const GlassNewsModal = ({ isOpen, onClose, themeMode }: Props) => {
               key={idx}
               className={`p-4 rounded border transition-colors ${
                 isWeiss
-                  ? 'bg-[#EBE8DF]/60 border-[#D6D2C4]'
-                  : 'bg-[#15130c] border-[#2E2A20]'
+                  ? 'bg-[#e4f0ec]/60 border-[#bdd6cf]'
+                  : 'bg-[#07100e] border-[#16302b]'
               }`}
             >
               <div className="flex items-center justify-between gap-2 mb-1.5">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded font-semibold bg-[#E54D2E]/15 text-[#E54D2E] border border-[#E54D2E]/30">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded font-semibold bg-[#34d399]/15 text-[#34d399] border border-[#34d399]/30">
                   {item.badge}
                 </span>
-                <span className="text-[11px] font-mono text-[#9b968a]">{item.date}</span>
+                <span className="text-[11px] font-mono text-[#689187]">{item.date}</span>
               </div>
 
               <h3 className="text-sm font-display font-bold mb-1.5">{item.title}</h3>
 
               <p
                 className={`text-xs font-mono leading-relaxed mb-3 ${
-                  isWeiss ? 'text-[#5C584D]' : 'text-[#cac6ba]'
+                  isWeiss ? 'text-[#3b6e63]' : 'text-[#b2d8ce]'
                 }`}
               >
                 {item.summary}

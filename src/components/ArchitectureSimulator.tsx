@@ -370,10 +370,10 @@ export const ArchitectureSimulator = () => {
                           <span
                             className={`w-6 h-6 rounded flex items-center justify-center text-xs font-bold ${
                               idx === 0
-                                ? 'bg-[#E54D2E] text-[#F5F3EC]'
+                                ? 'bg-[#34d399] text-[#041311]'
                                 : idx === 1
-                                ? 'bg-[#2c2a22] text-[#e8e2d6] border border-[#2E2A20]'
-                                : 'bg-[#1e1b14] text-[#9b968a] border border-[#2E2A20]'
+                                ? 'bg-[#132824] text-[#ecfdf5] border border-[#16302b]'
+                                : 'bg-[#0b1715] text-[#689187] border border-[#16302b]'
                             }`}
                           >
                             #{idx + 1}

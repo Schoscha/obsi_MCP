@@ -109,18 +109,18 @@ export const GlassChecklistModal = ({
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-5xl max-h-[90vh] rounded flex flex-col overflow-hidden border shadow-2xl transition-colors duration-150 ${
           isWeiss
-            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6]'
+            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5]'
         }`}
       >
         {/* Modal Header */}
         <div
           className={`px-5 py-4 border-b flex items-center justify-between gap-4 ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           <div>
-            <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#E54D2E]">
+            <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#34d399]">
               <span>[SPEC // BLAKE CROSLEY 2026 REFERENZ]</span>
             </div>
             <h2
@@ -134,7 +134,7 @@ export const GlassChecklistModal = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleExportMarkdown}
-              className="px-3 py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 transition-colors cursor-pointer bg-[#E54D2E] text-[#F5F3EC] hover:bg-[#ff5c3d]"
+              className="px-3 py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 transition-colors cursor-pointer bg-[#34d399] text-[#041311] hover:bg-[#10b981]"
               title="Als Markdown für Obsidian exportieren"
             >
               <Download className="w-3.5 h-3.5" />
@@ -146,8 +146,8 @@ export const GlassChecklistModal = ({
               aria-label="Modal schließen"
               className={`p-1.5 rounded border transition-colors cursor-pointer ${
                 isWeiss
-                  ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                  : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                  ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                  : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
               }`}
             >
               <X className="w-4 h-4" />
@@ -158,7 +158,7 @@ export const GlassChecklistModal = ({
         {/* Progress Bar & Filter Bar */}
         <div
           className={`px-5 py-3 border-b space-y-3 ${
-            isWeiss ? 'bg-[#EBE8DF]/60 border-[#D6D2C4]' : 'bg-[#221f18] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec]/60 border-[#bdd6cf]' : 'bg-[#0e1d1a] border-[#16302b]'
           }`}
         >
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
@@ -173,11 +173,11 @@ export const GlassChecklistModal = ({
 
           <div
             className={`w-full h-1.5 rounded overflow-hidden ${
-              isWeiss ? 'bg-[#D6D2C4]' : 'bg-[#15130c]'
+              isWeiss ? 'bg-[#bdd6cf]' : 'bg-[#07100e]'
             }`}
           >
             <div
-              className="h-full transition-all duration-300 bg-[#E54D2E]"
+              className="h-full transition-all duration-300 bg-[#34d399]"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -185,7 +185,7 @@ export const GlassChecklistModal = ({
           {/* Search & Phase Filter Controls */}
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 pt-1">
             <div className="relative flex-1 max-w-sm">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#9b968a]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#689187]" />
               <input
                 type="text"
                 placeholder="Kapitel, Dateipfad oder SQL/Python filtern..."
@@ -194,8 +194,8 @@ export const GlassChecklistModal = ({
                 aria-label="Kapitel durchsuchen"
                 className={`w-full pl-8 pr-3 py-1.5 rounded text-xs font-mono outline-none border transition-colors ${
                   isWeiss
-                    ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] focus:border-[#E54D2E]'
-                    : 'bg-[#15130c] border-[#2E2A20] text-[#e8e2d6] focus:border-[#E54D2E]'
+                    ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] focus:border-[#34d399]'
+                    : 'bg-[#07100e] border-[#16302b] text-[#ecfdf5] focus:border-[#34d399]'
                 }`}
               />
             </div>
@@ -207,10 +207,10 @@ export const GlassChecklistModal = ({
                   onClick={() => setSelectedPhase(phase)}
                   className={`px-2.5 py-1 rounded whitespace-nowrap transition-colors cursor-pointer text-[11px] font-mono border ${
                     selectedPhase === phase
-                      ? 'bg-[#E54D2E] text-[#F5F3EC] border-[#E54D2E] font-semibold'
+                      ? 'bg-[#34d399] text-[#041311] border-[#34d399] font-semibold'
                       : isWeiss
-                      ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#5C584D] hover:text-[#15130C]'
-                      : 'bg-[#15130c] border-[#2E2A20] text-[#9b968a] hover:text-[#e8e2d6]'
+                      ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#3b6e63] hover:text-[#06201b]'
+                      : 'bg-[#07100e] border-[#16302b] text-[#689187] hover:text-[#ecfdf5]'
                   }`}
                 >
                   {phase}
@@ -222,8 +222,8 @@ export const GlassChecklistModal = ({
                   onClick={() => onBatchTogglePhase(selectedPhase, !allSelectedPhaseDone)}
                   className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold flex items-center gap-1.5 border transition-colors cursor-pointer ${
                     isWeiss
-                      ? 'bg-[#15130C] text-[#F5F3EC] border-[#15130C]'
-                      : 'bg-[#2c2a22] text-[#7bd0ff] border-[#7bd0ff]/40 hover:bg-[#3a372f]'
+                      ? 'bg-[#06201b] text-[#f0f7f5] border-[#06201b]'
+                      : 'bg-[#132824] text-[#22d3ee] border-[#22d3ee]/40 hover:bg-[#3a372f]'
                   }`}
                   title="Gesamte Phase umschalten"
                 >
@@ -247,7 +247,7 @@ export const GlassChecklistModal = ({
         {/* Tasks List Content */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-2">
           {filteredTasks.length === 0 ? (
-            <div className="text-center py-12 text-[#9b968a] font-mono text-xs">
+            <div className="text-center py-12 text-[#689187] font-mono text-xs">
               Keine Kapitel für diese Suchkriterien gefunden.
             </div>
           ) : (
@@ -264,8 +264,8 @@ export const GlassChecklistModal = ({
                         ? 'bg-emerald-950/5 border-emerald-600/40'
                         : 'bg-emerald-950/15 border-emerald-500/30'
                       : isWeiss
-                      ? 'bg-[#EBE8DF]/70 border-[#D6D2C4] hover:border-[#15130C]/40'
-                      : 'bg-[#15130c] border-[#2E2A20] hover:border-[#4c453a]'
+                      ? 'bg-[#e4f0ec]/70 border-[#bdd6cf] hover:border-[#06201b]/40'
+                      : 'bg-[#07100e] border-[#16302b] hover:border-[#1f423b]'
                   }`}
                 >
                   {/* Task Summary Row */}
@@ -273,10 +273,10 @@ export const GlassChecklistModal = ({
                     <button
                       onClick={() => onToggleTask(task.id)}
                       aria-label={`Kapitel ${task.chapterNumber} abhaken`}
-                      className="mt-0.5 text-[#9b968a] hover:text-[#E54D2E] transition-colors cursor-pointer shrink-0"
+                      className="mt-0.5 text-[#689187] hover:text-[#34d399] transition-colors cursor-pointer shrink-0"
                     >
                       {task.completed ? (
-                        <CheckSquare className="w-4 h-4 text-[#E54D2E]" />
+                        <CheckSquare className="w-4 h-4 text-[#34d399]" />
                       ) : (
                         <Square className="w-4 h-4" />
                       )}
@@ -287,19 +287,19 @@ export const GlassChecklistModal = ({
                       onClick={() => setExpandedTaskId(isExpanded ? null : task.id)}
                     >
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] font-mono font-bold text-[#E54D2E]">
+                        <span className="text-[11px] font-mono font-bold text-[#34d399]">
                           KAPITEL {String(task.chapterNumber).padStart(2, '0')}
                         </span>
 
                         <span
                           className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-semibold border ${
                             isCritical
-                              ? 'bg-[#E54D2E]/15 text-[#E54D2E] border-[#E54D2E]/40'
+                              ? 'bg-[#34d399]/15 text-[#34d399] border-[#34d399]/40'
                               : task.priority === 'Hoch'
                               ? 'bg-amber-500/15 text-amber-500 border-amber-500/30'
                               : isWeiss
-                              ? 'bg-[#F5F3EC] text-[#5C584D] border-[#D6D2C4]'
-                              : 'bg-[#221f18] text-[#9b968a] border-[#2E2A20]'
+                              ? 'bg-[#f0f7f5] text-[#3b6e63] border-[#bdd6cf]'
+                              : 'bg-[#0e1d1a] text-[#689187] border-[#16302b]'
                           }`}
                         >
                           {task.priority.toUpperCase()}
@@ -308,14 +308,14 @@ export const GlassChecklistModal = ({
                         <span
                           className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                             isWeiss
-                              ? 'bg-[#F5F3EC] text-[#5C584D] border-[#D6D2C4]'
-                              : 'bg-[#221f18] text-[#7bd0ff] border-[#2E2A20]'
+                              ? 'bg-[#f0f7f5] text-[#3b6e63] border-[#bdd6cf]'
+                              : 'bg-[#0e1d1a] text-[#22d3ee] border-[#16302b]'
                           }`}
                         >
                           {task.filename}
                         </span>
 
-                        <span className="text-[10px] font-mono text-[#9b968a] ml-auto hidden sm:inline">
+                        <span className="text-[10px] font-mono text-[#689187] ml-auto hidden sm:inline">
                           {task.phase}
                         </span>
                       </div>
@@ -330,7 +330,7 @@ export const GlassChecklistModal = ({
 
                       <p
                         className={`text-xs mt-0.5 line-clamp-2 ${
-                          isWeiss ? 'text-[#5C584D]' : 'text-[#cac6ba]'
+                          isWeiss ? 'text-[#3b6e63]' : 'text-[#b2d8ce]'
                         }`}
                       >
                         {task.summary}
@@ -340,7 +340,7 @@ export const GlassChecklistModal = ({
                     <button
                       onClick={() => setExpandedTaskId(isExpanded ? null : task.id)}
                       aria-label="Details ein-/ausklappen"
-                      className="p-1 rounded text-[#9b968a] hover:text-[#E54D2E] cursor-pointer shrink-0"
+                      className="p-1 rounded text-[#689187] hover:text-[#34d399] cursor-pointer shrink-0"
                     >
                       {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </button>
@@ -350,17 +350,17 @@ export const GlassChecklistModal = ({
                   {isExpanded && (
                     <div
                       className={`px-4 pb-4 pt-3 border-t space-y-3 text-xs ${
-                        isWeiss ? 'border-[#D6D2C4] bg-[#F5F3EC]' : 'border-[#2E2A20] bg-[#1e1b14]'
+                        isWeiss ? 'border-[#bdd6cf] bg-[#f0f7f5]' : 'border-[#16302b] bg-[#0b1715]'
                       }`}
                     >
                       <div>
-                        <div className="font-mono font-bold text-[10px] uppercase tracking-wider text-[#9b968a] mb-1.5">
+                        <div className="font-mono font-bold text-[10px] uppercase tracking-wider text-[#689187] mb-1.5">
                           LIEFERGEGENSTÄNDE & VERIFIKATIONSSCHRITTE:
                         </div>
                         <ul className="space-y-1 pl-1 font-mono text-[11px]">
                           {task.deliverables.map((item, idx) => (
                             <li key={idx} className="flex items-start gap-2">
-                              <span className="text-[#E54D2E] font-bold">›</span>
+                              <span className="text-[#34d399] font-bold">›</span>
                               <span>{item}</span>
                             </li>
                           ))}
@@ -371,15 +371,15 @@ export const GlassChecklistModal = ({
                         <div className="space-y-2">
                           {task.codeSnippets.map((cs, cIdx) => (
                             <div key={cIdx}>
-                              <div className="flex items-center gap-1.5 font-mono font-bold text-[10px] uppercase tracking-wider text-[#9b968a] mb-1">
-                                <Code className="w-3.5 h-3.5 text-[#7bd0ff]" />
+                              <div className="flex items-center gap-1.5 font-mono font-bold text-[10px] uppercase tracking-wider text-[#689187] mb-1">
+                                <Code className="w-3.5 h-3.5 text-[#22d3ee]" />
                                 <span>{cs.description || 'Referenz-Implementierung'}:</span>
                               </div>
                               <pre
                                 className={`p-3 rounded font-mono text-[11px] overflow-x-auto border ${
                                   isWeiss
-                                    ? 'bg-[#15130C] text-[#e8e2d6] border-[#15130C]'
-                                    : 'bg-[#100e07] text-[#7bd0ff] border-[#2E2A20]'
+                                    ? 'bg-[#06201b] text-[#ecfdf5] border-[#06201b]'
+                                    : 'bg-[#050a09] text-[#22d3ee] border-[#16302b]'
                                 }`}
                               >
                                 <code>{cs.code}</code>

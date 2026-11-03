@@ -47,24 +47,24 @@
 @layer base {
   :root {
     --font-neurath: 'Neurath X Mono', 'Azeret Mono', 'JetBrains Mono', monospace;
-    --bg-base: #15130c;
-    --bg-lowest: #100e08;
-    --bg-low: #1e1b14;
-    --bg-container: #221f18;
-    --bg-high: #2c2a22;
-    --bg-highest: #37352c;
-    --bg-bright: #3c3931;
-    --text-primary: #e8e2d6;
-    --text-secondary: #cac6ba;
-    --text-muted: #8c877a;
-    --border-structural: #2E2A20;
-    --border-active: #3D382C;
-    --signal-vermillion: #E54D2E;
-    --signal-vermillion-hover: #F05C3E;
-    --signal-cyan: #7bd0ff;
-    --signal-cyan-dim: #2a9bcb;
-    --canvas-paper: #F5F3EC;
-    --grid-dot: rgba(202, 198, 186, 0.16);
+    --bg-base: #07100e;
+    --bg-lowest: #050a09;
+    --bg-low: #0b1715;
+    --bg-container: #0e1d1a;
+    --bg-high: #132824;
+    --bg-highest: #19352f;
+    --bg-bright: #20423b;
+    --text-primary: #ecfdf5;
+    --text-secondary: #99bab2;
+    --text-muted: #5e8279;
+    --border-structural: #16302b;
+    --border-active: #2dd4bf;
+    --signal-vermillion: #34d399;
+    --signal-vermillion-hover: #10b981;
+    --signal-cyan: #22d3ee;
+    --signal-cyan-dim: #0891b2;
+    --canvas-paper: #f0f7f5;
+    --grid-dot: rgba(52, 211, 153, 0.16);
   }
 
   html,
@@ -77,33 +77,33 @@
     background-color: var(--bg-base);
     color: var(--text-primary);
     overflow-x: hidden;
-    caret-color: #E54D2E;
+    caret-color: #34d399;
   }
 
   ::selection {
-    background-color: #E54D2E;
-    color: #F5F3EC;
+    background-color: #34d399;
+    color: #05100e;
   }
 }
 
-/* Custom Tectonic Scrollbars */
+/* Custom Emerald Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #100e08;
-  border-left: 1px solid #2E2A20;
+  background: #050a09;
+  border-left: 1px solid #16302b;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #37352c;
+  background: #19352f;
   border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #E54D2E;
+  background: #34d399;
 }
 
 /* Typography Utilities — Neurath X Mono (Radical Geometry, Fixed Width) */
@@ -119,57 +119,57 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Tectonic Precision Surface Stratification — Dark (Obsidian) */
+/* Second.brain / Central.station Surface Stratification — Dark Emerald */
 .tectonic-z0 {
-  background-color: #15130c;
-  color: #e8e2d6;
+  background-color: #07100e;
+  color: #ecfdf5;
 }
 
 .tectonic-z0-lowest {
-  background-color: #100e08;
-  color: #e8e2d6;
+  background-color: #050a09;
+  color: #ecfdf5;
 }
 
 .tectonic-z1 {
-  background-color: #1e1b14;
-  border: 1px solid #2E2A20;
-  color: #e8e2d6;
+  background-color: #0b1715;
+  border: 1px solid #16302b;
+  color: #ecfdf5;
 }
 
 .tectonic-z2 {
-  background-color: #221f18;
-  border: 1px solid #3D382C;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-  color: #e8e2d6;
+  background-color: #0e1d1a;
+  border: 1px solid #1f423b;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+  color: #ecfdf5;
 }
 
-/* Tectonic Precision Surface Stratification — Paper (Canvas Paper Inverted) */
+/* Mint Daylight Surface Stratification — Light Mode */
 .paper-z0 {
-  background-color: #F5F3EC;
-  color: #18160F;
+  background-color: #f0f7f5;
+  color: #06201b;
 }
 
 .paper-z1 {
-  background-color: #ECE8DC;
-  border: 1px solid #C8C2B0;
-  color: #18160F;
+  background-color: #e4f0ec;
+  border: 1px solid #bdd6cf;
+  color: #06201b;
 }
 
 .paper-z2 {
-  background-color: #E2DDD0;
-  border: 1px solid #ACA592;
-  box-shadow: 0 4px 16px rgba(24, 22, 15, 0.12);
-  color: #18160F;
+  background-color: #d7e8e2;
+  border: 1px solid #9ec2b8;
+  box-shadow: 0 4px 16px rgba(6, 32, 27, 0.1);
+  color: #06201b;
 }
 
 /* Architectural Drafting Grid Overlays */
 .tectonic-grid-dark {
-  background-image: radial-gradient(rgba(202, 198, 186, 0.18) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(52, 211, 153, 0.14) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
 .tectonic-grid-paper {
-  background-image: radial-gradient(rgba(46, 42, 32, 0.18) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(16, 185, 129, 0.22) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -179,23 +179,23 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
 [tabindex]:focus-visible {
-  outline: 1px solid #E54D2E;
+  outline: 1px solid #34d399;
   outline-offset: 2px;
 }
 
-/* Compatibility classes for existing sub-modals upgraded to Tectonic Precision */
+/* Compatibility classes for sub-modals upgraded to Second.brain Emerald */
 .glass-white {
-  background-color: #ECE8DC;
-  border: 1px solid #C8C2B0;
-  box-shadow: 0 4px 16px rgba(24, 22, 15, 0.12);
-  color: #18160F;
+  background-color: #e4f0ec;
+  border: 1px solid #bdd6cf;
+  box-shadow: 0 4px 16px rgba(6, 32, 27, 0.1);
+  color: #06201b;
 }
 
 .glass-bunt {
-  background-color: #1e1b14;
-  border: 1px solid #2E2A20;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-  color: #e8e2d6;
+  background-color: #0b1715;
+  border: 1px solid #16302b;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+  color: #ecfdf5;
 }
 
 .glass-rainbow-edge {
@@ -203,15 +203,147 @@ select:focus-visible,
 }
 
 .glass-pill-white {
-  background-color: #E2DDD0;
-  border: 1px solid #ACA592;
-  color: #18160F;
+  background-color: #d7e8e2;
+  border: 1px solid #9ec2b8;
+  color: #06201b;
 }
 
 .glass-pill-bunt {
-  background-color: #221f18;
-  border: 1px solid #2E2A20;
-  color: #e8e2d6;
+  background-color: #0e1d1a;
+  border: 1px solid #16302b;
+  color: #ecfdf5;
+}
+
+/* Second.brain & Central.station Sci-Fi Graph Shaders */
+.fuselab-canvas-dark {
+  background:
+    radial-gradient(circle at 48% 48%, rgba(16, 185, 129, 0.16) 0%, rgba(11, 29, 25, 0.78) 46%, #050c0a 100%),
+    radial-gradient(rgba(52, 211, 153, 0.12) 1px, transparent 1px);
+  background-size: 100% 100%, 22px 22px;
+}
+
+.fuselab-canvas-paper {
+  background:
+    radial-gradient(circle at 48% 48%, rgba(209, 250, 229, 0.7) 0%, rgba(236, 253, 245, 0.95) 65%, #d1e8e0 100%),
+    radial-gradient(rgba(16, 185, 129, 0.18) 1px, transparent 1px);
+  background-size: 100% 100%, 22px 22px;
+}
+
+@keyframes fuselabBeamFlow {
+  0% {
+    stroke-dashoffset: 120;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fuselabOrbitSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fuselabBorderSweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.fuselab-beam-pulse {
+  stroke-dasharray: 8 24;
+  animation: fuselabBeamFlow 2.4s linear infinite;
+}
+
+.fuselab-reticle-spin {
+  transform-origin: center;
+  animation: fuselabOrbitSpin 18s linear infinite;
+}
+
+.fuselab-hud-panel {
+  background: rgba(8, 20, 18, 0.84);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(52, 211, 153, 0.24);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(167, 243, 208, 0.1);
+}
+
+.fuselab-hud-panel-paper {
+  background: rgba(240, 247, 245, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow:
+    0 10px 28px rgba(6, 32, 27, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.fuselab-border-glow {
+  position: relative;
+}
+
+.fuselab-border-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    125deg,
+    rgba(52, 211, 153, 0.65),
+    rgba(34, 211, 238, 0.5),
+    rgba(16, 185, 129, 0.15),
+    rgba(45, 212, 191, 0.6)
+  );
+  background-size: 250% 250%;
+  animation: fuselabBorderSweep 6s ease infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Continuous Marquee Ticker with Pause on Hover */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5rem;
+  animation: marqueeScroll 40s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

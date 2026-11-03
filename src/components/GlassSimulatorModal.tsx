@@ -104,18 +104,18 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-4xl max-h-[90vh] rounded flex flex-col overflow-hidden border shadow-2xl transition-colors duration-150 ${
           isWeiss
-            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6]'
+            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5]'
         }`}
       >
         {/* Header */}
         <div
           className={`px-5 py-4 border-b flex items-center justify-between ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#E54D2E] text-[#F5F3EC]">
+            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#34d399] text-[#041311]">
               <Cpu className="w-4 h-4" />
             </div>
             <div>
@@ -125,7 +125,7 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
               >
                 RRF Simulator & Hybrides Ranking
               </h2>
-              <p className="text-xs font-mono text-[#9b968a]">
+              <p className="text-xs font-mono text-[#689187]">
                 Reciprocal Rank Fusion (k = {kParam}) · SQLite FTS5 + sqlite-vec (256d)
               </p>
             </div>
@@ -136,8 +136,8 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
             aria-label="Simulator schließen"
             className={`p-1.5 rounded border transition-colors cursor-pointer ${
               isWeiss
-                ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
             }`}
           >
             <X className="w-4 h-4" />
@@ -147,12 +147,12 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
         {/* Search Input & Presets + Sliders */}
         <div
           className={`p-4 sm:p-5 border-b space-y-4 ${
-            isWeiss ? 'bg-[#EBE8DF]/60 border-[#D6D2C4]' : 'bg-[#221f18] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec]/60 border-[#bdd6cf]' : 'bg-[#0e1d1a] border-[#16302b]'
           }`}
         >
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <div className="relative flex-1">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#9b968a]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#689187]" />
               <input
                 type="text"
                 value={testQuery}
@@ -161,8 +161,8 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                 aria-label="Test-Suchanfrage"
                 className={`w-full pl-8 pr-3 py-1.5 rounded text-xs font-mono outline-none border transition-colors ${
                   isWeiss
-                    ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C] focus:border-[#E54D2E]'
-                    : 'bg-[#15130c] border-[#2E2A20] text-[#e8e2d6] focus:border-[#E54D2E]'
+                    ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b] focus:border-[#34d399]'
+                    : 'bg-[#07100e] border-[#16302b] text-[#ecfdf5] focus:border-[#34d399]'
                 }`}
               />
             </div>
@@ -173,10 +173,10 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                   onClick={() => setTestQuery(preset)}
                   className={`px-2.5 py-1 rounded text-[11px] font-mono border cursor-pointer transition-colors ${
                     testQuery === preset
-                      ? 'bg-[#E54D2E] text-[#F5F3EC] border-[#E54D2E] font-semibold'
+                      ? 'bg-[#34d399] text-[#041311] border-[#34d399] font-semibold'
                       : isWeiss
-                      ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#5C584D] hover:text-[#15130C]'
-                      : 'bg-[#15130c] border-[#2E2A20] text-[#9b968a] hover:text-[#e8e2d6]'
+                      ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#3b6e63] hover:text-[#06201b]'
+                      : 'bg-[#07100e] border-[#16302b] text-[#689187] hover:text-[#ecfdf5]'
                   }`}
                 >
                   {preset}
@@ -189,7 +189,7 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
             <div>
               <div className="flex justify-between font-semibold mb-1">
                 <span>RRF KONSTANTE (k):</span>
-                <span className="text-[#E54D2E] font-bold">{kParam}</span>
+                <span className="text-[#34d399] font-bold">{kParam}</span>
               </div>
               <input
                 type="range"
@@ -197,9 +197,9 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                 max="120"
                 value={kParam}
                 onChange={(e) => setKParam(Number(e.target.value))}
-                className="w-full accent-[#E54D2E] cursor-pointer"
+                className="w-full accent-[#34d399] cursor-pointer"
               />
-              <div className="text-[10px] text-[#9b968a] mt-0.5">Standard: k = 60</div>
+              <div className="text-[10px] text-[#689187] mt-0.5">Standard: k = 60</div>
             </div>
 
             <div>
@@ -216,13 +216,13 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                 onChange={(e) => setBm25Weight(Number(e.target.value))}
                 className="w-full accent-amber-500 cursor-pointer"
               />
-              <div className="text-[10px] text-[#9b968a] mt-0.5">FTS5 Porter Stemmer</div>
+              <div className="text-[10px] text-[#689187] mt-0.5">FTS5 Porter Stemmer</div>
             </div>
 
             <div>
               <div className="flex justify-between font-semibold mb-1">
                 <span>VEKTOR GEWICHTUNG:</span>
-                <span className="text-[#7bd0ff] font-bold">{vecWeight.toFixed(1)}x</span>
+                <span className="text-[#22d3ee] font-bold">{vecWeight.toFixed(1)}x</span>
               </div>
               <input
                 type="range"
@@ -231,16 +231,16 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                 step="0.1"
                 value={vecWeight}
                 onChange={(e) => setVecWeight(Number(e.target.value))}
-                className="w-full accent-[#7bd0ff] cursor-pointer"
+                className="w-full accent-[#22d3ee] cursor-pointer"
               />
-              <div className="text-[10px] text-[#9b968a] mt-0.5">Model2Vec 256d KNN</div>
+              <div className="text-[10px] text-[#689187] mt-0.5">Model2Vec 256d KNN</div>
             </div>
           </div>
         </div>
 
         {/* Results Stream */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-2.5">
-          <div className="text-[10px] font-mono font-bold text-[#9b968a] uppercase tracking-[0.12em] mb-2">
+          <div className="text-[10px] font-mono font-bold text-[#689187] uppercase tracking-[0.12em] mb-2">
             FUSED RETRIEVAL RANKING (SCORE = w_bm25/(k + r_bm25) + w_vec/(k + r_vec)):
           </div>
 
@@ -250,11 +250,11 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
               className={`p-3.5 rounded border transition-colors ${
                 idx === 0
                   ? isWeiss
-                    ? 'bg-[#EBE8DF] border-[#E54D2E]'
-                    : 'bg-[#15130c] border-[#E54D2E]'
+                    ? 'bg-[#e4f0ec] border-[#34d399]'
+                    : 'bg-[#07100e] border-[#34d399]'
                   : isWeiss
-                  ? 'bg-[#F5F3EC] border-[#D6D2C4]'
-                  : 'bg-[#15130c] border-[#2E2A20]'
+                  ? 'bg-[#f0f7f5] border-[#bdd6cf]'
+                  : 'bg-[#07100e] border-[#16302b]'
               }`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -262,10 +262,10 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                   <span
                     className={`w-6 h-6 rounded flex items-center justify-center font-mono font-bold text-xs shrink-0 ${
                       idx === 0
-                        ? 'bg-[#E54D2E] text-[#F5F3EC]'
+                        ? 'bg-[#34d399] text-[#041311]'
                         : isWeiss
-                        ? 'bg-[#EBE8DF] text-[#15130C] border border-[#D6D2C4]'
-                        : 'bg-[#221f18] text-[#cac6ba] border border-[#2E2A20]'
+                        ? 'bg-[#e4f0ec] text-[#06201b] border border-[#bdd6cf]'
+                        : 'bg-[#0e1d1a] text-[#b2d8ce] border border-[#16302b]'
                     }`}
                   >
                     #{idx + 1}
@@ -273,7 +273,7 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
 
                   <div className="min-w-0">
                     <div className="font-mono text-xs font-bold truncate">{item.file}</div>
-                    <div className="text-[11px] font-mono text-[#9b968a]">{item.section}</div>
+                    <div className="text-[11px] font-mono text-[#689187]">{item.section}</div>
                   </div>
                 </div>
 
@@ -282,7 +282,7 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                     RRF: {item.totalScore.toFixed(4)}
                   </div>
                   {item.inBoth && (
-                    <span className="text-[10px] font-semibold text-[#E54D2E]">
+                    <span className="text-[10px] font-semibold text-[#34d399]">
                       ★ DUAL HIT (BM25 + VEC0)
                     </span>
                   )}
@@ -292,14 +292,14 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
               <p
                 className={`text-xs mt-2 font-mono p-2.5 rounded border ${
                   isWeiss
-                    ? 'bg-[#EBE8DF]/70 border-[#D6D2C4] text-[#15130C]'
-                    : 'bg-[#100e07] border-[#2E2A20] text-[#cac6ba]'
+                    ? 'bg-[#e4f0ec]/70 border-[#bdd6cf] text-[#06201b]'
+                    : 'bg-[#050a09] border-[#16302b] text-[#b2d8ce]'
                 }`}
               >
                 {item.text}
               </p>
 
-              <div className="flex items-center gap-4 mt-2 text-[11px] font-mono text-[#9b968a]">
+              <div className="flex items-center gap-4 mt-2 text-[11px] font-mono text-[#689187]">
                 <span>
                   BM25 Rang:{' '}
                   <strong className="text-amber-500">
@@ -308,7 +308,7 @@ export const GlassSimulatorModal = ({ isOpen, onClose, themeMode }: Props) => {
                 </span>
                 <span>
                   Vektor Rang:{' '}
-                  <strong className="text-[#7bd0ff]">
+                  <strong className="text-[#22d3ee]">
                     {item.vecRank !== null ? `#${item.vecRank}` : '—'}
                   </strong>
                 </span>

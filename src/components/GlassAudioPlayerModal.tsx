@@ -232,26 +232,26 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-4xl max-h-[92vh] rounded flex flex-col overflow-hidden border shadow-2xl transition-colors duration-150 ${
           isWeiss
-            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6]'
+            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5]'
         }`}
       >
         {/* Header */}
         <div
           className={`px-5 py-4 border-b flex items-center justify-between ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#E54D2E] text-[#F5F3EC]">
+            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#34d399] text-[#041311]">
               <Headphones className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#E54D2E]/15 text-[#E54D2E] border border-[#E54D2E]/30">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#34d399]/15 text-[#34d399] border border-[#34d399]/30">
                   AUDIO TELEMETRY // DEUTSCH
                 </span>
-                <span className="text-[11px] font-mono text-[#9b968a]">
+                <span className="text-[11px] font-mono text-[#689187]">
                   KAPITEL {currentChapterIdx + 1} / {AUDIO_EXPLANATION_CHAPTERS.length}
                 </span>
               </div>
@@ -270,15 +270,15 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
               aria-label={isMuted ? 'Ton einschalten' : 'Stummschalten'}
               className={`p-1.5 rounded border transition-colors cursor-pointer ${
                 isWeiss
-                  ? 'bg-[#F5F3EC] text-[#15130C] border-[#D6D2C4]'
-                  : 'bg-[#221f18] text-[#cac6ba] border-[#2E2A20] hover:text-[#e8e2d6]'
+                  ? 'bg-[#f0f7f5] text-[#06201b] border-[#bdd6cf]'
+                  : 'bg-[#0e1d1a] text-[#b2d8ce] border-[#16302b] hover:text-[#ecfdf5]'
               }`}
               title={isMuted ? 'Ton einschalten' : 'Stummschalten'}
             >
               {isMuted ? (
-                <VolumeX className="w-4 h-4 text-[#E54D2E]" />
+                <VolumeX className="w-4 h-4 text-[#34d399]" />
               ) : (
-                <Volume2 className="w-4 h-4 text-[#7bd0ff]" />
+                <Volume2 className="w-4 h-4 text-[#22d3ee]" />
               )}
             </button>
 
@@ -286,8 +286,8 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
               onClick={handleRateChange}
               className={`px-2.5 py-1.5 rounded text-xs font-mono font-bold flex items-center gap-1 border transition-colors cursor-pointer ${
                 isWeiss
-                  ? 'bg-[#F5F3EC] text-[#15130C] border-[#D6D2C4]'
-                  : 'bg-[#221f18] text-[#7bd0ff] border-[#2E2A20]'
+                  ? 'bg-[#f0f7f5] text-[#06201b] border-[#bdd6cf]'
+                  : 'bg-[#0e1d1a] text-[#22d3ee] border-[#16302b]'
               }`}
               title="Geschwindigkeit anpassen"
             >
@@ -300,8 +300,8 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
               aria-label="Audio-Player schließen"
               className={`p-1.5 rounded border transition-colors cursor-pointer ${
                 isWeiss
-                  ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                  : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                  ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                  : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
               }`}
             >
               <X className="w-4 h-4" />
@@ -312,7 +312,7 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
         {/* Audio Waveform & Player Deck */}
         <div
           className={`p-5 border-b flex flex-col items-center justify-center relative overflow-hidden ${
-            isWeiss ? 'bg-[#EBE8DF]/50 border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec]/50 border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           {/* Animated Waveform Visualizer */}
@@ -325,11 +325,11 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
                   className={`w-1.5 rounded-sm transition-all duration-150 ${
                     isPlaying
                       ? i % 3 === 0
-                        ? 'bg-[#7bd0ff]'
-                        : 'bg-[#E54D2E]'
+                        ? 'bg-[#22d3ee]'
+                        : 'bg-[#34d399]'
                       : isWeiss
-                      ? 'bg-[#D6D2C4]'
-                      : 'bg-[#2E2A20]'
+                      ? 'bg-[#bdd6cf]'
+                      : 'bg-[#16302b]'
                   }`}
                   style={{
                     height: `${activeHeight}%`,
@@ -345,22 +345,22 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
             <h3 className="text-base sm:text-lg font-bold font-display">
               {currentChapter.title}
             </h3>
-            <p className={`text-xs mt-1 ${isWeiss ? 'text-[#5C584D]' : 'text-[#9b968a]'}`}>
+            <p className={`text-xs mt-1 ${isWeiss ? 'text-[#3b6e63]' : 'text-[#689187]'}`}>
               {currentChapter.subtitle}
             </p>
           </div>
 
           {/* Progress Bar with scrubber */}
-          <div className="w-full max-w-md flex items-center gap-3 mb-4 text-xs font-mono text-[#9b968a]">
+          <div className="w-full max-w-md flex items-center gap-3 mb-4 text-xs font-mono text-[#689187]">
             <span>{elapsedFormatted}</span>
 
             <div
               className={`flex-1 h-1.5 rounded overflow-hidden relative ${
-                isWeiss ? 'bg-[#D6D2C4]' : 'bg-[#2E2A20]'
+                isWeiss ? 'bg-[#bdd6cf]' : 'bg-[#16302b]'
               }`}
             >
               <div
-                className="h-full transition-all duration-200 bg-[#E54D2E]"
+                className="h-full transition-all duration-200 bg-[#34d399]"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -378,8 +378,8 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
                 currentChapterIdx === 0
                   ? 'opacity-30 cursor-not-allowed border-transparent'
                   : isWeiss
-                  ? 'border-[#D6D2C4] hover:bg-[#EBE8DF] text-[#15130C]'
-                  : 'border-[#2E2A20] hover:bg-[#221f18] text-[#e8e2d6]'
+                  ? 'border-[#bdd6cf] hover:bg-[#e4f0ec] text-[#06201b]'
+                  : 'border-[#16302b] hover:bg-[#0e1d1a] text-[#ecfdf5]'
               }`}
               title="Vorheriges Kapitel"
             >
@@ -389,7 +389,7 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
             <button
               onClick={togglePlay}
               aria-label={isPlaying ? 'Pause' : 'Abspielen'}
-              className="w-12 h-12 rounded flex items-center justify-center transition-colors cursor-pointer bg-[#E54D2E] hover:bg-[#ff5c3d] text-[#F5F3EC]"
+              className="w-12 h-12 rounded flex items-center justify-center transition-colors cursor-pointer bg-[#34d399] hover:bg-[#10b981] text-[#041311]"
               title={isPlaying ? 'Pause' : 'Abspielen'}
             >
               {isPlaying ? (
@@ -407,8 +407,8 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
                 currentChapterIdx === AUDIO_EXPLANATION_CHAPTERS.length - 1
                   ? 'opacity-30 cursor-not-allowed border-transparent'
                   : isWeiss
-                  ? 'border-[#D6D2C4] hover:bg-[#EBE8DF] text-[#15130C]'
-                  : 'border-[#2E2A20] hover:bg-[#221f18] text-[#e8e2d6]'
+                  ? 'border-[#bdd6cf] hover:bg-[#e4f0ec] text-[#06201b]'
+                  : 'border-[#16302b] hover:bg-[#0e1d1a] text-[#ecfdf5]'
               }`}
               title="Nächstes Kapitel"
             >
@@ -421,10 +421,10 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
           <div
             className={`w-full md:w-80 border-b md:border-b-0 md:border-r p-4 overflow-y-auto space-y-1.5 ${
-              isWeiss ? 'bg-[#EBE8DF]/40 border-[#D6D2C4]' : 'bg-[#221f18] border-[#2E2A20]'
+              isWeiss ? 'bg-[#e4f0ec]/40 border-[#bdd6cf]' : 'bg-[#0e1d1a] border-[#16302b]'
             }`}
           >
-            <div className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#9b968a] font-bold px-2 mb-2 flex items-center justify-between">
+            <div className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#689187] font-bold px-2 mb-2 flex items-center justify-between">
               <span>KAPITELÜBERSICHT</span>
               <ListMusic className="w-3.5 h-3.5" />
             </div>
@@ -440,20 +440,20 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
                   }}
                   className={`p-2.5 rounded cursor-pointer text-xs transition-colors flex items-center justify-between gap-2 border ${
                     isSelected
-                      ? 'bg-[#E54D2E]/15 border-[#E54D2E] font-bold'
+                      ? 'bg-[#34d399]/15 border-[#34d399] font-bold'
                       : isWeiss
-                      ? 'border-transparent hover:bg-[#EBE8DF] text-[#5C584D]'
-                      : 'border-transparent hover:bg-[#15130c] text-[#cac6ba]'
+                      ? 'border-transparent hover:bg-[#e4f0ec] text-[#3b6e63]'
+                      : 'border-transparent hover:bg-[#07100e] text-[#b2d8ce]'
                   }`}
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <span
                       className={`w-5 h-5 rounded flex items-center justify-center font-mono text-[10px] shrink-0 ${
                         isSelected
-                          ? 'bg-[#E54D2E] text-[#F5F3EC]'
+                          ? 'bg-[#34d399] text-[#041311]'
                           : isWeiss
-                          ? 'bg-[#F5F3EC] text-[#5C584D] border border-[#D6D2C4]'
-                          : 'bg-[#15130c] text-[#9b968a] border border-[#2E2A20]'
+                          ? 'bg-[#f0f7f5] text-[#3b6e63] border border-[#bdd6cf]'
+                          : 'bg-[#07100e] text-[#689187] border border-[#16302b]'
                       }`}
                     >
                       {idx + 1}
@@ -463,7 +463,7 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
                     </span>
                   </div>
 
-                  <span className="text-[10px] font-mono text-[#9b968a] shrink-0">
+                  <span className="text-[10px] font-mono text-[#689187] shrink-0">
                     {chap.durationEst}
                   </span>
                 </div>
@@ -473,7 +473,7 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
 
           {/* Spoken Text Transcript Drawer */}
           <div className="flex-1 p-4 sm:p-5 overflow-y-auto">
-            <div className="flex items-center justify-between mb-3 text-xs font-mono text-[#9b968a]">
+            <div className="flex items-center justify-between mb-3 text-xs font-mono text-[#689187]">
               <span className="uppercase tracking-[0.12em] text-[10px] font-bold">
                 GESPROCHENER TEXT (TRANSKRIPT)
               </span>
@@ -485,14 +485,14 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
             <div
               className={`p-4 rounded border text-xs sm:text-sm leading-relaxed whitespace-pre-line font-mono ${
                 isWeiss
-                  ? 'bg-[#EBE8DF]/50 border-[#D6D2C4] text-[#15130C]'
-                  : 'bg-[#15130c] border-[#2E2A20] text-[#e8e2d6]'
+                  ? 'bg-[#e4f0ec]/50 border-[#bdd6cf] text-[#06201b]'
+                  : 'bg-[#07100e] border-[#16302b] text-[#ecfdf5]'
               }`}
             >
               {currentChapter.text}
             </div>
 
-            <div className="mt-4 flex items-center justify-between text-xs text-[#9b968a] font-mono">
+            <div className="mt-4 flex items-center justify-between text-xs text-[#689187] font-mono">
               <span>Web Speech API · Lokale Sprachausgabe</span>
               <button
                 onClick={() => {
@@ -502,7 +502,7 @@ export const GlassAudioPlayerModal = ({ isOpen, onClose, themeMode }: Props) => 
                     )
                   );
                 }}
-                className="text-[#E54D2E] hover:underline cursor-pointer"
+                className="text-[#34d399] hover:underline cursor-pointer"
               >
                 Volltext kopieren
               </button>

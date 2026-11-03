@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+.node-draggable { cursor: grab; user-select: none; touch-action: none; transition: box-shadow 0.15s ease, transform 0.15s ease; }
+.node-dragging { cursor: grabbing !important; z-index: 50 !important; transform: scale(1.025); box-shadow: 0 14px 28px rgba(0,0,0,0.45), 0 0 0 2px #34d399, 0 0 20px rgba(52, 211, 153,0.35) !important; }
+.node-selected { box-shadow: 0 0 0 2px #34d399 !important; }
+</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error-container":"#93000a","tertiary-fixed-dim":"#22d3ee","on-tertiary":"#003549","on-error":"#690005","on-secondary-container":"#7e9ea5","outline":"#5e8c85","surface-container-lowest":"#05090b","on-secondary-fixed-variant":"#1c373e","on-surface":"#e6f1f3","secondary-fixed-dim":"#8cb4ae","secondary":"#8cb4ae","on-primary-fixed-variant":"#065f46","on-secondary":"#0f2024","drafting-grid":"#13252a","outline-variant":"#1f4248","surface-variant":"#162c32","on-background":"#e6f1f3","tertiary":"#22d3ee","primary":"#5ef6c4","error":"#ffb4ab","tertiary-container":"#0891b2","surface-container-highest":"#162c32","on-secondary-fixed":"#081214","on-primary-fixed":"#022c22","structural-border":"#173037","primary-fixed-dim":"#5ef6c4","inverse-on-surface":"#0f2024","surface-container-high":"#112226","inverse-primary":"#059669","surface":"#080d0f","inverse-surface":"#e6f1f3","on-tertiary-container":"#002d40","on-error-container":"#ffdad6","surface-container":"#0e1b1e","secondary-container":"#1c373e","surface-tint":"#5ef6c4","surface-bright":"#1b353c","blueprint-amber":"#34d399","tertiary-fixed":"#a5f3fc","on-primary":"#042f2e","canvas-paper":"#041310","background":"#080d0f","secondary-fixed":"#d5ece8","on-surface-variant":"#99f6e4","on-primary-container":"#022c22","primary-container":"#10b981","primary-fixed":"#a7f3d0","on-tertiary-fixed":"#001e2c","on-tertiary-fixed-variant":"#004c69","surface-dim":"#080d0f","surface-container-low":"#0b1417"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"space-md":"1rem","gutter":"1rem","space-lg":"1.5rem","gutter-desktop":"1.5rem","space-xs":"0.25rem","space-sm":"0.5rem","space-xl":"2.5rem","margin-desktop":"2.5rem","margin":"1rem"},fontFamily:{"title-md":["JetBrains Mono"],"body-sm":["JetBrains Mono"],"title-sm":["JetBrains Mono"],"label-md":["JetBrains Mono"],"headline-xl":["Space Grotesk"],"body-lg":["JetBrains Mono"],"code-inline":["JetBrains Mono"],"headline-md":["Space Grotesk"],"body-md":["JetBrains Mono"],"headline-lg-mobile":["Space Grotesk"],"label-sm":["JetBrains Mono"],"headline-sm":["Space Grotesk"],"headline-xl-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"]},fontSize:{"title-md":["16px",{"lineHeight":"24px","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"title-sm":["14px",{"lineHeight":"20px","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"600"}],"body-lg":["15px",{"lineHeight":"24px","fontWeight":"400"}],"code-inline":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"500"}],"body-md":["13px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["10px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"500"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low z-50 flex flex-col justify-between border-r border-structural-border"><div class="flex flex-col"><div class="h-14 px-space-md flex items-center gap-space-sm border-b border-structural-border bg-surface-container-lowest"><span class="material-symbols-outlined text-primary text-[20px]">deployed_code</span><span class="font-title-sm text-title-sm tracking-wider uppercase text-on-surface">ARCHIFY</span><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant border border-structural-border">STUDIO</span></div><div class="px-space-md py-space-sm border-b border-structural-border bg-surface-container"><div class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-1">Workspace Tree</div><div class="flex items-center justify-between text-on-surface-variant font-code-inline text-code-inline"><span class="truncate">/root/infra/iac/</span><span class="material-symbols-outlined text-[16px]">unfold_more</span></div></div><nav class="flex flex-col py-space-sm" data-active-classes="bg-surface-container-high text-on-surface border-l-2 border-primary font-title-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-all duration-200 bg-surface-container-high text-on-surface border-l-2 border-blueprint-amber font-title-sm shadow-sm group" data-path="canvas-studio" href="#"><span class="material-symbols-outlined text-[18px] text-primary transition-transform duration-200 group-hover:scale-110">architecture</span><span class="">Canvas Studio</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface hover:border-l-2 hover:border-blueprint-amber/60 border-l-2 border-transparent transition-all duration-200 font-body-sm text-body-sm group" data-path="dsl-code-editor" href="#"><span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:scale-110">terminal</span><span class="">DSL Editor</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface hover:border-l-2 hover:border-blueprint-amber/60 border-l-2 border-transparent transition-all duration-200 font-body-sm text-body-sm group" data-path="resource-catalog" href="#"><span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:scale-110">grid_view</span><span class="">Resource Catalog</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface hover:border-l-2 hover:border-blueprint-amber/60 border-l-2 border-transparent transition-all duration-200 font-body-sm text-body-sm group" data-path="state-graph" href="#"><span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:scale-110">hub</span><span class="">State Graph</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface hover:border-l-2 hover:border-blueprint-amber/60 border-l-2 border-transparent transition-all duration-200 font-body-sm text-body-sm group" data-path="iac-diff-inspector" href="#"><span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:scale-110">difference</span><span class="">Diff Inspector</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface hover:border-l-2 hover:border-blueprint-amber/60 border-l-2 border-transparent transition-all duration-200 font-body-sm text-body-sm group" data-path="deploy-pipelines" href="#"><span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:scale-110">rocket_launch</span><span class="">Deploy Runs</span></a></nav>
+<!-- Palette / Quick Resource Injector Section -->
+<div class="px-space-md py-space-sm border-t border-structural-border bg-surface-container-lowest">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-[10px] text-secondary uppercase tracking-wider">Drag to Canvas</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">drag_indicator</span>
+</div>
+<div class="space-y-1.5" id="toolbox-palette">
+<div class="palette-item p-2 rounded bg-surface-container hover:bg-surface-container-high border border-structural-border flex items-center justify-between cursor-grab hover:border-blueprint-amber/50 transition-all text-body-sm" data-engine="aurora-pg" data-kind="StorageNode • AURORA_PG" data-metric="1TB io2 • Multi-AZ" data-name="auroraCluster" data-type="database" draggable="true">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary">database</span>
+<span class="text-on-surface font-title-sm text-[12px]">Database</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-secondary">drag_indicator</span>
+</div>
+<div class="palette-item p-2 rounded bg-surface-container hover:bg-surface-container-high border border-structural-border flex items-center justify-between cursor-grab hover:border-blueprint-amber/50 transition-all text-body-sm" data-engine="k8s-pod" data-kind="ServiceNode • K8S_POD" data-metric="6 Replicas • 1500m" data-name="paymentService" data-type="service" draggable="true">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">hub</span>
+<span class="text-on-surface font-title-sm text-[12px]">Service</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-secondary">drag_indicator</span>
+</div>
+<div class="palette-item p-2 rounded bg-surface-container hover:bg-surface-container-high border border-structural-border flex items-center justify-between cursor-grab hover:border-blueprint-amber/50 transition-all text-body-sm" data-engine="redis" data-kind="CacheNode • REDIS_STANDALONE" data-metric="3 Nodes • 8gb" data-name="workerCache" data-type="cache" draggable="true">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-emerald-400">memory</span>
+<span class="text-on-surface font-title-sm text-[12px]">Cache</span>
+</div>
+<span class="material-symbols-outlined text-[14px] text-secondary">drag_indicator</span>
+</div>
+</div>
+</div>
+</div><div class="p-space-sm border-t border-structural-border bg-surface-container-lowest"><div class="p-space-sm rounded bg-surface-container border border-structural-border flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface">Engine: v3.12</span></div><span class="font-label-sm text-label-sm text-secondary">READY</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-14 bg-surface-container-low/95 backdrop-blur border-b border-structural-border z-40 flex items-center justify-between px-space-md"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 font-code-inline text-body-sm text-on-surface-variant"><span class="text-secondary">Project:</span><span class="text-on-surface font-title-sm">acme-fintech-prod</span><span class="text-structural-border">/</span><span class="text-secondary">Branch:</span><span class="text-primary-fixed-dim">main</span><span class="px-2 py-0.5 rounded bg-surface-container-high border border-structural-border font-label-sm text-label-sm text-secondary-fixed flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>Syncing [0 err]</span></div><div class="h-4 w-[1px] bg-structural-border"></div><div class="flex items-center p-0.5 rounded bg-surface-container-lowest border border-structural-border font-label-sm text-label-sm"><button class="px-2.5 py-1 rounded bg-secondary-container text-on-surface font-medium">Staging</button><button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface">Production</button></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-1 p-1 rounded bg-surface-container border border-structural-border"><button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" title="Compute Filter"><span class="material-symbols-outlined text-[18px]">memory</span></button><button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" title="Data Layer"><span class="material-symbols-outlined text-[18px]">database</span></button><button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" title="Network Topology"><span class="material-symbols-outlined text-[18px]">lan</span></button><button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface" title="IAM Security"><span class="material-symbols-outlined text-[18px]">shield_person</span></button></div><div class="flex items-center -space-x-1.5"><div class="w-7 h-7 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center font-label-sm text-[11px] font-bold border border-structural-border">AK</div><div class="w-7 h-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-label-sm text-[11px] font-bold border border-structural-border">ML</div><div class="w-7 h-7 rounded-full bg-surface-bright text-on-surface flex items-center justify-center font-label-sm text-[10px] border border-structural-border">+3</div></div><button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-primary-container text-on-primary-container font-title-sm text-title-sm hover:opacity-90 active:scale-95 transition-all shadow-sm"><span class="material-symbols-outlined text-[16px]">cloud_upload</span><span class="">Deploy</span></button><div class="flex items-center gap-2 pl-2 border-l border-structural-border"><button class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">tune</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-14 w-full bg-surface-dim min-h-screen"><div class="flex flex-col w-full">
+<!-- SUB-HEADER CONTROL & SYNC STATUS BAR -->
+<section class="w-full bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-space-md min-w-0">
+<!-- Breadcrumb Path -->
+<div class="flex items-center gap-2 font-code-inline text-body-sm text-on-surface-variant min-w-0">
+<span class="text-secondary hidden sm:inline">org</span>
+<span class="text-surface-bright hidden sm:inline">/</span>
+<span class="text-secondary truncate">acme-fintech</span>
+<span class="text-surface-bright">/</span>
+<span class="text-secondary">infra</span>
+<span class="text-surface-bright">/</span>
+<span class="text-on-surface font-title-sm flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-high">
+<span class="material-symbols-outlined text-primary text-[15px]">code_blocks</span>
+          global-mesh.arch.ts
+        </span>
+</div>
+<!-- Mode Switcher Tabs -->
+<div class="hidden md:flex items-center p-0.5 rounded bg-surface-container-lowest text-label-sm font-label-sm">
+<button class="px-2.5 py-1 rounded bg-blueprint-amber text-canvas-paper font-semibold transition-all" id="btn-mode-split">Split View</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface transition-colors" id="btn-mode-canvas">Canvas Only</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface transition-colors" id="btn-mode-code">Code Only</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface flex items-center gap-1" id="btn-mode-diff">
+<span class="">IaC Diff</span>
+<span class="w-4 h-4 rounded-full bg-surface-bright text-on-surface text-[9px] flex items-center justify-center font-bold">2</span>
+</button>
+</div>
+</div>
+<!-- Live Synchronization Engine Metadata & Actions -->
+<div class="flex items-center gap-space-md">
+<div class="hidden xl:flex items-center gap-space-md font-label-sm text-label-sm">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container text-on-surface">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="">Bi-directional Sync Active <span class="text-secondary">(24ms)</span></span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[14px] text-tertiary">check_circle</span>
+<span class="">TypeScript [0 err]</span>
+</div>
+<div class="px-1.5 py-0.5 rounded bg-surface-container font-code-inline text-[10px] text-primary-fixed-dim">
+          AST: #8f32bc
+        </div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="flex items-center gap-2">
+<button class="hidden lg:flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-title-sm text-body-sm transition-colors" title="Sync state from current cloud remote">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+<span class="">Sync TF</span>
+</button>
+<button class="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-title-sm text-body-sm transition-colors" title="Check dependency cycles and schema">
+<span class="material-symbols-outlined text-[16px] text-tertiary">verified</span>
+<span class="">Validate</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-blueprint-amber hover:opacity-90 active:scale-95 text-canvas-paper font-title-sm text-title-sm transition-all shadow-md">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span class="">Deploy Preview</span>
+</button>
+</div>
+</div>
+</section>
+<!-- WORKSPACE BODY (3-PANEL BENTO LAYOUT) -->
+<div class="relative w-full flex-1 grid grid-cols-12 overflow-hidden bg-surface-dim" style="min-height: calc(100vh - 105px);">
+<!-- LEFT PANEL: Monaco-Style DSL Editor -->
+<div class="col-span-12 lg:col-span-4 xl:col-span-4 flex flex-col bg-surface-container-lowest transition-all border-r border-structural-border" id="panel-editor">
+<!-- File Tab Header -->
+<div class="h-10 px-space-sm bg-surface-container-low flex items-center justify-between border-b border-structural-border">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-lowest rounded-t text-body-sm font-code-inline text-on-surface">
+<span class="text-tertiary font-bold text-[11px]">TS</span>
+<span class="">global-mesh.arch.ts</span>
+<span class="w-1.5 h-1.5 rounded-full bg-blueprint-amber ml-1" title="Unsaved AST changes in buffer"></span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="font-label-sm text-label-sm text-secondary hidden sm:inline px-1.5 py-0.5 rounded bg-surface-container">AST-v3</span>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Format DSL">
+<span class="material-symbols-outlined text-[16px]">align_horizontal_left</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" title="Fold All">
+<span class="material-symbols-outlined text-[16px]">unfold_less</span>
+</button>
+</div>
+</div>
+<!-- Editor Canvas Simulation -->
+<div class="flex-1 overflow-x-auto p-space-sm font-code-inline text-body-sm leading-relaxed text-on-surface select-text bg-surface-container-lowest/80">
+<div class="flex font-code-inline text-code-inline">
+<!-- Line Numbers -->
+<div class="pr-3 text-right select-none text-surface-bright flex flex-col font-mono text-[11px] leading-6 w-7">
+<span class="">01</span><span class="">02</span><span class="">03</span><span class="">04</span><span class="">05</span>
+<span class="">06</span><span class="">07</span><span class="">08</span><span class="">09</span><span class="">10</span>
+<span class="">11</span><span class="">12</span><span class="">13</span><span class="">14</span><span class="">15</span>
+<span class="">16</span><span class="">17</span><span class="">18</span><span class="">19</span><span class="">20</span>
+<span class="">21</span><span class="">22</span><span class="">23</span>
+</div>
+<!-- Code Syntax Lines -->
+<div class="flex-1 pl-2 text-[12px] leading-6 font-mono overflow-x-auto">
+<div class="text-secondary italic">// Archify Infrastructure as Code DSL v3.12</div>
+<div class=""><span class="text-primary-container font-semibold">import</span> { <span class="text-tertiary">System</span>, <span class="text-tertiary">Gateway</span>, <span class="text-tertiary">Service</span>, <span class="text-tertiary">Cache</span>, <span class="text-tertiary">Stream</span>, <span class="text-tertiary">Database</span> } <span class="text-primary-container font-semibold">from</span> <span class="text-on-surface-variant">'@archify/core'</span>;</div>
+<div class="h-2"></div>
+<div class=""><span class="text-primary-container font-semibold">export const</span> <span class="text-on-surface font-bold">productionCluster</span> = <span class="text-primary-container">new</span> <span class="text-tertiary">System</span>({</div>
+<div class="pl-4"><span class="text-on-surface-variant">region</span>: <span class="text-on-surface-variant">'us-east-1'</span>,</div>
+<div class="pl-4"><span class="text-on-surface-variant">compliance</span>: [<span class="text-on-surface-variant">'SOC2_TYPE_II'</span>, <span class="text-on-surface-variant">'HIPAA'</span>],</div>
+<div class="pl-4"><span class="text-on-surface-variant">vpc</span>: <span class="text-on-surface-variant">'10.100.0.0/16'</span></div>
+<div class="">});</div>
+<div class="h-2"></div>
+<div><span class="text-secondary italic">// Ingress Edge</span></div>
+<div class=""><span class="text-primary-container font-semibold">export const</span> <span class="text-on-surface font-semibold">edgeGateway</span> = <span class="text-primary-container">new</span> <span class="text-tertiary">Gateway</span>({</div>
+<div class="pl-4"><span class="text-on-surface-variant">rateLimit</span>: <span class="text-blueprint-amber font-semibold">12500</span>, <span class="text-on-surface-variant">waf</span>: <span class="text-tertiary">true</span>, <span class="text-on-surface-variant">ssl</span>: <span class="text-on-surface-variant">'strict'</span></div>
+<div class="">});</div>
+<div class="h-2"></div>
+<div class="bg-surface-container/60 -mx-2 px-2 py-0.5 rounded" id="code-line-authCluster">
+<span class="text-primary-container font-semibold">export const</span> <span class="text-blueprint-amber font-bold" id="code-selected-token">authCluster</span> = <span class="text-primary-container">new</span> <span class="text-tertiary">Service</span>({
+            </div>
+<div class="pl-4 bg-surface-container/60 -mx-2 px-2"><span class="text-on-surface-variant">replicas</span>: <span class="text-blueprint-amber font-bold" id="code-replicas-val">12</span>, <span class="text-on-surface-variant">runtime</span>: <span class="text-on-surface-variant">'k8s-pod'</span>, <span class="text-on-surface-variant">cpu</span>: <span class="text-on-surface-variant">'2000m'</span>, <span class="text-on-surface-variant">mem</span>: <span class="text-on-surface-variant">'4Gi'</span></div>
+<div class="bg-surface-container/60 -mx-2 px-2">});</div>
+<div class="h-2"></div>
+<div class=""><span class="text-primary-container font-semibold">export const</span> <span class="text-on-surface">sessionCache</span> = <span class="text-primary-container">new</span> <span class="text-tertiary">Cache</span>({ <span class="text-on-surface-variant">engine</span>: <span class="text-on-surface-variant">'redis-cluster'</span>, <span class="text-on-surface-variant">nodes</span>: <span class="text-blueprint-amber">6</span>, <span class="text-on-surface-variant">maxmemory</span>: <span class="text-on-surface-variant">'16gb'</span> });</div>
+<div class=""><span class="text-primary-container font-semibold">export const</span> <span class="text-on-surface">eventMesh</span> = <span class="text-primary-container">new</span> <span class="text-tertiary">Stream</span>({ <span class="text-on-surface-variant">engine</span>: <span class="text-on-surface-variant">'kafka'</span>, <span class="text-on-surface-variant">partitions</span>: <span class="text-blueprint-amber">64</span>, <span class="text-on-surface-variant">replication</span>: <span class="text-blueprint-amber">3</span> });</div>
+<div class=""><span class="text-primary-container font-semibold">export const</span> <span class="text-on-surface">masterDB</span> = <span class="text-primary-container">new</span> <span class="text-tertiary">Database</span>({ <span class="text-on-surface-variant">engine</span>: <span class="text-on-surface-variant">'aurora-pg'</span>, <span class="text-on-surface-variant">ha</span>: <span class="text-tertiary">true</span>, <span class="text-on-surface-variant">storage</span>: <span class="text-on-surface-variant">'1TB-io2'</span> });</div>
+<div class="h-2"></div>
+<div class="text-secondary italic">// Declarative Topology Links</div>
+<div class=""><span class="text-on-surface">edgeGateway</span>.<span class="text-tertiary">connectTo</span>(<span class="text-blueprint-amber">authCluster</span>, { <span class="text-on-surface-variant">tls</span>: <span class="text-on-surface-variant">'1.3'</span>, <span class="text-on-surface-variant">timeout</span>: <span class="text-on-surface-variant">'250ms'</span> });</div>
+<div class=""><span class="text-blueprint-amber">authCluster</span>.<span class="text-tertiary">bindData</span>(<span class="text-on-surface">sessionCache</span>, { <span class="text-on-surface-variant">poolSize</span>: <span class="text-blueprint-amber">100</span> });</div>
+<div class=""><span class="text-blueprint-amber">authCluster</span>.<span class="text-tertiary">publishTo</span>(<span class="text-on-surface">eventMesh</span>, { <span class="text-on-surface-variant">topic</span>: <span class="text-on-surface-variant">'auth.session.audit'</span> });</div>
+</div>
+</div>
+</div>
+<!-- Execution Drawer / Compilation Output -->
+<div class="h-32 bg-surface-container-low flex flex-col font-code-inline text-[11px] p-space-sm border-t border-structural-border shadow-inner hover:bg-surface-container-low/95 transition-all duration-200 cursor-pointer group">
+<div class="flex items-center justify-between pb-1 mb-1 text-secondary">
+<div class="flex items-center gap-1.5 text-on-surface font-title-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary">terminal</span>
+<span class="">AST COMPILER EXECUTION</span>
+</div>
+<span class="font-label-sm text-[10px] text-emerald-400" id="ast-status">STATE: NOMINAL</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-1 text-on-surface-variant" id="compiler-log">
+<div class="flex items-center gap-1.5 text-emerald-400">
+<span class="">[✓]</span>
+<span id="compiler-parsed-msg">Parsed 4 active canvas nodes, 3 directional links in real-time.</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="">[i]</span>
+<span class="">Zero drift detected against AWS us-east-1 state snapshot.</span>
+</div>
+<div class="flex items-center gap-1.5 text-tertiary-fixed-dim">
+<span class="">[•]</span>
+<span class="">HCL generation target: terraform-provider-aws v5.42.0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- CENTER PANEL: Interactive Node Topology Canvas -->
+<div class="col-span-12 lg:col-span-5 xl:col-span-5 relative flex flex-col overflow-hidden bg-surface-container-lowest" id="panel-canvas">
+<!-- Architectural Drafting Grid Overlay (SVG Canvas) -->
+<div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: radial-gradient(#8cb4ae 0.75px, transparent 0.75px); background-size: 20px 20px;"></div>
+<!-- Top Canvas HUD: Tools & Layer Filter -->
+<div class="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-auto">
+<!-- Canvas Navigation Tools -->
+<div class="flex items-center gap-1 p-1 rounded bg-surface-container/90 backdrop-blur border border-structural-border shadow-md">
+<button class="p-1.5 rounded bg-surface-container-high text-on-surface" id="tool-select" title="Select / Move Node">
+<span class="material-symbols-outlined text-[17px]">near_me</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" id="tool-snap" title="Toggle Grid Snap (20px)">
+<span class="material-symbols-outlined text-[17px] text-blueprint-amber" id="snap-icon">grid_3x3</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" id="tool-add-node" title="Add Generic Microservice Node">
+<span class="material-symbols-outlined text-[17px]">add_circle</span>
+</button>
+<div class="h-4 w-[1px] bg-surface-bright my-auto mx-0.5"></div>
+<button class="p-1.5 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" id="tool-auto-layout" title="Auto Layout Nodes">
+<span class="material-symbols-outlined text-[17px]">account_tree</span>
+</button>
+<button class="p-1.5 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface" id="tool-reset-zoom" title="Reset Viewport">
+<span class="material-symbols-outlined text-[17px]">fit_screen</span>
+</button>
+</div>
+<!-- Layer Filters -->
+<div class="flex items-center p-0.5 rounded bg-surface-container/90 backdrop-blur border border-structural-border font-label-sm text-label-sm shadow-md">
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface" onclick="filterCategory('all')">All</button>
+<button class="px-2 py-1 rounded bg-surface-bright text-on-surface font-semibold" onclick="filterCategory('compute')">Compute</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface" onclick="filterCategory('storage')">Storage</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface" onclick="filterCategory('network')">Network</button>
+</div>
+</div>
+<!-- Real-Time Coordinate & Drag Feedback HUD Badge -->
+<div class="absolute top-16 left-4 z-20 hidden items-center gap-2 px-2.5 py-1 rounded bg-surface-container/95 border border-blueprint-amber/40 font-code-inline text-[11px] text-blueprint-amber shadow-lg pointer-events-none" id="coord-hud">
+<span class="material-symbols-outlined text-[13px] text-blueprint-amber animate-spin">sync</span>
+<span id="coord-text">X: 280, Y: 180 | Snapped (20px)</span>
+</div>
+<!-- Synchronous Bi-directional Banner -->
+<div class="absolute bottom-4 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded bg-surface-container/90 backdrop-blur border border-structural-border font-label-sm text-label-sm text-on-surface-variant shadow-md">
+<span class="w-1.5 h-1.5 rounded-full bg-blueprint-amber animate-ping"></span>
+<span class="">Interactive Drag &amp; Drop: Nodes update AST lines</span>
+</div>
+<!-- Minimap Float -->
+<div class="absolute bottom-4 right-4 z-20 hidden sm:flex flex-col p-2 rounded bg-surface-container/90 backdrop-blur border border-structural-border shadow-md w-28 h-20">
+<span class="font-label-sm text-[9px] text-secondary mb-1">CANVAS MAP</span>
+<div class="w-full flex-1 bg-surface-container-lowest rounded relative overflow-hidden" id="minimap-area">
+<div class="absolute w-3.5 h-2.5 rounded bg-surface-bright" id="mm-edgeGateway" style="left: 10px; top: 18px;"></div>
+<div class="absolute w-4 h-3.5 rounded bg-blueprint-amber" id="mm-authCluster" style="left: 42px; top: 30px;"></div>
+<div class="absolute w-3.5 h-2.5 rounded bg-surface-bright" id="mm-sessionCache" style="left: 78px; top: 12px;"></div>
+<div class="absolute w-3.5 h-2.5 rounded bg-surface-bright" id="mm-eventMesh" style="left: 78px; top: 48px;"></div>
+<div class="absolute inset-1 border border-primary/40 pointer-events-none"></div>
+</div>
+</div>
+<!-- Canvas Schematic Graph Work Area -->
+<div class="relative w-full h-full p-4 overflow-hidden" id="canvas-viewport">
+<!-- SVG Connections Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" id="connections-svg" xmlns="http://www.w3.org/2000/svg">
+<!-- Connection 1: Gateway -> AuthCluster -->
+<path class="opacity-80 transition-all duration-75" d="M 180 180 C 230 180, 240 250, 280 250" fill="none" id="wire-edgeGateway-authCluster" stroke="#8cb4ae" stroke-dasharray="4 3" stroke-width="1.75"></path>
+<!-- Connection 2: AuthCluster -> SessionCache -->
+<path class="opacity-90 transition-all duration-75" d="M 460 230 C 510 230, 500 150, 540 150" fill="none" id="wire-authCluster-sessionCache" stroke="#22d3ee" stroke-width="1.75"></path>
+<!-- Connection 3: AuthCluster -> EventMesh -->
+<path class="opacity-90 transition-all duration-75" d="M 460 280 C 510 280, 500 350, 540 350" fill="none" id="wire-authCluster-eventMesh" stroke="#5ef6c4" stroke-width="1.75"></path>
+<!-- Dynamic Wire Protocol Badges -->
+<g id="badge-edgeGateway-authCluster" transform="translate(200, 215)">
+<rect class="shadow-sm" fill="#0e1b1e" height="18" rx="2" stroke="#173037" stroke-width="1" width="60"></rect>
+<text fill="#8cb4ae" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="30" y="12">mTLS 1.3</text>
+</g>
+<g id="badge-authCluster-sessionCache" transform="translate(480, 185)">
+<rect class="shadow-sm" fill="#0e1b1e" height="18" rx="2" stroke="#173037" stroke-width="1" width="52"></rect>
+<text fill="#22d3ee" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="26" y="12">RESP/6</text>
+</g>
+<g id="badge-authCluster-eventMesh" transform="translate(480, 310)">
+<rect class="shadow-sm" fill="#0e1b1e" height="18" rx="2" stroke="#173037" stroke-width="1" width="64"></rect>
+<text fill="#5ef6c4" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="32" y="12">KAFKA-SASL</text>
+</g>
+</svg>
+<!-- Dynamic Visual Graph Nodes Container -->
+<div class="absolute inset-0 w-full h-full" id="canvas-nodes-container">
+<!-- Node 1: Ingress Edge Gateway -->
+<div class="node-draggable absolute w-44 rounded bg-surface-container-high p-space-sm shadow-md border border-structural-border group" data-id="edgeGateway" data-kind="GatewayNode • ENVOY_PROXY" data-replicas="4" data-runtime="Envoy WAF v1.28" data-title="edgeGateway" data-type="network" id="node-edgeGateway" style="left: 40px; top: 120px;">
+<div class="flex items-center justify-between pb-1.5 mb-1.5 bg-surface-container-highest/40 -mx-2 -mt-2 px-2 pt-1.5 rounded-t group-hover:bg-surface-container-highest/70 transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-secondary opacity-60">drag_indicator</span>
+<span class="material-symbols-outlined text-primary text-[15px]">shield</span>
+<span class="font-title-sm text-body-sm font-semibold text-on-surface">edgeGateway</span>
+</div>
+<span class="font-label-sm text-[9px] px-1 rounded bg-surface-bright text-tertiary">INGRESS</span>
+</div>
+<div class="font-label-sm text-[10px] text-secondary space-y-1 font-mono">
+<div class="flex justify-between"><span class="">Type:</span> <span class="text-on-surface">Envoy/WAF</span></div>
+<div class="flex justify-between"><span class="">Req/sec:</span> <span class="text-on-surface font-semibold">42.4k</span></div>
+<div class="flex justify-between"><span class="">SLA:</span> <span class="text-emerald-400">99.99%</span></div>
+</div>
+<div class="mt-2 pt-1.5 border-t border-structural-border flex items-center justify-between text-[9px] font-label-sm text-secondary">
+<span class="">RATE_LIMIT</span><span class="text-primary-fixed-dim">12.5k req/s</span>
+</div>
+</div>
+<!-- Node 2: SELECTED Focus Node - authCluster (Compute) -->
+<div class="node-draggable node-selected absolute w-56 rounded bg-surface-container-high p-space-sm shadow-xl border border-structural-border ring-2 ring-blueprint-amber group z-20" data-id="authCluster" data-kind="ServiceNode • K8S_DEPLOYMENT" data-replicas="12" data-runtime="EKS Pod (m6i.xlarge)" data-title="authCluster" data-type="compute" id="node-authCluster" style="left: 240px; top: 190px;">
+<div class="flex items-center justify-between pb-1.5 mb-2 bg-surface-container-highest/60 -mx-2 -mt-2 px-2 pt-2 rounded-t">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-secondary opacity-60">drag_indicator</span>
+<span class="material-symbols-outlined text-blueprint-amber text-[17px]">hub</span>
+<span class="font-title-sm text-title-sm font-bold text-on-surface">authCluster</span>
+</div>
+<span class="font-label-sm text-[9px] px-1.5 py-0.5 rounded bg-blueprint-amber text-canvas-paper font-bold node-badge-tag">ACTIVE</span>
+</div>
+<div class="space-y-1.5 font-mono text-[11px]">
+<div class="flex justify-between items-center text-secondary"><span class="">Runtime:</span><span class="text-on-surface font-medium">EKS Pod (m6i)</span></div>
+<div class="flex justify-between items-center text-secondary"><span class="">Replicas:</span><span class="text-blueprint-amber font-bold" id="node-auth-rep-text">12 Active</span></div>
+<div class="pt-1">
+<div class="flex justify-between text-[10px] text-secondary mb-0.5"><span class="">CPU (Avg 48%)</span><span class="text-on-surface">2.4 / 4 Core</span></div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-lowest overflow-hidden"><div class="h-full bg-primary-container rounded-full transition-all duration-300" style="width: 48%"></div></div>
+</div>
+<div class="pt-0.5">
+<div class="flex justify-between text-[10px] text-secondary mb-0.5"><span class="">Memory (62%)</span><span class="text-on-surface">2.48 / 4 GiB</span></div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-lowest overflow-hidden"><div class="h-full bg-tertiary-container rounded-full transition-all duration-300" style="width: 62%"></div></div>
+</div>
+</div>
+<div class="mt-2.5 pt-2 border-t border-structural-border flex items-center justify-between text-[10px] font-mono text-secondary">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>P99: 18ms</span>
+<span class="text-on-surface-variant font-semibold">SOC2 • HIPAA</span>
+</div>
+</div>
+<!-- Node 3: Session Cache (Redis) -->
+<div class="node-draggable absolute w-44 rounded bg-surface-container-high p-space-sm shadow-md border border-structural-border group" data-id="sessionCache" data-kind="CacheNode • REDIS_CLUSTER" data-replicas="6" data-runtime="Redis 7.0 (Cluster)" data-title="sessionCache" data-type="storage" id="node-sessionCache" style="left: 540px; top: 80px;">
+<div class="flex items-center justify-between pb-1.5 mb-1.5 bg-surface-container-highest/40 -mx-2 -mt-2 px-2 pt-1.5 rounded-t group-hover:bg-surface-container-highest/70 transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-secondary opacity-60">drag_indicator</span>
+<span class="material-symbols-outlined text-tertiary text-[15px]">memory</span>
+<span class="font-title-sm text-body-sm font-semibold text-on-surface">sessionCache</span>
+</div>
+<span class="font-label-sm text-[9px] px-1 rounded bg-surface-bright text-secondary">CACHE</span>
+</div>
+<div class="font-label-sm text-[10px] text-secondary space-y-1 font-mono">
+<div class="flex justify-between"><span class="">Engine:</span> <span class="text-on-surface">Redis 7.0</span></div>
+<div class="flex justify-between"><span class="">Nodes:</span> <span class="text-on-surface">6 Cluster</span></div>
+<div class="flex justify-between"><span class="">Hit Ratio:</span> <span class="text-emerald-400 font-semibold">98.4%</span></div>
+<div class="flex justify-between"><span class="">Latency:</span> <span class="text-on-surface">0.4ms avg</span></div>
+</div>
+</div>
+<!-- Node 4: Event Mesh (Kafka) -->
+<div class="node-draggable absolute w-44 rounded bg-surface-container-high p-space-sm shadow-md border border-structural-border group" data-id="eventMesh" data-kind="StreamNode • APACHE_KAFKA" data-replicas="3" data-runtime="Kafka 3.4 (Strimzi)" data-title="eventMesh" data-type="storage" id="node-eventMesh" style="left: 540px; top: 300px;">
+<div class="flex items-center justify-between pb-1.5 mb-1.5 bg-surface-container-highest/40 -mx-2 -mt-2 px-2 pt-1.5 rounded-t group-hover:bg-surface-container-highest/70 transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-secondary opacity-60">drag_indicator</span>
+<span class="material-symbols-outlined text-primary text-[15px]">stream</span>
+<span class="font-title-sm text-body-sm font-semibold text-on-surface">eventMesh</span>
+</div>
+<span class="font-label-sm text-[9px] px-1 rounded bg-surface-bright text-secondary">STREAM</span>
+</div>
+<div class="font-label-sm text-[10px] text-secondary space-y-1 font-mono">
+<div class="flex justify-between"><span class="">Engine:</span> <span class="text-on-surface">Kafka v3.4</span></div>
+<div class="flex justify-between"><span class="">Partitions:</span> <span class="text-on-surface">64</span></div>
+<div class="flex justify-between"><span class="">Throughput:</span> <span class="text-primary-fixed-dim">52k msg/s</span></div>
+<div class="flex justify-between"><span class="">Replication:</span> <span class="text-on-surface">3x ISR</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL: Node Properties & Configuration Inspector -->
+<div class="col-span-12 lg:col-span-3 xl:col-span-3 flex flex-col bg-surface-container-low transition-all border-l border-structural-border" id="panel-inspector">
+<!-- Inspector Header -->
+<div class="h-10 px-space-sm bg-surface-container flex items-center justify-between border-b border-structural-border">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-blueprint-amber text-[17px]">tune</span>
+<span class="font-title-sm text-title-sm text-on-surface font-semibold">NODE INSPECTOR</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-[9px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold" id="inspector-sync-badge">SYNCHRONIZED</span>
+</div>
+</div>
+<!-- Selected Entity Meta Bar -->
+<div class="p-space-sm bg-surface-container-high flex items-center justify-between border-b border-structural-border">
+<div class="min-w-0">
+<div class="font-title-md text-title-md font-bold text-on-surface truncate" id="inspector-node-title">authCluster</div>
+<div class="font-label-sm text-[10px] text-secondary truncate" id="inspector-node-kind">Kind: ServiceNode • K8S_DEPLOYMENT</div>
+</div>
+<button class="p-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface" title="View DSL Declaration">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+</button>
+</div>
+<!-- Tab Navigator -->
+<div class="flex items-center px-space-sm bg-surface-container-lowest font-label-sm text-label-sm border-b border-structural-border">
+<button class="py-2 px-3 border-b-2 border-blueprint-amber text-on-surface font-semibold">Attributes</button>
+<button class="py-2 px-3 text-secondary hover:text-on-surface">Security</button>
+<button class="py-2 px-3 text-secondary hover:text-on-surface">Drift (0)</button>
+<button class="py-2 px-3 text-secondary hover:text-on-surface">Telemetry</button>
+</div>
+<!-- Inspector Content Body -->
+<div class="flex-1 overflow-y-auto p-space-sm space-y-space-md font-code-inline text-body-sm">
+<!-- Field 1: Replicas (Interactive Stepper) -->
+<div class="space-y-1">
+<div class="flex justify-between items-center text-secondary font-label-sm text-label-sm">
+<label class="" for="input-replicas">DESIRED REPLICAS</label>
+<span class="text-tertiary font-mono">autoscale min:4 max:24</span>
+</div>
+<div class="flex items-center rounded bg-surface-container-lowest border border-structural-border p-1">
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-bold text-base flex items-center justify-center transition-colors" id="btn-dec-replicas">-</button>
+<input class="w-full bg-transparent text-center font-bold text-blueprint-amber focus:outline-none text-base" id="input-replicas" type="text" value="12"/>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-bold text-base flex items-center justify-center transition-colors" id="btn-inc-replicas">+</button>
+</div>
+<span class="text-[10px] text-secondary block" id="inspector-dsl-hint">Updates `replicas` attribute in `global-mesh.arch.ts`</span>
+</div>
+<!-- Field 2: Runtime Configuration -->
+<div class="space-y-1.5">
+<div class="text-secondary font-label-sm text-label-sm">INSTANCE HARDWARE SPEC</div>
+<div class="p-space-sm rounded bg-surface-container-lowest border border-structural-border space-y-2">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-secondary">Node Type:</span>
+<span class="text-on-surface font-medium bg-surface-container px-2 py-0.5 rounded" id="inspector-node-type">m6i.xlarge (AWS)</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-secondary">CPU Allocation:</span>
+<span class="text-on-surface" id="inspector-cpu">2000m / core</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-secondary">Memory Limit:</span>
+<span class="text-on-surface" id="inspector-mem">4GiB (Burstable)</span>
+</div>
+</div>
+</div>
+<!-- Field 3: Service Mesh & Policy -->
+<div class="space-y-1.5">
+<div class="text-secondary font-label-sm text-label-sm">ZERO TRUST NETWORKING</div>
+<div class="p-space-sm rounded bg-surface-container-lowest border border-structural-border space-y-2 text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-secondary">Istio Sidecar:</span>
+<span class="text-emerald-400 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                STRICT mTLS
+              </span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-secondary">Egress Whitelist:</span>
+<span class="text-on-surface">2 Targets</span>
+</div>
+</div>
+</div>
+<!-- Infrastructure Verification & Commit Card -->
+<div class="p-space-sm rounded bg-surface-container border border-structural-border space-y-2">
+<div class="flex items-center gap-1.5 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-tertiary">commit</span>
+<span class="">IaC MODULE LINKAGE</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+            Bound to <code class="text-primary-fixed-dim" id="inspector-module-path">terraform/modules/auth-service</code>. Latest deployed commit <span class="text-on-surface font-semibold">#4b29f0c</span>.
+          </p>
+<div class="pt-1 flex items-center justify-between text-[10px] text-emerald-400">
+<span class="">DRIFT: 0.00%</span>
+<span class="">KMS: AWS_MANAGED</span>
+</div>
+</div>
+<!-- Action Toolbelt -->
+<div class="space-y-2 pt-2"><button class="w-full py-2 px-3 rounded bg-surface-container hover:bg-surface-container-high hover:border-tertiary/40 border border-transparent text-on-surface font-title-sm text-body-sm flex items-center justify-between transition-all duration-200 hover:shadow-sm group"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary group-hover:scale-110 transition-transform">code</span><span class="">View Generated HCL</span></span><span class="material-symbols-outlined text-[16px] text-secondary group-hover:translate-x-1 group-hover:text-on-surface transition-transform duration-200">chevron_right</span></button><button class="w-full py-2 px-3 rounded bg-surface-container hover:bg-surface-container-high hover:border-blueprint-amber/40 border border-transparent text-on-surface font-title-sm text-body-sm flex items-center justify-between transition-all duration-200 hover:shadow-sm group"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-primary group-hover:scale-110 transition-transform">warning</span><span class="">Simulate Blast Radius</span></span><span class="material-symbols-outlined text-[16px] text-secondary group-hover:translate-x-1 group-hover:text-on-surface transition-transform duration-200">chevron_right</span></button></div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // -------------------------------------------------------------
+    // State & Wire Connections
+    // -------------------------------------------------------------
+    const canvasViewport = document.getElementById('canvas-viewport');
+    const nodesContainer = document.getElementById('canvas-nodes-container');
+    const coordHud = document.getElementById('coord-hud');
+    const coordText = document.getElementById('coord-text');
+    let snapToGrid = true;
+    const GRID_SIZE = 20;
+
+    // Topology links configuration: source node -> target node
+    const wires = [
+      { id: 'wire-edgeGateway-authCluster', badgeId: 'badge-edgeGateway-authCluster', from: 'node-edgeGateway', to: 'node-authCluster' },
+      { id: 'wire-authCluster-sessionCache', badgeId: 'badge-authCluster-sessionCache', from: 'node-authCluster', to: 'node-sessionCache' },
+      { id: 'wire-authCluster-eventMesh', badgeId: 'badge-authCluster-eventMesh', from: 'node-authCluster', to: 'node-eventMesh' }
+    ];
+
+    // Compute center-right / center-left anchor coordinates for wiring
+    function getNodeAnchor(nodeEl, side = 'right') {
+      const x = nodeEl.offsetLeft;
+      const y = nodeEl.offsetTop;
+      const w = nodeEl.offsetWidth;
+      const h = nodeEl.offsetHeight;
+
+      if (side === 'right') {
+        return { x: x + w, y: y + (h / 2) };
+      } else if (side === 'left') {
+        return { x: x, y: y + (h / 2) };
+      } else if (side === 'center') {
+        return { x: x + (w / 2), y: y + (h / 2) };
+      }
+      return { x: x + w, y: y + (h / 2) };
+    }
+
+    // Dynamic Bezier connector updater
+    function updateWirePaths() {
+      wires.forEach(link => {
+        const fromEl = document.getElementById(link.from);
+        const toEl = document.getElementById(link.to);
+        const pathEl = document.getElementById(link.id);
+        const badgeEl = document.getElementById(link.badgeId);
+
+        if (!fromEl || !toEl || !pathEl) return;
+
+        const fromPos = getNodeAnchor(fromEl, 'right');
+        const toPos = getNodeAnchor(toEl, 'left');
+
+        const deltaX = Math.max(30, Math.abs(toPos.x - fromPos.x) * 0.5);
+        const c1x = fromPos.x + deltaX;
+        const c1y = fromPos.y;
+        const c2x = toPos.x - deltaX;
+        const c2y = toPos.y;
+
+        const d = `M ${fromPos.x.toFixed(1)} ${fromPos.y.toFixed(1)} C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${toPos.x.toFixed(1)} ${toPos.y.toFixed(1)}`;
+        pathEl.setAttribute('d', d);
+
+        if (badgeEl) {
+          // Place badge at mid-curve
+          const midX = (fromPos.x + toPos.x) / 2 - 28;
+          const midY = (fromPos.y + toPos.y) / 2 - 9;
+          badgeEl.setAttribute('transform', `translate(${midX.toFixed(1)}, ${midY.toFixed(1)})`);
+        }
+      });
+      updateMinimap();
+    }
+
+    function updateMinimap() {
+      ['node-edgeGateway', 'node-authCluster', 'node-sessionCache', 'node-eventMesh'].forEach(nodeId => {
+        const el = document.getElementById(nodeId);
+        const mmId = 'mm-' + nodeId.replace('node-', '');
+        const mmEl = document.getElementById(mmId);
+        if (el && mmEl && canvasViewport) {
+          const vw = canvasViewport.offsetWidth || 700;
+          const vh = canvasViewport.offsetHeight || 500;
+          const leftPct = Math.min(85, Math.max(5, (el.offsetLeft / vw) * 100));
+          const topPct = Math.min(80, Math.max(5, (el.offsetTop / vh) * 100));
+          mmEl.style.left = `${leftPct.toFixed(0)}%`;
+          mmEl.style.top = `${topPct.toFixed(0)}%`;
+        }
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Node Drag & Drop Logic (Pointer Events)
+    // -------------------------------------------------------------
+    let activeDragNode = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let initialLeft = 0;
+    let initialTop = 0;
+    let hasMoved = false;
+
+    function initNodeDraggable(node) {
+      node.addEventListener('pointerdown', (e) => {
+        // If clicking buttons inside node, let default handle
+        if (e.target.closest('button') || e.target.closest('input')) return;
+
+        activeDragNode = node;
+        hasMoved = false;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        initialLeft = node.offsetLeft;
+        initialTop = node.offsetTop;
+
+        node.setPointerCapture(e.pointerId);
+        node.classList.add('node-dragging');
+
+        // Show coordinate HUD
+        coordHud.classList.remove('hidden');
+        coordHud.classList.add('flex');
+        updateCoordDisplay(initialLeft, initialTop);
+
+        e.stopPropagation();
+      });
+
+      node.addEventListener('pointermove', (e) => {
+        if (!activeDragNode || activeDragNode !== node) return;
+
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+          hasMoved = true;
+        }
+
+        let newLeft = initialLeft + dx;
+        let newTop = initialTop + dy;
+
+        // Bounding limits
+        newLeft = Math.max(10, Math.min(newLeft, canvasViewport.offsetWidth - node.offsetWidth - 20));
+        newTop = Math.max(60, Math.min(newTop, canvasViewport.offsetHeight - node.offsetHeight - 20));
+
+        // Grid snapping
+        if (snapToGrid) {
+          newLeft = Math.round(newLeft / GRID_SIZE) * GRID_SIZE;
+          newTop = Math.round(newTop / GRID_SIZE) * GRID_SIZE;
+        }
+
+        node.style.left = `${newLeft}px`;
+        node.style.top = `${newTop}px`;
+
+        updateCoordDisplay(newLeft, newTop);
+        updateWirePaths();
+      });
+
+      const handlePointerUp = (e) => {
+        if (!activeDragNode || activeDragNode !== node) return;
+
+        node.classList.remove('node-dragging');
+        coordHud.classList.add('hidden');
+        coordHud.classList.remove('flex');
+
+        try {
+          node.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+
+        if (!hasMoved) {
+          selectNode(node);
+        } else {
+          // Log compiler sync event
+          const nodeId = node.getAttribute('data-id') || 'node';
+          const left = node.offsetLeft;
+          const top = node.offsetTop;
+          logAstChange(`Topology repositioned: \`${nodeId}\` at (${left}px, ${top}px)`);
+        }
+
+        activeDragNode = null;
+        hasMoved = false;
+      };
+
+      node.addEventListener('pointerup', handlePointerUp);
+      node.addEventListener('pointercancel', handlePointerUp);
+    }
+
+    function updateCoordDisplay(x, y) {
+      if (coordText) {
+        coordText.textContent = `X: ${Math.round(x)}, Y: ${Math.round(y)} | ${snapToGrid ? 'Snap: 20px' : 'Free Drag'}`;
+      }
+    }
+
+    function logAstChange(msg) {
+      const astStatus = document.getElementById('ast-status');
+      const parsedMsg = document.getElementById('compiler-parsed-msg');
+      if (astStatus) {
+        astStatus.textContent = 'STATE: SYNCED';
+        astStatus.className = 'font-label-sm text-[10px] text-tertiary-fixed-dim';
+        setTimeout(() => {
+          if (astStatus) {
+            astStatus.textContent = 'STATE: NOMINAL';
+            astStatus.className = 'font-label-sm text-[10px] text-emerald-400';
+          }
+        }, 1200);
+      }
+      if (parsedMsg) {
+        parsedMsg.textContent = `${msg} (0 err, AST refreshed).`;
+      }
+    }
+
+    // -------------------------------------------------------------
+    // Node Selection & Inspector Population
+    // -------------------------------------------------------------
+    function selectNode(node) {
+      document.querySelectorAll('.node-draggable').forEach(n => {
+        n.classList.remove('node-selected', 'ring-2', 'ring-blueprint-amber');
+        const badge = n.querySelector('.node-badge-tag');
+        if (badge) {
+          badge.classList.remove('bg-blueprint-amber', 'text-canvas-paper');
+          badge.classList.add('bg-surface-bright', 'text-secondary');
+          badge.textContent = badge.getAttribute('data-orig-text') || 'NODE';
+        }
+      });
+
+      node.classList.add('node-selected', 'ring-2', 'ring-blueprint-amber');
+      const badge = node.querySelector('.node-badge-tag');
+      if (badge) {
+        if (!badge.getAttribute('data-orig-text')) badge.setAttribute('data-orig-text', badge.textContent);
+        badge.classList.add('bg-blueprint-amber', 'text-canvas-paper');
+        badge.classList.remove('bg-surface-bright', 'text-secondary');
+        badge.textContent = 'ACTIVE';
+      }
+
+      // Update Inspector panel
+      const title = node.getAttribute('data-title') || 'authCluster';
+      const kind = node.getAttribute('data-kind') || 'ServiceNode • K8S_DEPLOYMENT';
+      const runtime = node.getAttribute('data-runtime') || 'm6i.xlarge (AWS)';
+      const replicas = node.getAttribute('data-replicas') || '12';
+
+      const inspTitle = document.getElementById('inspector-node-title');
+      const inspKind = document.getElementById('inspector-node-kind');
+      const inspType = document.getElementById('inspector-node-type');
+      const inspReplicas = document.getElementById('input-replicas');
+      const codeToken = document.getElementById('code-selected-token');
+      const inspHint = document.getElementById('inspector-dsl-hint');
+      const modulePath = document.getElementById('inspector-module-path');
+
+      if (inspTitle) inspTitle.textContent = title;
+      if (inspKind) inspKind.textContent = `Kind: ${kind}`;
+      if (inspType) inspType.textContent = runtime;
+      if (inspReplicas) inspReplicas.value = replicas;
+      if (codeToken) codeToken.textContent = title;
+      if (inspHint) inspHint.textContent = `Updates \`${title}\` attributes in \`global-mesh.arch.ts\``;
+      if (modulePath) modulePath.textContent = `terraform/modules/${title.toLowerCase()}`;
+    }
+
+    // Attach drag listener to initial nodes
+    document.querySelectorAll('.node-draggable').forEach(initNodeDraggable);
+
+    // Initial wire sync
+    setTimeout(updateWirePaths, 60);
+    window.addEventListener('resize', updateWirePaths);
+
+    // -------------------------------------------------------------
+    // Palette Drag-and-Drop to Canvas
+    // -------------------------------------------------------------
+    const paletteItems = document.querySelectorAll('.palette-item');
+    paletteItems.forEach(item => {
+      item.addEventListener('dragstart', (e) => {
+        const payload = {
+          name: item.getAttribute('data-name'),
+          kind: item.getAttribute('data-kind'),
+          type: item.getAttribute('data-type'),
+          engine: item.getAttribute('data-engine'),
+          metric: item.getAttribute('data-metric')
+        };
+        e.dataTransfer.setData('text/plain', JSON.stringify(payload));
+        e.dataTransfer.effectAllowed = 'copy';
+      });
+    });
+
+    if (canvasViewport) {
+      canvasViewport.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+      });
+
+      canvasViewport.addEventListener('drop', (e) => {
+        e.preventDefault();
+        try {
+          const raw = e.dataTransfer.getData('text/plain');
+          if (!raw) return;
+          const data = JSON.parse(raw);
+
+          const rect = canvasViewport.getBoundingClientRect();
+          let dropX = e.clientX - rect.left - 80;
+          let dropY = e.clientY - rect.top - 30;
+
+          if (snapToGrid) {
+            dropX = Math.round(dropX / GRID_SIZE) * GRID_SIZE;
+            dropY = Math.round(dropY / GRID_SIZE) * GRID_SIZE;
+          }
+
+          createNewCanvasNode(data, dropX, dropY);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+
+    function createNewCanvasNode(data, x, y) {
+      const newNode = document.createElement('div');
+      const uniqueId = data.name + '_' + Math.floor(Math.random() * 100);
+      newNode.id = 'node-' + uniqueId;
+      newNode.className = 'node-draggable absolute w-48 rounded bg-surface-container-high p-space-sm shadow-md border border-structural-border group z-20';
+      newNode.style.left = `${Math.max(20, x)}px`;
+      newNode.style.top = `${Math.max(60, y)}px`;
+
+      newNode.setAttribute('data-id', uniqueId);
+      newNode.setAttribute('data-title', uniqueId);
+      newNode.setAttribute('data-kind', data.kind);
+      newNode.setAttribute('data-runtime', data.metric);
+      newNode.setAttribute('data-replicas', '4');
+      newNode.setAttribute('data-type', data.type);
+
+      const iconMap = { database: 'database', service: 'hub', cache: 'memory' };
+      const icon = iconMap[data.type] || 'widgets';
+
+      newNode.innerHTML = `
+        <div class="flex items-center justify-between pb-1.5 mb-1.5 bg-surface-container-highest/40 -mx-2 -mt-2 px-2 pt-1.5 rounded-t group-hover:bg-surface-container-highest/70 transition-colors">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[13px] text-secondary opacity-60">drag_indicator</span>
+            <span class="material-symbols-outlined text-tertiary text-[15px]">${icon}</span>
+            <span class="font-title-sm text-body-sm font-semibold text-on-surface">${uniqueId}</span>
+          </div>
+          <span class="font-label-sm text-[9px] px-1 rounded bg-surface-bright text-secondary uppercase">${data.type}</span>
+        </div>
+        <div class="font-label-sm text-[10px] text-secondary space-y-1 font-mono">
+          <div class="flex justify-between"><span class="">Engine:</span> <span class="text-on-surface font-semibold">${data.engine}</span></div>
+          <div class="flex justify-between"><span class="">Spec:</span> <span class="text-on-surface">${data.metric}</span></div>
+        </div>
+      `;
+
+      nodesContainer.appendChild(newNode);
+      initNodeDraggable(newNode);
+      selectNode(newNode);
+      logAstChange(`Instantiated new DSL node \`${uniqueId}\` into AST`);
+    }
+
+    // -------------------------------------------------------------
+    // HUD Tool Actions: Snap, Auto-Layout, Add
+    // -------------------------------------------------------------
+    const toolSnap = document.getElementById('tool-snap');
+    const snapIcon = document.getElementById('snap-icon');
+    if (toolSnap && snapIcon) {
+      toolSnap.addEventListener('click', () => {
+        snapToGrid = !snapToGrid;
+        snapIcon.className = snapToGrid ? 'material-symbols-outlined text-[17px] text-blueprint-amber' : 'material-symbols-outlined text-[17px] text-secondary';
+        toolSnap.title = snapToGrid ? 'Grid Snap: 20px (ON)' : 'Grid Snap: (OFF)';
+      });
+    }
+
+    const toolAddNode = document.getElementById('tool-add-node');
+    if (toolAddNode) {
+      toolAddNode.addEventListener('click', () => {
+        createNewCanvasNode({
+          name: 'workerQueue',
+          kind: 'QueueNode • SQS_WORKER',
+          type: 'service',
+          engine: 'sqs-fifo',
+          metric: '800 msg/s concurrency'
+        }, 320, 260);
+      });
+    }
+
+    const toolAutoLayout = document.getElementById('tool-auto-layout');
+    if (toolAutoLayout) {
+      toolAutoLayout.addEventListener('click', () => {
+        const edge = document.getElementById('node-edgeGateway');
+        const auth = document.getElementById('node-authCluster');
+        const cache = document.getElementById('node-sessionCache');
+        const event = document.getElementById('node-eventMesh');
+
+        if (edge) { edge.style.left = '40px'; edge.style.top = '140px'; }
+        if (auth) { auth.style.left = '260px'; auth.style.top = '170px'; }
+        if (cache) { cache.style.left = '560px'; cache.style.top = '80px'; }
+        if (event) { event.style.left = '560px'; event.style.top = '300px'; }
+
+        updateWirePaths();
+        logAstChange('Dagre hierarchical auto-layout recalculated');
+      });
+    }
+
+    // Filter categories (Compute, Storage, Network, All)
+    window.filterCategory = function(cat) {
+      document.querySelectorAll('.node-draggable').forEach(node => {
+        const type = node.getAttribute('data-type');
+        if (cat === 'all' || type === cat) {
+          node.style.opacity = '1';
+          node.style.filter = 'none';
+        } else {
+          node.style.opacity = '0.3';
+          node.style.filter = 'grayscale(80%)';
+        }
+      });
+    };
+
+    // -------------------------------------------------------------
+    // Mode Switcher Interactions
+    // -------------------------------------------------------------
+    const btnSplit = document.getElementById('btn-mode-split');
+    const btnCanvas = document.getElementById('btn-mode-canvas');
+    const btnCode = document.getElementById('btn-mode-code');
+    const panelEditor = document.getElementById('panel-editor');
+    const panelCanvas = document.getElementById('panel-canvas');
+    const panelInspector = document.getElementById('panel-inspector');
+
+    function resetModeButtons() {
+      [btnSplit, btnCanvas, btnCode].forEach(btn => {
+        if (!btn) return;
+        btn.className = "px-2.5 py-1 text-on-surface-variant hover:text-on-surface transition-colors";
+      });
+    }
+
+    if (btnSplit && btnCanvas && btnCode) {
+      btnSplit.addEventListener('click', () => {
+        resetModeButtons();
+        btnSplit.className = "px-2.5 py-1 rounded bg-blueprint-amber text-canvas-paper font-semibold transition-all";
+        panelEditor.classList.remove('hidden');
+        panelEditor.className = "col-span-12 lg:col-span-4 xl:col-span-4 flex flex-col bg-surface-container-lowest transition-all border-r border-structural-border";
+        panelCanvas.className = "col-span-12 lg:col-span-5 xl:col-span-5 relative flex flex-col overflow-hidden bg-surface-container-lowest";
+        panelInspector.classList.remove('hidden');
+        setTimeout(updateWirePaths, 100);
+      });
+
+      btnCanvas.addEventListener('click', () => {
+        resetModeButtons();
+        btnCanvas.className = "px-2.5 py-1 rounded bg-blueprint-amber text-canvas-paper font-semibold transition-all";
+        panelEditor.classList.add('hidden');
+        panelCanvas.className = "col-span-12 lg:col-span-9 xl:col-span-9 relative flex flex-col overflow-hidden bg-surface-container-lowest";
+        panelInspector.classList.remove('hidden');
+        setTimeout(updateWirePaths, 100);
+      });
+
+      btnCode.addEventListener('click', () => {
+        resetModeButtons();
+        btnCode.className = "px-2.5 py-1 rounded bg-blueprint-amber text-canvas-paper font-semibold transition-all";
+        panelEditor.classList.remove('hidden');
+        panelEditor.className = "col-span-12 lg:col-span-8 xl:col-span-8 flex flex-col bg-surface-container-lowest transition-all border-r border-structural-border";
+        panelCanvas.classList.add('hidden');
+        panelInspector.classList.remove('hidden');
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Interactive Replicas Stepper
+    // -------------------------------------------------------------
+    const btnInc = document.getElementById('btn-inc-replicas');
+    const btnDec = document.getElementById('btn-dec-replicas');
+    const inputRep = document.getElementById('input-replicas');
+    const nodeAuthRep = document.getElementById('node-auth-rep-text');
+    const codeRepVal = document.getElementById('code-replicas-val');
+
+    function setReplicas(val) {
+      if (inputRep) inputRep.value = val;
+      if (nodeAuthRep) nodeAuthRep.textContent = `${val} Active`;
+      if (codeRepVal) codeRepVal.textContent = val;
+      const selected = document.querySelector('.node-selected');
+      if (selected) selected.setAttribute('data-replicas', val);
+      logAstChange(`Updated replicas = ${val} in AST buffer`);
+    }
+
+    if (btnInc && btnDec && inputRep) {
+      btnInc.addEventListener('click', () => {
+        let val = parseInt(inputRep.value, 10) || 0;
+        if (val < 24) setReplicas(val + 1);
+      });
+      btnDec.addEventListener('click', () => {
+        let val = parseInt(inputRep.value, 10) || 0;
+        if (val > 4) setReplicas(val - 1);
+      });
+    }
+  })();
+</script></main></div>
+</body></html>

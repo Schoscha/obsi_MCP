@@ -50,18 +50,18 @@ export const GlassAnalysisModal = ({
         onClick={(e) => e.stopPropagation()}
         className={`w-full max-w-4xl max-h-[92vh] rounded flex flex-col overflow-hidden border shadow-2xl transition-colors duration-150 ${
           isWeiss
-            ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-            : 'bg-[#1e1b14] border-[#2E2A20] text-[#e8e2d6]'
+            ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+            : 'bg-[#0b1715] border-[#16302b] text-[#ecfdf5]'
         }`}
       >
         {/* Header */}
         <div
           className={`px-5 py-4 border-b flex items-center justify-between ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#E54D2E] text-[#F5F3EC]">
+            <div className="w-8 h-8 rounded flex items-center justify-center bg-[#34d399] text-[#041311]">
               <BookOpen className="w-4 h-4" />
             </div>
             <div>
@@ -71,7 +71,7 @@ export const GlassAnalysisModal = ({
               >
                 Architektur-Audit & Sinnhaftigkeits-Analyse
               </h2>
-              <p className="text-xs font-mono text-[#9b968a]">
+              <p className="text-xs font-mono text-[#689187]">
                 Blake Crosley 2026 Leitfaden · Ist die kombinierte Version umsetzbar?
               </p>
             </div>
@@ -82,8 +82,8 @@ export const GlassAnalysisModal = ({
             aria-label="Analyse schließen"
             className={`p-1.5 rounded border transition-colors cursor-pointer ${
               isWeiss
-                ? 'border-[#D6D2C4] hover:bg-[#E2DFD5] text-[#15130C]'
-                : 'border-[#2E2A20] hover:bg-[#2c2a22] text-[#cac6ba]'
+                ? 'border-[#bdd6cf] hover:bg-[#d7e8e2] text-[#06201b]'
+                : 'border-[#16302b] hover:bg-[#132824] text-[#b2d8ce]'
             }`}
           >
             <X className="w-4 h-4" />
@@ -95,8 +95,8 @@ export const GlassAnalysisModal = ({
           <div
             className={`p-4 rounded border ${
               isWeiss
-                ? 'bg-emerald-950/5 border-emerald-600/40 text-[#15130C]'
-                : 'bg-emerald-950/20 border-emerald-500/40 text-[#e8e2d6]'
+                ? 'bg-emerald-950/5 border-emerald-600/40 text-[#06201b]'
+                : 'bg-emerald-950/20 border-emerald-500/40 text-[#ecfdf5]'
             }`}
           >
             <div className="flex items-center gap-2 font-display font-bold text-sm mb-1 text-emerald-500">
@@ -113,42 +113,42 @@ export const GlassAnalysisModal = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div
               className={`p-4 rounded border ${
-                isWeiss ? 'bg-[#EBE8DF]/70 border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+                isWeiss ? 'bg-[#e4f0ec]/70 border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
               }`}
             >
               <div className="flex items-center gap-2 font-display font-bold mb-2">
-                <Zap className="w-4 h-4 text-[#E54D2E]" />
+                <Zap className="w-4 h-4 text-[#34d399]" />
                 <span>1. Sinn & Fusion</span>
               </div>
-              <p className={isWeiss ? 'text-[#5C584D]' : 'text-[#cac6ba]'}>
+              <p className={isWeiss ? 'text-[#3b6e63]' : 'text-[#b2d8ce]'}>
                 Reine Vektorsuche scheitert bei exakten Bezeichnern (Funktionsnamen, Ticket-IDs). Reine Keyword-Suche scheitert bei Synonymen. Die RRF-Fusion (k = 60) kombiniert beide Ranglisten verlustfrei.
               </p>
             </div>
 
             <div
               className={`p-4 rounded border ${
-                isWeiss ? 'bg-[#EBE8DF]/70 border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+                isWeiss ? 'bg-[#e4f0ec]/70 border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
               }`}
             >
               <div className="flex items-center gap-2 font-display font-bold mb-2">
-                <ShieldCheck className="w-4 h-4 text-[#7bd0ff]" />
+                <ShieldCheck className="w-4 h-4 text-[#22d3ee]" />
                 <span>2. Machbarkeit</span>
               </div>
-              <p className={isWeiss ? 'text-[#5C584D]' : 'text-[#cac6ba]'}>
+              <p className={isWeiss ? 'text-[#3b6e63]' : 'text-[#b2d8ce]'}>
                 Vollständig lokal. Durch <strong>Model2Vec (30 MB)</strong> und <strong>SQLite</strong> entfällt jeglicher GPU- oder Cloud-Zwang. 16.000 Notizen indizieren in 4 Minuten, Abfragen dauern 23 ms.
               </p>
             </div>
 
             <div
               className={`p-4 rounded border ${
-                isWeiss ? 'bg-[#EBE8DF]/70 border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+                isWeiss ? 'bg-[#e4f0ec]/70 border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
               }`}
             >
               <div className="flex items-center gap-2 font-display font-bold mb-2">
                 <Layers className="w-4 h-4 text-emerald-500" />
                 <span>3. Agenten-Hooks</span>
               </div>
-              <p className={isWeiss ? 'text-[#5C584D]' : 'text-[#cac6ba]'}>
+              <p className={isWeiss ? 'text-[#3b6e63]' : 'text-[#b2d8ce]'}>
                 Über <code>UserPromptSubmit</code>-Hooks in Claude Code injiziert das System den relevanten Kontext (max. 1.500–4.000 Tokens), ohne den Prompt Cache zu invalidieren.
               </p>
             </div>
@@ -182,10 +182,10 @@ export const GlassAnalysisModal = ({
         {/* Footer */}
         <div
           className={`px-5 py-3.5 border-t flex flex-wrap gap-2 items-center justify-between ${
-            isWeiss ? 'bg-[#EBE8DF] border-[#D6D2C4]' : 'bg-[#15130c] border-[#2E2A20]'
+            isWeiss ? 'bg-[#e4f0ec] border-[#bdd6cf]' : 'bg-[#07100e] border-[#16302b]'
           }`}
         >
-          <span className="text-xs font-mono text-[#9b968a]">
+          <span className="text-xs font-mono text-[#689187]">
             Alle 32 Kapitel stehen als interaktive Taskliste & Audio-Erklärung bereit.
           </span>
           <div className="flex items-center gap-2">
@@ -197,8 +197,8 @@ export const GlassAnalysisModal = ({
                 }}
                 className={`px-3 py-1.5 rounded text-xs font-mono font-semibold flex items-center gap-1.5 border transition-colors cursor-pointer ${
                   isWeiss
-                    ? 'bg-[#F5F3EC] border-[#D6D2C4] text-[#15130C]'
-                    : 'bg-[#221f18] border-[#2E2A20] text-[#7bd0ff]'
+                    ? 'bg-[#f0f7f5] border-[#bdd6cf] text-[#06201b]'
+                    : 'bg-[#0e1d1a] border-[#16302b] text-[#22d3ee]'
                 }`}
               >
                 <Headphones className="w-3.5 h-3.5" />
@@ -211,7 +211,7 @@ export const GlassAnalysisModal = ({
                 onClose();
                 onOpenChecklist();
               }}
-              className="px-3.5 py-1.5 rounded text-xs font-mono font-semibold transition-colors cursor-pointer bg-[#E54D2E] hover:bg-[#ff5c3d] text-[#F5F3EC]"
+              className="px-3.5 py-1.5 rounded text-xs font-mono font-semibold transition-colors cursor-pointer bg-[#34d399] hover:bg-[#10b981] text-[#041311]"
             >
               ZUR 32-KAPITEL MATRIX
             </button>
